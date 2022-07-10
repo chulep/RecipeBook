@@ -51,8 +51,8 @@ class TabBarController: UITabBarController {
         tabBar.itemWidth = width / 5
         tabBar.itemPositioning = .centered
         
-        shapeLayer.fillColor = UIColor.white.cgColor
-        tabBar.tintColor = .black
+        shapeLayer.fillColor = UIColor.orange.cgColor
+        tabBar.tintColor = .white
         tabBar.unselectedItemTintColor = .gray
     }
 

@@ -81,8 +81,9 @@
 		5D13FCC2287AB42000F5DF4D /* BookModule */ = {
 			isa = PBXGroup;
 			children = (
-				5D13FCC6287ABAC600F5DF4D /* BookViewController.swift */,
-				5D13FCCC287AFE7800F5DF4D /* SearchView.swift */,
+				5D3EC374287B5D8700A8B1F7 /* Model */,
+				5D3EC373287B5D7B00A8B1F7 /* View */,
+				5D3EC375287B5DA100A8B1F7 /* ViewModel */,
 			);
 			path = BookModule;
 			sourceTree = "<group>";
@@ -109,6 +110,29 @@
 				5D13FCAF287AB3F400F5DF4D /* TabBarController.swift */,
 			);
 			path = TabBarModule;
+			sourceTree = "<group>";
+		};
+		5D3EC373287B5D7B00A8B1F7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5D13FCC6287ABAC600F5DF4D /* BookViewController.swift */,
+				5D13FCCC287AFE7800F5DF4D /* SearchView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5D3EC374287B5D8700A8B1F7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5D3EC375287B5DA100A8B1F7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
