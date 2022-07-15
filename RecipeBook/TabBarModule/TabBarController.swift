@@ -11,6 +11,7 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         createTabBar()
         tabBarApperanse()
     }
@@ -31,6 +32,13 @@ class TabBarController: UITabBarController {
     }
     
     private func tabBarApperanse() {
+        //прозрачный бэкграунд
+        tabBar.backgroundImage = UIImage()
+        tabBar.shadowImage = UIImage()
+        tabBar.backgroundColor = .clear
+        
+        
+        //основное оформление
         let positionOnX: CGFloat = 10
         let positionOnY: CGFloat = 14
         let width = tabBar.bounds.width - positionOnX * 2
@@ -42,7 +50,7 @@ class TabBarController: UITabBarController {
                                height: heigth)
         
         let bezierPath = UIBezierPath(roundedRect: roundRect,
-                                      cornerRadius: heigth / 2)
+                                      cornerRadius: heigth / 4)
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = bezierPath.cgPath
@@ -52,9 +60,10 @@ class TabBarController: UITabBarController {
         tabBar.itemPositioning = .centered
         
         shapeLayer.fillColor = UIColor.orange.cgColor
+        
+        //цвет нажатой/отжатой кнопки
         tabBar.tintColor = .white
         tabBar.unselectedItemTintColor = .gray
     }
-
 }
 

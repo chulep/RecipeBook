@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewNew: UIView {
+class CustomSearchView: UIView {
     
     private var button = UIButton()
     private var substrateView = UIView()
@@ -18,6 +18,11 @@ class SearchViewNew: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         createUI()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        button.setImage(openImage, for: .normal)
     }
     
     private func createUI() {
@@ -36,10 +41,11 @@ class SearchViewNew: UIView {
         
         textField.backgroundColor = .white
         button.backgroundColor = .orange
-        //button.setImage(openImage, for: .normal)
         button.tintColor = .white
         
         button.addTarget(nil, action: #selector(BookViewController.openSearchBar), for: .touchUpInside)
+        textField.addTarget(nil, action: #selector(BookViewController.searchViewMethod), for: .allEvents)
+        
         NSLayoutConstraint.activate([
             button.rightAnchor.constraint(equalTo: rightAnchor),
             button.topAnchor.constraint(equalTo: topAnchor),
@@ -57,7 +63,6 @@ class SearchViewNew: UIView {
             textField.bottomAnchor.constraint(equalTo: substrateView.bottomAnchor, constant: -5)
         ])
         
-        
     }
     
     func openClose(condition: Bool) {
@@ -68,5 +73,9 @@ class SearchViewNew: UIView {
         case false:
             button.setImage(openImage, for: .normal)
         }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
