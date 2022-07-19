@@ -62,7 +62,6 @@ class CustomSearchView: UIView {
             textField.rightAnchor.constraint(equalTo: substrateView.rightAnchor, constant: -5),
             textField.bottomAnchor.constraint(equalTo: substrateView.bottomAnchor, constant: -5)
         ])
-        
     }
     
     func openClose(condition: Bool) {

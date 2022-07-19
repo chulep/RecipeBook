@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class BookModel {
+final class RecipeModel {
     var name: String
     var incomingInternet: Bool
     var description: String?

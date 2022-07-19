@@ -62,8 +62,8 @@ class TabBarController: UITabBarController {
         shapeLayer.fillColor = UIColor.orange.cgColor
         
         //цвет нажатой/отжатой кнопки
-        tabBar.tintColor = .white
-        tabBar.unselectedItemTintColor = .gray
+        tabBar.tintColor = .black
+        tabBar.unselectedItemTintColor = .white
     }
 }
 

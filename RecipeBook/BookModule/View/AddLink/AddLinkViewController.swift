@@ -1,18 +1,18 @@
 //
-//  AddIndependViewController.swift
+//  AddLinkViewController.swift
 //  RecipeBook
 //
-//  Created by Pavel Schulepov on 14.07.2022.
+//  Created by Pavel Schulepov on 15.07.2022.
 //
 
 import UIKit
 
-class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+class AddLinkViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
     private var image = UIImage()
     private var imageButton = UIButton()
     private var nameRecipe = UITextField()
-    private var descriptionRecipe = UITextView()
+    private var linkTextField = UITextField()
     private var imagePickerController: UIImagePickerController!
 
     override func viewDidLoad() {
@@ -20,25 +20,27 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
         view.backgroundColor = .white
         createUI()
         createNavBarStyle()
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         imageButton.layer.cornerRadius = imageButton.bounds.height / 2
         nameRecipe.layer.cornerRadius = nameRecipe.bounds.height / 3
-        descriptionRecipe.layer.cornerRadius = descriptionRecipe.bounds.height / 30
+        linkTextField.layer.cornerRadius = linkTextField.bounds.height / 3
     }
     
     //MARK: - UI
     func createUI() {
-        for i in [imageButton, nameRecipe, descriptionRecipe] {
+        for i in [imageButton, nameRecipe, linkTextField] {
             i.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(i)
         }
         
-        imageButton.setImage(UIImage(systemName: "camera")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: view.bounds.width / 6)), for: .normal)
         imageButton.tintColor = .white
+        imageButton.setImage(UIImage(systemName: "camera")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: view.bounds.width / 6)), for: .normal)
         imageButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        imageButton.addTarget(self, action: #selector(touchSetImage), for: .touchUpInside)
         imageButton.imageView?.contentMode = .scaleAspectFill
         imageButton.clipsToBounds = true
 
@@ -48,14 +50,12 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
         nameRecipe.textAlignment = .center
         nameRecipe.placeholder = "Введите название"
         
-        descriptionRecipe.backgroundColor = .white
-        descriptionRecipe.layer.borderColor = UIColor.gray.cgColor
-        descriptionRecipe.layer.borderWidth = 1
-        descriptionRecipe.delegate = self
-        descriptionRecipe.text = "Опишите рецепт"
-        descriptionRecipe.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        descriptionRecipe.textAlignment = .center
-        descriptionRecipe.font = UIFont.boldSystemFont(ofSize: 15)
+        linkTextField.backgroundColor = .white
+        linkTextField.layer.borderColor = UIColor.gray.cgColor
+        linkTextField.layer.borderWidth = 1
+        linkTextField.textAlignment = .center
+        linkTextField.placeholder = "Вставьте ссылку"
+        
         
         NSLayoutConstraint.activate([
             imageButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
@@ -68,10 +68,10 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
             nameRecipe.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             nameRecipe.heightAnchor.constraint(equalTo: imageButton.heightAnchor, multiplier: 1/4),
             
-            descriptionRecipe.topAnchor.constraint(equalTo: nameRecipe.bottomAnchor, constant: 15),
-            descriptionRecipe.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
-            descriptionRecipe.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            descriptionRecipe.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5)
+            linkTextField.topAnchor.constraint(equalTo: nameRecipe.bottomAnchor, constant: 15),
+            linkTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            linkTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            linkTextField.heightAnchor.constraint(equalTo: imageButton.heightAnchor, multiplier: 1/4),
         ])
         
     }
@@ -91,23 +91,6 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
     @objc func confirmItemButton() {
         
     }
-
-    //MARK: - TextView Delegate
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1) {
-            textView.text = nil
-            textView.textColor = .black
-            textView.textAlignment = .natural
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-                textView.text = "Опишите рецепт"
-                textView.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-                textView.textAlignment = .center
-            }
-    }
     
     //MARK: - UIPickerController
     @objc func touchSetImage() {
@@ -125,4 +108,13 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
         newImage?.jpegData(compressionQuality: 0.4)
         imageButton.setImage(newImage, for: .normal)
     }
+}
+
+extension UIView {
+    
+    func cornerRadius(_ a: CGFloat) {
+        self.layer.cornerRadius = a
+        self.clipsToBounds = true
+    }
+    
 }

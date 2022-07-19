@@ -47,10 +47,17 @@ class AddRecipeView: UIView {
         subWallView.backgroundColor = .orange
         openButton.backgroundColor = .orange
         openButton.tintColor = .white
-        addLinkButton.backgroundColor = .green
-        addIndependButton.backgroundColor = .gray
+        
+        addLinkButton.setImage(UIImage(systemName: "globe")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: sizeButton)), for: .normal)
+        addLinkButton.tintColor = .white
+        addLinkButton.setTitle("Из интернета", for: .normal)
+        
+        addIndependButton.setImage(UIImage(systemName: "pencil.tip.crop.circle")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: sizeButton)), for: .normal)
+        addIndependButton.tintColor = .white
+        addIndependButton.setTitle("Вручную", for: .normal)
         
         addIndependButton.addTarget(nil, action: #selector(BookViewController.buttonadd), for: .touchUpInside)
+        addLinkButton.addTarget(nil, action: #selector(BookViewController.buttonadd2), for: .touchUpInside)
         
         openButton.addTarget(nil, action: #selector(BookViewController.openAddRecipe), for: .touchUpInside)
         NSLayoutConstraint.activate([

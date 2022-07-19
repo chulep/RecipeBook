@@ -6,3 +6,22 @@
 //
 
 import Foundation
+
+protocol BookViewModelType {
+    var recipes: [RecipeModel] { get }
+    func bookCellViewModel(forIndexPath indexPath: IndexPath) -> BookCellViewModelType?
+    func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType?
+}
+
+class BookViewModel: BookViewModelType {
+    
+    var recipes: [RecipeModel] = [RecipeModel(name: "Kура", incomingInternet: true, description: nil, exLink: nil, image: nil), RecipeModel(name: "картоха", incomingInternet: true, description: nil, exLink: nil, image: nil), RecipeModel(name: "пиHог", incomingInternet: true, description: nil, exLink: nil, image: nil), RecipeModel(name: "котлетыыыыы ыыыыыыыыыыыыыыыыыыы", incomingInternet: true, description: "nilnilnilnilnilnilnilnilnilnilnilnilnil nilnilnilnilnil nilnil nilnilnilnil nilnilnilnil nilnilnil nilnil nilnilnil nilnilnil \n nil nilnilnil nilnil", exLink: nil, image: nil)]
+    
+    func bookCellViewModel(forIndexPath indexPath: IndexPath) -> BookCellViewModelType? {
+        return BookCellViewModel(recipe: recipes[indexPath.row])
+    }
+    
+    func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType? {
+        return DetailRecipeViewModel(recipe: recipes[indexPath.row])
+    }
+}

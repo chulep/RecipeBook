@@ -17,13 +17,14 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     var addRecipeIsOpen = false
     var searchView = CustomSearchView()
     var addRecipeView = AddRecipeView()
-    var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private var bookArray: [BookModel] = [BookModel(name: "кура", incomingInternet: true, description: nil, exLink: nil, image: nil), BookModel(name: "картоха", incomingInternet: true, description: nil, exLink: nil, image: nil), BookModel(name: "пирог", incomingInternet: true, description: nil, exLink: nil, image: nil), BookModel(name: "котлетыыыыыыыыыыыыыыыыыыыыыыыы", incomingInternet: true, description: nil, exLink: nil, image: nil)]
-    private var bookArrayFiltr = [BookModel]()
+    var collectionView: UICollectionView?
+    var viewModel: BookViewModelType?
+    private var bookArrayFiltr = [RecipeModel]()
 
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = BookViewModel()
         createCollectionView()
         createUI()
     }
@@ -31,7 +32,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     //MARK: - Create UI
     private func createUI() {
         view.backgroundColor = .white
-        bookArrayFiltr = bookArray
+        bookArrayFiltr = viewModel?.recipes ?? []
         
         searchView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchView)
@@ -71,12 +72,12 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     private func createCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: settingCollectionViewLayout())
-        collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.identifire)
-        collectionView.frame = view.bounds
-        view.addSubview(collectionView)
+        collectionView?.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.identifire)
+        collectionView?.frame = view.bounds
+        view.addSubview(collectionView!)
         
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
     }
     
     //MARK: - CollectionView DataSource/Delegate
@@ -87,26 +88,44 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifire, for: indexPath) as! BookCollectionViewCell
+        guard let viewModel = viewModel else { return UICollectionViewCell() }
+
         cell.layer.cornerRadius = cell.bounds.height / 10
-        cell.nameLabel.text = bookArrayFiltr[indexPath.row].name
-        cell.imageView.image = bookArrayFiltr[indexPath.row].image
+        cell.viewModel = viewModel.bookCellViewModel(forIndexPath: indexPath)
         return cell
     }
+    
     //delegate
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let viewModel = viewModel else { return }
+        let detailVC = DetailRecipeViewController()
+        detailVC.viewModel = viewModel.detailRecipeViewModel(forIdexPath: indexPath)
+        let navVC = UINavigationController(rootViewController: detailVC)
+        navVC.modalPresentationStyle = .fullScreen
+        present(navVC, animated: true)
+    }
+    
     //MARK: - Search Method
     @objc func searchViewMethod() {
         if searchView.textField.text == "" {
-            bookArrayFiltr = bookArray
+            bookArrayFiltr = viewModel?.recipes ?? []
         } else {
-            bookArrayFiltr = bookArray.filter({ return String($0.name).lowercased().contains(searchView.textField.text?.lowercased() ?? "")
-            })
+            bookArrayFiltr = viewModel?.recipes.filter({ return String($0.name).lowercased().contains(searchView.textField.text?.lowercased() ?? "")
+            }) ?? []
         }
-        collectionView.reloadData()
+        collectionView?.reloadData()
     }
     
     @objc func buttonadd() {
         let VC = AddIndependViewController()
+        let navVC = UINavigationController(rootViewController: VC)
+            navVC.modalPresentationStyle = .fullScreen
+            navVC.navigationBar.backgroundColor = .orange
+        present(navVC, animated: true)
+    }
+    
+    @objc func buttonadd2() {
+        let VC = AddLinkViewController()
         let navVC = UINavigationController(rootViewController: VC)
             navVC.modalPresentationStyle = .fullScreen
             navVC.navigationBar.backgroundColor = .orange
