@@ -27,4 +27,5 @@ final class RecipeModel {
             self.image = UIImage(systemName: "globe")
         }
     }
+    
 }

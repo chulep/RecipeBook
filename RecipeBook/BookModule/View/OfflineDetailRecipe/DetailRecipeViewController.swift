@@ -6,13 +6,18 @@
 //
 
 import UIKit
+import WebKit
 
 class DetailRecipeViewController: UIViewController {
     
     var recipeImageView = UIImageView()
     var recipeNameLabel = UILabel()
     var recipeDescriptionTextView = UITextView()
-    var supportDescriptionLabel = UILabel()
+    private var supportDescriptionLabel: UILabel?
+    
+    var webView: WKWebView?
+    var activityIndicator: UIActivityIndicatorView?
+    
     var viewModel: DetailRecipeViewModelType? {
         willSet(viewModel) {
             recipeImageView.image = viewModel?.image
@@ -21,23 +26,36 @@ class DetailRecipeViewController: UIViewController {
         }
     }
     
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         createNavBarStyle()
-        createUI()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         
+        if viewModel?.incomingInternet == true {
+            createOnlineUI()
+        } else {
+            createOfflineUI()
+        }
     }
     
-    func createUI() {
+    //MARK: - Navigation bar
+    func createNavBarStyle() {
+        title = "Рецепт"
+        navigationController?.navigationBar.tintColor = .white
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(cancelItemButton))
+    }
+    
+    @objc func cancelItemButton() {
+        dismiss(animated: true)
+    }
+    
+    //MARK: - Create offline detail UI
+    func createOfflineUI() {
         view.backgroundColor = .white
-        
+        supportDescriptionLabel = UILabel()
         for i in [recipeNameLabel, recipeDescriptionTextView, recipeImageView, supportDescriptionLabel] {
-            i.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(i)
+            i!.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(i!)
         }
         
         recipeImageView.contentMode = .scaleAspectFill
@@ -57,8 +75,8 @@ class DetailRecipeViewController: UIViewController {
         recipeDescriptionTextView.textColor = .gray
         recipeDescriptionTextView.font = UIFont.boldSystemFont(ofSize: 17)
         
-        supportDescriptionLabel.text = "Описание:"
-        supportDescriptionLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        supportDescriptionLabel?.text = "Описание:"
+        supportDescriptionLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         
         NSLayoutConstraint.activate([
             recipeImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1),
@@ -71,25 +89,46 @@ class DetailRecipeViewController: UIViewController {
             recipeNameLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
             recipeNameLabel.heightAnchor.constraint(equalTo: recipeNameLabel.widthAnchor, multiplier: 1/8),
             
-            supportDescriptionLabel.topAnchor.constraint(equalTo: recipeNameLabel.bottomAnchor, constant: 13),
-            supportDescriptionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            supportDescriptionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            supportDescriptionLabel.heightAnchor.constraint(equalTo: supportDescriptionLabel.widthAnchor, multiplier: 1/12),
+            supportDescriptionLabel!.topAnchor.constraint(equalTo: recipeNameLabel.bottomAnchor, constant: 13),
+            supportDescriptionLabel!.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            supportDescriptionLabel!.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            supportDescriptionLabel!.heightAnchor.constraint(equalTo: supportDescriptionLabel!.widthAnchor, multiplier: 1/12),
             
-            recipeDescriptionTextView.topAnchor.constraint(equalTo: supportDescriptionLabel.bottomAnchor),
+            recipeDescriptionTextView.topAnchor.constraint(equalTo: supportDescriptionLabel!.bottomAnchor),
             recipeDescriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             recipeDescriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
             recipeDescriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5)
         ])
     }
     
-    func createNavBarStyle() {
-        title = "Рецепт"
-        navigationController?.navigationBar.tintColor = .white
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(cancelItemButton))
+    //MARK: - Create online detail UI
+    func createOnlineUI() {
+        webView = WKWebView()
+        view.addSubview(webView!)
+        webView?.frame = view.bounds
+        webView?.navigationDelegate = self
+        
+        activityIndicator = UIActivityIndicatorView()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator!)
+        
+        guard let exLink = viewModel?.exLink else { return }
+        let urlRequest = URLRequest(url: exLink)
+        webView?.load(urlRequest)
     }
     
-    @objc func cancelItemButton() {
-        dismiss(animated: true)
+}
+
+//MARK: - WKWebView navigation delegate
+extension DetailRecipeViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        activityIndicator?.isHidden = false
+        activityIndicator?.startAnimating()
     }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        activityIndicator?.isHidden = true
+        activityIndicator?.stopAnimating()
+    }
+    
 }

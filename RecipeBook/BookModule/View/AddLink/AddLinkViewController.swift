@@ -109,12 +109,3 @@ class AddLinkViewController: UIViewController, UIImagePickerControllerDelegate, 
         imageButton.setImage(newImage, for: .normal)
     }
 }
-
-extension UIView {
-    
-    func cornerRadius(_ a: CGFloat) {
-        self.layer.cornerRadius = a
-        self.clipsToBounds = true
-    }
-    
-}
