@@ -6,26 +6,58 @@
 //
 
 import Foundation
+import CoreData
 import UIKit
 
 final class RecipeModel {
-    var name: String
-    var incomingInternet: Bool
-    var description: String?
-    var image: UIImage?
-    var exLink: URL?
-    var save = false
     
-    init(name: String, incomingInternet: Bool, description: String?, exLink: URL?, image: UIImage?) {
-        self.name = name
-        self.incomingInternet = incomingInternet
-        self.description = description
-        self.exLink = exLink
-        self.image = image
-        
-        if self.image == nil {
-            self.image = UIImage(systemName: "globe")
+    func exportAllRecipe() -> [RecipeData] {
+        let coreDataStack = CoreDataStack()
+        let context = coreDataStack.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<RecipeData> = RecipeData.fetchRequest()
+        do {
+            print("Export CoreData DONE")
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Export CoreData ERROR")
         }
+        return []
+    }
+    
+    func exportDetailRecipe(indexPath: IndexPath) -> RecipeData? {
+        let coreDataStack = CoreDataStack()
+        let context = coreDataStack.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<RecipeData> = RecipeData.fetchRequest()
+        do {
+            print("Export CoreData DONE")
+            return try context.fetch(fetchRequest)[indexPath.row]
+        } catch {
+            print("Export CoreData ERROR")
+        }
+        return nil
+    }
+    
+    
+    func saveRecipe(name: String?, description: String?, image: UIImage?, exURL: String?) {
+        let coreDataStack = CoreDataStack()
+        let context = coreDataStack.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "RecipeData", in: context)
+        let objectRecipe = NSManagedObject(entity: entity!, insertInto: context) as? RecipeData
+        objectRecipe?.nameRecipe = name
+        objectRecipe?.descriptionRecipe = description
+        objectRecipe?.exURL = exURL
+        guard let image = image else { return }
+        objectRecipe?.imageRecipe = UIImage.jpegData(image)(compressionQuality: 0.5)
+        do {
+            try context.save()
+            print("RECIPE SAVE")
+        } catch {
+            print("SAVE RECIPE ERROR")
+        }
+    }
+    
+    deinit {
+        print("KILL RECIPE MODEL")
     }
     
 }

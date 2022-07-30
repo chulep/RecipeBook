@@ -10,25 +10,27 @@ import UIKit
 
 protocol DetailRecipeViewModelType {
     var image: UIImage? { get }
-    var name: String { get }
-    var description: String? { get }
-    var incomingInternet: Bool { get }
-    var exLink: URL? { get }
-    init(recipe: RecipeModel)
+    var name: String? { get }
+    var descriptionView: String? { get }
+    var exURL: String? { get }
+    init(recipe: RecipeData)
 }
 
 class DetailRecipeViewModel: DetailRecipeViewModelType {
     var image: UIImage?
-    var name: String
-    var description: String?
-    var incomingInternet: Bool
-    var exLink: URL?
+    var name: String?
+    var descriptionView: String?
+    var exURL: String?
 
-    required init(recipe: RecipeModel) {
-        self.image = recipe.image
-        self.name = recipe.name
-        self.description = recipe.description
-        self.incomingInternet = recipe.incomingInternet
-        self.exLink = recipe.exLink
+    required init(recipe: RecipeData) {
+        self.name = recipe.nameRecipe
+        self.descriptionView = recipe.descriptionRecipe
+        self.exURL = recipe.exURL
+        
+        if recipe.imageRecipe == nil {
+            self.image = UIImage(systemName: "globe")
+        } else {
+            self.image = UIImage(data: recipe.imageRecipe!)
+        }
     }
 }

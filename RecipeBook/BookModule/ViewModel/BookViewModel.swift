@@ -8,20 +8,31 @@
 import Foundation
 
 protocol BookViewModelType {
-    var recipes: [RecipeModel] { get }
+    var recipeModel: RecipeModel { get }
+    var allRecipes: [RecipeData] { get }
+    func exportAllRecipes()
     func bookCellViewModel(forIndexPath indexPath: IndexPath) -> BookCellViewModelType?
     func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType?
 }
 
 class BookViewModel: BookViewModelType {
     
-    var recipes: [RecipeModel] = [RecipeModel(name: "Kура", incomingInternet: false, description: nil, exLink: nil, image: nil), RecipeModel(name: "картоха", incomingInternet: false, description: nil, exLink: nil, image: nil), RecipeModel(name: "пиHог", incomingInternet: false, description: nil, exLink: nil, image: nil), RecipeModel(name: "котлетыыыыы ыыыыыыыыыыыыыыыыыыы", incomingInternet: false, description: "nilnilnilnilnilnilnilnilnilnilnilnilnil nilnilnilnilnil nilnil nilnilnilnil nilnilnilnil nilnilnil nilnil nilnilnil nilnilnil \n nil nilnilnil nilnil", exLink: nil, image: nil), RecipeModel(name: "internet", incomingInternet: true, description: nil, exLink: URL(string: "https://1000.menu/cooking/26339-bystryi-sladkii-pirog"), image: nil)]
+    var recipeModel: RecipeModel = RecipeModel()
+    
+    var allRecipes: [RecipeData] = [RecipeData]()
+    
+    func exportAllRecipes() {
+        allRecipes = recipeModel.exportAllRecipe()
+    }
     
     func bookCellViewModel(forIndexPath indexPath: IndexPath) -> BookCellViewModelType? {
-        return BookCellViewModel(recipe: recipes[indexPath.row])
+        return BookCellViewModel(recipe: allRecipes[indexPath.row])
     }
     
     func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType? {
-        return DetailRecipeViewModel(recipe: recipes[indexPath.row])
+        let detailRecipe = recipeModel.exportDetailRecipe(indexPath: indexPath)
+        return DetailRecipeViewModel(recipe: detailRecipe ?? RecipeData())
+
     }
+
 }

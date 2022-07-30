@@ -19,20 +19,22 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     var addRecipeView = AddRecipeView()
     var collectionView: UICollectionView?
     var viewModel: BookViewModelType?
-    private var bookArrayFiltr = [RecipeModel]()
+    private var bookArrayFiltr = [RecipeData]()
 
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = BookViewModel()
+        viewModel?.exportAllRecipes()
         createCollectionView()
         createUI()
+        collectionView?.reloadData()
     }
     
     //MARK: - Create UI
     private func createUI() {
         view.backgroundColor = .white
-        bookArrayFiltr = viewModel?.recipes ?? []
+        bookArrayFiltr = viewModel?.allRecipes ?? []
         
         searchView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchView)
@@ -108,9 +110,9 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     //MARK: - Search Method
     @objc func searchViewMethod() {
         if searchView.textField.text == "" {
-            bookArrayFiltr = viewModel?.recipes ?? []
+            bookArrayFiltr = viewModel?.allRecipes ?? []
         } else {
-            bookArrayFiltr = viewModel?.recipes.filter({ return String($0.name).lowercased().contains(searchView.textField.text?.lowercased() ?? "")
+            bookArrayFiltr = viewModel?.allRecipes.filter({ return String($0.nameRecipe ?? "").lowercased().contains(searchView.textField.text?.lowercased() ?? "")
             }) ?? []
         }
         collectionView?.reloadData()
@@ -131,4 +133,5 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
             navVC.navigationBar.backgroundColor = .orange
         present(navVC, animated: true)
     }
+    
 }

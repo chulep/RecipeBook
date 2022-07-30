@@ -14,6 +14,7 @@ class AddLinkViewController: UIViewController, UIImagePickerControllerDelegate, 
     private var nameRecipe = UITextField()
     private var linkTextField = UITextField()
     private var imagePickerController: UIImagePickerController!
+    private var recipeModel = RecipeModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,10 +90,11 @@ class AddLinkViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @objc func confirmItemButton() {
-        
+        recipeModel.saveRecipe(name: nameRecipe.text, description: nil, image: image, exURL: linkTextField.text)
+        dismiss(animated: true)
     }
     
-    //MARK: - UIPickerController
+    //MARK: - UIPickerController (camera)
     @objc func touchSetImage() {
         imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self

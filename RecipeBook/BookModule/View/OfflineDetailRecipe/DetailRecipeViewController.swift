@@ -22,7 +22,7 @@ class DetailRecipeViewController: UIViewController {
         willSet(viewModel) {
             recipeImageView.image = viewModel?.image
             recipeNameLabel.text = viewModel?.name
-            recipeDescriptionTextView.text = viewModel?.description
+            recipeDescriptionTextView.text = viewModel?.descriptionView
         }
     }
     
@@ -31,10 +31,10 @@ class DetailRecipeViewController: UIViewController {
         super.viewDidLoad()
         createNavBarStyle()
         
-        if viewModel?.incomingInternet == true {
-            createOnlineUI()
-        } else {
+        if viewModel?.exURL == nil {
             createOfflineUI()
+        } else {
+            createOnlineUI()
         }
     }
     
@@ -111,8 +111,8 @@ class DetailRecipeViewController: UIViewController {
         activityIndicator = UIActivityIndicatorView()
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator!)
         
-        guard let exLink = viewModel?.exLink else { return }
-        let urlRequest = URLRequest(url: exLink)
+        guard let exLink = viewModel?.exURL, let url = URL(string: exLink) else { return }
+        let urlRequest = URLRequest(url: url)
         webView?.load(urlRequest)
     }
     
