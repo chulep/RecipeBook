@@ -9,34 +9,36 @@ import Foundation
 import CoreData
 import UIKit
 
-final class RecipeModel {
+struct Recipe {
+    let nameRecipe: String?
+    let descriptionRecipe: String?
+    let imageRecipe: Data?
+    let exURL: String?
+}
+
+final class RecipeCoreData {
     
-    func exportAllRecipe() -> [RecipeData] {
+    private func mapping(data: [RecipeData]) -> [Recipe] {
+        return data.map { Recipe(nameRecipe: $0.nameRecipe,
+                                 descriptionRecipe: $0.descriptionRecipe,
+                                 imageRecipe: $0.imageRecipe,
+                                 exURL: $0.exURL)
+        }
+    }
+    
+    func exportAllRecipe() -> [Recipe] {
+        var allRecipe = [RecipeData]()
         let coreDataStack = CoreDataStack()
         let context = coreDataStack.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<RecipeData> = RecipeData.fetchRequest()
         do {
             print("Export CoreData DONE")
-            return try context.fetch(fetchRequest)
+            allRecipe = try context.fetch(fetchRequest)
         } catch {
             print("Export CoreData ERROR")
         }
-        return []
+        return mapping(data: allRecipe)
     }
-    
-    func exportDetailRecipe(indexPath: IndexPath) -> RecipeData? {
-        let coreDataStack = CoreDataStack()
-        let context = coreDataStack.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<RecipeData> = RecipeData.fetchRequest()
-        do {
-            print("Export CoreData DONE")
-            return try context.fetch(fetchRequest)[indexPath.row]
-        } catch {
-            print("Export CoreData ERROR")
-        }
-        return nil
-    }
-    
     
     func saveRecipe(name: String?, description: String?, image: UIImage?, exURL: String?) {
         let coreDataStack = CoreDataStack()
@@ -54,10 +56,6 @@ final class RecipeModel {
         } catch {
             print("SAVE RECIPE ERROR")
         }
-    }
-    
-    deinit {
-        print("KILL RECIPE MODEL")
     }
     
 }

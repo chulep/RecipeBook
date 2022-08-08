@@ -13,7 +13,7 @@ protocol DetailRecipeViewModelType {
     var name: String? { get }
     var descriptionView: String? { get }
     var exURL: String? { get }
-    init(recipe: RecipeData)
+    init(recipe: Recipe)
 }
 
 class DetailRecipeViewModel: DetailRecipeViewModelType {
@@ -22,7 +22,7 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
     var descriptionView: String?
     var exURL: String?
 
-    required init(recipe: RecipeData) {
+    required init(recipe: Recipe) {
         self.name = recipe.nameRecipe
         self.descriptionView = recipe.descriptionRecipe
         self.exURL = recipe.exURL
@@ -33,4 +33,5 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
             self.image = UIImage(data: recipe.imageRecipe!)
         }
     }
+    
 }

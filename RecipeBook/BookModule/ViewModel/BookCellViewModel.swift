@@ -18,14 +18,13 @@ class BookCellViewModel: BookCellViewModelType {
     var name: String
     var image: UIImage?
     
-    init(recipe: RecipeData) {
+    init(recipe: Recipe) {
         self.name = recipe.nameRecipe ?? ""
         if recipe.imageRecipe == nil {
             self.image = UIImage(systemName: "globe")
         } else {
             self.image = UIImage(data: recipe.imageRecipe!)
         }
-        
     }
     
 }

@@ -14,7 +14,7 @@ class AddLinkViewController: UIViewController, UIImagePickerControllerDelegate, 
     private var nameRecipe = UITextField()
     private var linkTextField = UITextField()
     private var imagePickerController: UIImagePickerController!
-    private var recipeModel = RecipeModel()
+    private var recipeModel = RecipeCoreData()
 
     override func viewDidLoad() {
         super.viewDidLoad()
