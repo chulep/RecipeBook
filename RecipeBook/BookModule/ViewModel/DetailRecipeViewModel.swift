@@ -13,25 +13,41 @@ protocol DetailRecipeViewModelType {
     var name: String? { get }
     var descriptionView: String? { get }
     var exURL: String? { get }
-    init(recipe: Recipe)
+    var favoriteRecipe: Bool { get set }
+    func tapToFavorite()
+    init(recipe: Recipe, indexPath: IndexPath)
 }
 
 class DetailRecipeViewModel: DetailRecipeViewModelType {
+    
     var image: UIImage?
     var name: String?
     var descriptionView: String?
     var exURL: String?
+    var favoriteRecipe: Bool
+    private var indexPath: IndexPath
+    let model = CoreDataInteraction()
 
-    required init(recipe: Recipe) {
+    required init(recipe: Recipe, indexPath: IndexPath) {
         self.name = recipe.nameRecipe
         self.descriptionView = recipe.descriptionRecipe
         self.exURL = recipe.exURL
+        self.favoriteRecipe = recipe.favoriteRecipe
+        self.indexPath = indexPath
         
-        if recipe.imageRecipe == nil {
-            self.image = UIImage(systemName: "globe")
-        } else {
-            self.image = UIImage(data: recipe.imageRecipe!)
+        switch recipe {
+        case _ where recipe.exURL == nil && recipe.imageRecipe == nil:
+            image = UIImage(systemName: "pencil.circle")
+        case _ where recipe.exURL != nil && recipe.imageRecipe == nil:
+            image = UIImage(systemName: "globe")
+        default:
+            image = UIImage(data: recipe.imageRecipe!)
         }
+    }
+    
+    func tapToFavorite() {
+        favoriteRecipe = !favoriteRecipe
+        model.tapToFavorite(indexPath: indexPath, favorite: favoriteRecipe)
     }
     
 }

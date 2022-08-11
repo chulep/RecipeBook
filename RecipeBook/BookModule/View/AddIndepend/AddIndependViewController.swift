@@ -14,8 +14,8 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
     private var nameRecipe = UITextField()
     private var descriptionRecipe = UITextView()
     private var imagePickerController: UIImagePickerController!
-    weak var delegate: addRecipeDelegate?
-    var recipeModel = RecipeCoreData()
+    weak var delegate: reloadRecipeDelegate?
+    var recipeModel = CoreDataInteraction()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,8 +93,8 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
     
     @objc func confirmItemButton() {
         recipeModel.saveRecipe(name: nameRecipe.text, description: descriptionRecipe.text, image: image, exURL: nil)
-        delegate?.updateRecipe()
         dismiss(animated: true)
+        delegate?.updateListRecipe()
     }
 
     //MARK: - TextView Delegate
@@ -121,7 +121,6 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
         imagePickerController.sourceType = .camera
         imagePickerController.allowsEditing = true
         present(imagePickerController, animated: true)
-        print("открыт")
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D1041D128A549B300EBBAC1 /* CoreDataInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1041D028A549B300EBBAC1 /* CoreDataInteraction.swift */; };
 		5D122625287C238F00FF3A0A /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D122624287C238F00FF3A0A /* BookCollectionViewCell.swift */; };
 		5D13FCAC287AB3F400F5DF4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D13FCAB287AB3F400F5DF4D /* AppDelegate.swift */; };
 		5D13FCAE287AB3F400F5DF4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D13FCAD287AB3F400F5DF4D /* SceneDelegate.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D1041D028A549B300EBBAC1 /* CoreDataInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataInteraction.swift; sourceTree = "<group>"; };
 		5D122624287C238F00FF3A0A /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
 		5D13FCA8287AB3F400F5DF4D /* RecipeBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipeBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D13FCAB287AB3F400F5DF4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				5D16EE7828914EC700C7EEF8 /* CoreDataStack.swift */,
+				5D1041D028A549B300EBBAC1 /* CoreDataInteraction.swift */,
 				5D13FCB4287AB3F400F5DF4D /* RecipeBook.xcdatamodeld */,
 			);
 			path = CoreData;
@@ -288,6 +291,7 @@
 				5D13FCC7287ABAC600F5DF4D /* BookViewController.swift in Sources */,
 				5D2E12EA28843EC2003601BB /* BookCellViewModel.swift in Sources */,
 				5DF60DF1287DDEFF00D72AAC /* RecipeModel.swift in Sources */,
+				5D1041D128A549B300EBBAC1 /* CoreDataInteraction.swift in Sources */,
 				5D13FCCD287AFE7900F5DF4D /* SearchView.swift in Sources */,
 				5D13FCB6287AB3F400F5DF4D /* RecipeBook.xcdatamodeld in Sources */,
 				5D13FCC9287ABAD900F5DF4D /* CalculationViewController.swift in Sources */,

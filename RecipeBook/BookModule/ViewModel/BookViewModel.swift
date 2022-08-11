@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import UIKit
 
 protocol BookViewModelType {
     var recipeCount: Int? { get set }
+    func exportAllRecipes()
     func searchRecipe(text: String)
     func bookCellViewModel(forIdexPath indexPath: IndexPath) -> BookCellViewModelType?
     func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType?
@@ -18,7 +18,7 @@ protocol BookViewModelType {
 class BookViewModel: BookViewModelType {
     
     var recipeCount: Int?
-    var recipeModel: RecipeCoreData = RecipeCoreData()
+    var recipeModel: CoreDataInteraction = CoreDataInteraction()
     private var parentArrayRecipies: [Recipe]?
     private var recipes: [Recipe]? {
         willSet (recipes) {
@@ -30,7 +30,7 @@ class BookViewModel: BookViewModelType {
         exportAllRecipes()
     }
     
-    private func exportAllRecipes() {
+    func exportAllRecipes() {
         parentArrayRecipies = recipeModel.exportAllRecipe()
         recipes = parentArrayRecipies
     }
@@ -42,7 +42,7 @@ class BookViewModel: BookViewModelType {
     
     func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType? {
         guard let recipes = recipes else { return nil }
-        return DetailRecipeViewModel(recipe: recipes[indexPath.row])
+        return DetailRecipeViewModel(recipe: recipes[indexPath.row], indexPath: indexPath)
     }
     
     func searchRecipe(text: String) {

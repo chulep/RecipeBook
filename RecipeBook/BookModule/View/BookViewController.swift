@@ -5,8 +5,8 @@
 //  Created by Pavel Schulepov on 10.07.2022.
 //
 
-protocol addRecipeDelegate: AnyObject {
-    func updateRecipe()
+protocol reloadRecipeDelegate: AnyObject {
+    func updateListRecipe()
 }
 
 import UIKit
@@ -105,6 +105,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewModel = viewModel else { return }
         let detailVC = DetailRecipeViewController()
+        detailVC.delegate = self
         detailVC.viewModel = viewModel.detailRecipeViewModel(forIdexPath: indexPath)
         let navVC = UINavigationController(rootViewController: detailVC)
         navVC.modalPresentationStyle = .fullScreen
@@ -128,6 +129,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     @objc func buttonadd2() {
         let VC = AddLinkViewController()
+        VC.delegate = self
         let navVC = UINavigationController(rootViewController: VC)
             navVC.modalPresentationStyle = .fullScreen
             navVC.navigationBar.backgroundColor = .orange
@@ -136,10 +138,11 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     
 }
 
-extension BookViewController: addRecipeDelegate {
-    func updateRecipe() {
-        print("DELEGATE !")
-        
+//MARK: - Add Recipe Delegate
+extension BookViewController: reloadRecipeDelegate {
+    func updateListRecipe() {
+        viewModel?.exportAllRecipes()
+        collectionView?.reloadData()
     }
     
 }
