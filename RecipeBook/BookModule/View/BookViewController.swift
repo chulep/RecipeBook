@@ -5,6 +5,10 @@
 //  Created by Pavel Schulepov on 10.07.2022.
 //
 
+protocol reloadRecipeDelegate: AnyObject {
+    func updateListRecipe()
+}
+
 import UIKit
 
 class BookViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -19,7 +23,6 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     var addRecipeView = AddRecipeView()
     var collectionView: UICollectionView?
     var viewModel: BookViewModelType?
-    private var bookArrayFiltr = [RecipeModel]()
 
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -29,10 +32,13 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         createUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     //MARK: - Create UI
     private func createUI() {
         view.backgroundColor = .white
-        bookArrayFiltr = viewModel?.recipes ?? []
         
         searchView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchView)
@@ -58,6 +64,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         addRecipeView.clipsToBounds = true
         addRecipeView.layer.cornerRadius = buttonSize / 2
+        collectionView?.reloadData()
     }
     
     //MARK: - CollectionView Settings
@@ -83,15 +90,14 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     //MARK: - CollectionView DataSource/Delegate
     //dataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        bookArrayFiltr.count
+        viewModel?.recipeCount ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifire, for: indexPath) as! BookCollectionViewCell
         guard let viewModel = viewModel else { return UICollectionViewCell() }
-
         cell.layer.cornerRadius = cell.bounds.height / 10
-        cell.viewModel = viewModel.bookCellViewModel(forIndexPath: indexPath)
+        cell.viewModel = viewModel.bookCellViewModel(forIdexPath: indexPath)
         return cell
     }
     
@@ -99,6 +105,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewModel = viewModel else { return }
         let detailVC = DetailRecipeViewController()
+        detailVC.delegate = self
         detailVC.viewModel = viewModel.detailRecipeViewModel(forIdexPath: indexPath)
         let navVC = UINavigationController(rootViewController: detailVC)
         navVC.modalPresentationStyle = .fullScreen
@@ -107,17 +114,13 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     //MARK: - Search Method
     @objc func searchViewMethod() {
-        if searchView.textField.text == "" {
-            bookArrayFiltr = viewModel?.recipes ?? []
-        } else {
-            bookArrayFiltr = viewModel?.recipes.filter({ return String($0.name).lowercased().contains(searchView.textField.text?.lowercased() ?? "")
-            }) ?? []
-        }
+        viewModel?.searchRecipe(text: searchView.textField.text ?? "")
         collectionView?.reloadData()
     }
     
     @objc func buttonadd() {
         let VC = AddIndependViewController()
+        VC.delegate = self
         let navVC = UINavigationController(rootViewController: VC)
             navVC.modalPresentationStyle = .fullScreen
             navVC.navigationBar.backgroundColor = .orange
@@ -126,9 +129,20 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     @objc func buttonadd2() {
         let VC = AddLinkViewController()
+        VC.delegate = self
         let navVC = UINavigationController(rootViewController: VC)
             navVC.modalPresentationStyle = .fullScreen
             navVC.navigationBar.backgroundColor = .orange
         present(navVC, animated: true)
     }
+    
+}
+
+//MARK: - Add Recipe Delegate
+extension BookViewController: reloadRecipeDelegate {
+    func updateListRecipe() {
+        viewModel?.exportAllRecipes()
+        collectionView?.reloadData()
+    }
+    
 }

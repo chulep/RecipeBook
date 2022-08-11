@@ -18,9 +18,17 @@ class BookCellViewModel: BookCellViewModelType {
     var name: String
     var image: UIImage?
     
-    init(recipe: RecipeModel) {
-        self.name = recipe.name
-        self.image = recipe.image
+    init(recipe: Recipe) {
+        name = recipe.nameRecipe ?? ""
+        
+        switch recipe {
+        case _ where recipe.exURL == nil && recipe.imageRecipe == nil:
+            image = UIImage(systemName: "pencil.circle")
+        case _ where recipe.exURL != nil && recipe.imageRecipe == nil:
+            image = UIImage(systemName: "globe")
+        default:
+            image = UIImage(data: recipe.imageRecipe!)
+        }
     }
     
 }

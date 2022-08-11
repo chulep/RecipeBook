@@ -14,6 +14,8 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
     private var nameRecipe = UITextField()
     private var descriptionRecipe = UITextView()
     private var imagePickerController: UIImagePickerController!
+    weak var delegate: reloadRecipeDelegate?
+    var recipeModel = CoreDataInteraction()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,7 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
         }
         
         imageButton.setImage(UIImage(systemName: "camera")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: view.bounds.width / 6)), for: .normal)
+        imageButton.addTarget(self, action: #selector(touchSetImage), for: .touchUpInside)
         imageButton.tintColor = .white
         imageButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         imageButton.imageView?.contentMode = .scaleAspectFill
@@ -89,7 +92,9 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
     }
     
     @objc func confirmItemButton() {
-        
+        recipeModel.saveRecipe(name: nameRecipe.text, description: descriptionRecipe.text, image: image, exURL: nil)
+        dismiss(animated: true)
+        delegate?.updateListRecipe()
     }
 
     //MARK: - TextView Delegate
@@ -116,13 +121,12 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
         imagePickerController.sourceType = .camera
         imagePickerController.allowsEditing = true
         present(imagePickerController, animated: true)
-        print("открыт")
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         imagePickerController.dismiss(animated: true)
-        let newImage = info[.originalImage] as? UIImage
-        newImage?.jpegData(compressionQuality: 0.4)
-        imageButton.setImage(newImage, for: .normal)
+        image = info[.originalImage] as! UIImage
+        image.jpegData(compressionQuality: 0.4)
+        imageButton.setImage(image, for: .normal)
     }
 }

@@ -14,15 +14,18 @@ class DetailRecipeViewController: UIViewController {
     var recipeNameLabel = UILabel()
     var recipeDescriptionTextView = UITextView()
     private var supportDescriptionLabel: UILabel?
+    private var favoriteImage: UIImage?
+    
     
     var webView: WKWebView?
     var activityIndicator: UIActivityIndicatorView?
     
+    var delegate: reloadRecipeDelegate?
     var viewModel: DetailRecipeViewModelType? {
         willSet(viewModel) {
             recipeImageView.image = viewModel?.image
             recipeNameLabel.text = viewModel?.name
-            recipeDescriptionTextView.text = viewModel?.description
+            recipeDescriptionTextView.text = viewModel?.descriptionView
         }
     }
     
@@ -31,10 +34,10 @@ class DetailRecipeViewController: UIViewController {
         super.viewDidLoad()
         createNavBarStyle()
         
-        if viewModel?.incomingInternet == true {
-            createOnlineUI()
-        } else {
+        if viewModel?.exURL == nil {
             createOfflineUI()
+        } else {
+            createOnlineUI()
         }
     }
     
@@ -43,10 +46,28 @@ class DetailRecipeViewController: UIViewController {
         title = "Рецепт"
         navigationController?.navigationBar.tintColor = .white
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(cancelItemButton))
+        
+        switch viewModel!.favoriteRecipe {
+        case true:
+            favoriteImage = UIImage(systemName: "heart.fill")
+        case false:
+            favoriteImage = UIImage(systemName: "heart")
+        }
+        
+        activityIndicator = UIActivityIndicatorView()
+        let indicatorItem = UIBarButtonItem(customView: activityIndicator!)
+        let favoriteItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: #selector(tapToFavorite))
+        navigationItem.setRightBarButtonItems([favoriteItem, indicatorItem], animated: true)
     }
     
     @objc func cancelItemButton() {
         dismiss(animated: true)
+        delegate?.updateListRecipe()
+    }
+    
+    @objc func tapToFavorite() {
+        viewModel?.tapToFavorite()
+        createNavBarStyle()
     }
     
     //MARK: - Create offline detail UI
@@ -108,11 +129,8 @@ class DetailRecipeViewController: UIViewController {
         webView?.frame = view.bounds
         webView?.navigationDelegate = self
         
-        activityIndicator = UIActivityIndicatorView()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator!)
-        
-        guard let exLink = viewModel?.exLink else { return }
-        let urlRequest = URLRequest(url: exLink)
+        guard let exLink = viewModel?.exURL, let url = URL(string: exLink) else { return }
+        let urlRequest = URLRequest(url: url)
         webView?.load(urlRequest)
     }
     

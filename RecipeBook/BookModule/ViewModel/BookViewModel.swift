@@ -8,20 +8,49 @@
 import Foundation
 
 protocol BookViewModelType {
-    var recipes: [RecipeModel] { get }
-    func bookCellViewModel(forIndexPath indexPath: IndexPath) -> BookCellViewModelType?
+    var recipeCount: Int? { get set }
+    func exportAllRecipes()
+    func searchRecipe(text: String)
+    func bookCellViewModel(forIdexPath indexPath: IndexPath) -> BookCellViewModelType?
     func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType?
 }
 
 class BookViewModel: BookViewModelType {
     
-    var recipes: [RecipeModel] = [RecipeModel(name: "Kура", incomingInternet: false, description: nil, exLink: nil, image: nil), RecipeModel(name: "картоха", incomingInternet: false, description: nil, exLink: nil, image: nil), RecipeModel(name: "пиHог", incomingInternet: false, description: nil, exLink: nil, image: nil), RecipeModel(name: "котлетыыыыы ыыыыыыыыыыыыыыыыыыы", incomingInternet: false, description: "nilnilnilnilnilnilnilnilnilnilnilnilnil nilnilnilnilnil nilnil nilnilnilnil nilnilnilnil nilnilnil nilnil nilnilnil nilnilnil \n nil nilnilnil nilnil", exLink: nil, image: nil), RecipeModel(name: "internet", incomingInternet: true, description: nil, exLink: URL(string: "https://1000.menu/cooking/26339-bystryi-sladkii-pirog"), image: nil)]
+    var recipeCount: Int?
+    var recipeModel: CoreDataInteraction = CoreDataInteraction()
+    private var parentArrayRecipies: [Recipe]?
+    private var recipes: [Recipe]? {
+        willSet (recipes) {
+            recipeCount = recipes?.count
+        }
+    }
     
-    func bookCellViewModel(forIndexPath indexPath: IndexPath) -> BookCellViewModelType? {
+    init() {
+        exportAllRecipes()
+    }
+    
+    func exportAllRecipes() {
+        parentArrayRecipies = recipeModel.exportAllRecipe()
+        recipes = parentArrayRecipies
+    }
+    
+    func bookCellViewModel(forIdexPath indexPath: IndexPath) -> BookCellViewModelType? {
+        guard let recipes = recipes else { return nil }
         return BookCellViewModel(recipe: recipes[indexPath.row])
     }
     
     func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType? {
-        return DetailRecipeViewModel(recipe: recipes[indexPath.row])
+        guard let recipes = recipes else { return nil }
+        return DetailRecipeViewModel(recipe: recipes[indexPath.row], indexPath: indexPath)
     }
+    
+    func searchRecipe(text: String) {
+        if text == "" {
+            recipes = parentArrayRecipies
+        } else {
+            recipes = parentArrayRecipies?.filter({ return String($0.nameRecipe ?? "").lowercased().contains(text.lowercased()) })
+        }
+    }
+    
 }

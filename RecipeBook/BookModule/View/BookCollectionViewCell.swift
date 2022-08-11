@@ -59,7 +59,9 @@ class BookCollectionViewCell: UICollectionViewCell {
         ])
         
         imageView.layer.cornerRadius = radiusView
+        imageView.clipsToBounds = true
         imageView.tintColor = .white
+        imageView.contentMode = .scaleAspectFill
     }
     
     override var isSelected: Bool {

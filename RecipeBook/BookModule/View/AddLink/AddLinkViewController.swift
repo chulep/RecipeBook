@@ -8,13 +8,15 @@
 import UIKit
 
 class AddLinkViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     private var image = UIImage()
     private var imageButton = UIButton()
     private var nameRecipe = UITextField()
     private var linkTextField = UITextField()
     private var imagePickerController: UIImagePickerController!
-
+    weak var delegate: reloadRecipeDelegate?
+    private var recipeModel = CoreDataInteraction()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -43,7 +45,7 @@ class AddLinkViewController: UIViewController, UIImagePickerControllerDelegate, 
         imageButton.addTarget(self, action: #selector(touchSetImage), for: .touchUpInside)
         imageButton.imageView?.contentMode = .scaleAspectFill
         imageButton.clipsToBounds = true
-
+        
         nameRecipe.backgroundColor = .white
         nameRecipe.layer.borderColor = UIColor.gray.cgColor
         nameRecipe.layer.borderWidth = 1
@@ -89,17 +91,18 @@ class AddLinkViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @objc func confirmItemButton() {
-        
+        recipeModel.saveRecipe(name: nameRecipe.text, description: nil, image: image, exURL: linkTextField.text)
+        dismiss(animated: true)
+        delegate?.updateListRecipe()
     }
     
-    //MARK: - UIPickerController
+    //MARK: - UIPickerController (camera)
     @objc func touchSetImage() {
         imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = .camera
         imagePickerController.allowsEditing = true
         present(imagePickerController, animated: true)
-        print("открыт")
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
