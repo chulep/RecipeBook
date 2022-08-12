@@ -16,8 +16,7 @@ final class CoreDataInteraction {
                                  descriptionRecipe: $0.descriptionRecipe,
                                  imageRecipe: $0.imageRecipe,
                                  exURL: $0.exURL,
-                                 favoriteRecipe: $0.favoriteRecipe)
-        }
+                                 favoriteRecipe: $0.favoriteRecipe) }
     }
     
     func exportAllRecipe() -> [Recipe] {
@@ -73,6 +72,21 @@ final class CoreDataInteraction {
             print("SAVE FAVORITE")
         } catch {
             print("EDIT ERROR")
+        }
+    }
+    
+    func delete(indexPath: IndexPath) {
+        var allRecipe = [RecipeData]()
+        let coreDataStack = CoreDataStack()
+        let context = coreDataStack.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<RecipeData> = RecipeData.fetchRequest()
+        do {
+            allRecipe = try context.fetch(fetchRequest)
+            context.delete(allRecipe[indexPath.row])
+            try context.save()
+            print("DELETE DONE")
+        } catch {
+            print("DELETE CoreData ERROR")
         }
     }
     

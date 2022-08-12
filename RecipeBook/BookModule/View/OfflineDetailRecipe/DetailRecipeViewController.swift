@@ -56,8 +56,9 @@ class DetailRecipeViewController: UIViewController {
         
         activityIndicator = UIActivityIndicatorView()
         let indicatorItem = UIBarButtonItem(customView: activityIndicator!)
+        let deleteItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(deleteObject))
         let favoriteItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: #selector(tapToFavorite))
-        navigationItem.setRightBarButtonItems([favoriteItem, indicatorItem], animated: true)
+        navigationItem.setRightBarButtonItems([favoriteItem, deleteItem, indicatorItem], animated: true)
     }
     
     @objc func cancelItemButton() {
@@ -68,6 +69,20 @@ class DetailRecipeViewController: UIViewController {
     @objc func tapToFavorite() {
         viewModel?.tapToFavorite()
         createNavBarStyle()
+    }
+    
+    @objc func deleteObject() {
+        let alertController = UIAlertController(title: "Хотите удалить рецепт?", message: "\(viewModel?.name)", preferredStyle: .alert)
+        let actionCancel = UIAlertAction(title: "Отмена", style: .default) { action in
+            alertController.dismiss(animated: true)
+        }
+        let actionDelete = UIAlertAction(title: "Удалить", style: .default) { action in
+            self.viewModel?.deleteRecipe()
+            self.cancelItemButton()
+        }
+        alertController.addAction(actionDelete)
+        alertController.addAction(actionCancel)
+        present(alertController, animated: true)
     }
     
     //MARK: - Create offline detail UI
@@ -135,6 +150,7 @@ class DetailRecipeViewController: UIViewController {
                 self.cancelItemButton()
             }
             let actionDelete = UIAlertAction(title: "Удалить", style: .default) { action in
+                self.deleteObject()
                 self.cancelItemButton()
             }
             alertController.addAction(actionDelete)

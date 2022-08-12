@@ -16,6 +16,7 @@ protocol DetailRecipeViewModelType {
     var favoriteRecipe: Bool { get set }
     func tapToFavorite()
     func checkURL(urlString: String) -> Bool
+    func deleteRecipe()
     init(recipe: Recipe, indexPath: IndexPath)
 }
 
@@ -56,6 +57,10 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
     func tapToFavorite() {
         favoriteRecipe = !favoriteRecipe
         model.tapToFavorite(indexPath: indexPath, favorite: favoriteRecipe)
+    }
+    
+    func deleteRecipe() {
+        model.delete(indexPath: indexPath)
     }
     
 }
