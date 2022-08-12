@@ -150,7 +150,7 @@ class DetailRecipeViewController: UIViewController {
                 self.cancelItemButton()
             }
             let actionDelete = UIAlertAction(title: "Удалить", style: .default) { action in
-                self.deleteObject()
+                self.viewModel?.deleteRecipe()
                 self.cancelItemButton()
             }
             alertController.addAction(actionDelete)
