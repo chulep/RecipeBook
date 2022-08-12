@@ -128,8 +128,19 @@ class DetailRecipeViewController: UIViewController {
         view.addSubview(webView!)
         webView?.frame = view.bounds
         webView?.navigationDelegate = self
-        
         guard let exLink = viewModel?.exURL, let url = URL(string: exLink) else { return }
+        if viewModel?.checkURL(urlString: exLink) == false {
+            let alertController = UIAlertController(title: "Не удалось открыть ссылку:", message: "\(exLink)", preferredStyle: .alert)
+            let actionCancel = UIAlertAction(title: "Назад", style: .default) { action in
+                self.cancelItemButton()
+            }
+            let actionDelete = UIAlertAction(title: "Удалить", style: .default) { action in
+                self.cancelItemButton()
+            }
+            alertController.addAction(actionDelete)
+            alertController.addAction(actionCancel)
+            present(alertController, animated: true)
+        }
         let urlRequest = URLRequest(url: url)
         webView?.load(urlRequest)
     }

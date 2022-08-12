@@ -15,6 +15,7 @@ protocol DetailRecipeViewModelType {
     var exURL: String? { get }
     var favoriteRecipe: Bool { get set }
     func tapToFavorite()
+    func checkURL(urlString: String) -> Bool
     init(recipe: Recipe, indexPath: IndexPath)
 }
 
@@ -43,6 +44,13 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
         default:
             image = UIImage(data: recipe.imageRecipe!)
         }
+    }
+    
+    func checkURL(urlString: String) -> Bool {
+        if let url = URL(string: urlString) {
+            return UIApplication.shared.canOpenURL(url)
+        }
+        return false
     }
     
     func tapToFavorite() {
