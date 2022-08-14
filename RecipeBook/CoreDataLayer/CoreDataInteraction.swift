@@ -90,4 +90,22 @@ final class CoreDataInteraction {
         }
     }
     
+    func exportFavoriteRecipe() -> [Recipe] {
+        var favRecipe = [RecipeData]()
+        let coreDataStack = CoreDataStack()
+        let context = coreDataStack.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<RecipeData> = RecipeData.fetchRequest()
+        let predicate = NSPredicate(format: "favoriteRecipe == %@", NSNumber(value: true))
+        fetchRequest.predicate = predicate
+        
+        do {
+            favRecipe = try context.fetch(fetchRequest)
+            print("EXPORT FAVPRITE DONE")
+        } catch {
+            print("EXPORT FAVORITES ERROR")
+        }
+        
+        return mapping(data: favRecipe)
+    }
+    
 }
