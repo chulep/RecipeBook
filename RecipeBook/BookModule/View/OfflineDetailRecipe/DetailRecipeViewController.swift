@@ -72,7 +72,7 @@ class DetailRecipeViewController: UIViewController {
     }
     
     @objc func deleteObject() {
-        let alertController = UIAlertController(title: "Хотите удалить рецепт?", message: "\(viewModel?.name)", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Хотите удалить рецепт?", message: "\(String(describing: viewModel?.name))", preferredStyle: .alert)
         let actionCancel = UIAlertAction(title: "Отмена", style: .default) { action in
             alertController.dismiss(animated: true)
         }
@@ -143,20 +143,21 @@ class DetailRecipeViewController: UIViewController {
         view.addSubview(webView!)
         webView?.frame = view.bounds
         webView?.navigationDelegate = self
-        guard let exLink = viewModel?.exURL, let url = URL(string: exLink) else { return }
-        if viewModel?.checkURL(urlString: exLink) == false {
+        guard let exLink = viewModel?.exURL else { return } // если писать на руском то выкидывает через урл { ретёрн }
+        if viewModel?.checkURL(urlString: exLink) == false { //можно запихнуть в вью модель
             let alertController = UIAlertController(title: "Не удалось открыть ссылку:", message: "\(exLink)", preferredStyle: .alert)
             let actionCancel = UIAlertAction(title: "Назад", style: .default) { action in
                 self.cancelItemButton()
             }
             let actionDelete = UIAlertAction(title: "Удалить", style: .default) { action in
-                self.deleteObject()
+                self.viewModel?.deleteRecipe()
                 self.cancelItemButton()
             }
             alertController.addAction(actionDelete)
             alertController.addAction(actionCancel)
             present(alertController, animated: true)
         }
+        guard let url = URL(string: exLink) else { return }
         let urlRequest = URLRequest(url: url)
         webView?.load(urlRequest)
     }
@@ -175,5 +176,5 @@ extension DetailRecipeViewController: WKNavigationDelegate {
         activityIndicator?.isHidden = true
         activityIndicator?.stopAnimating()
     }
-    
+
 }

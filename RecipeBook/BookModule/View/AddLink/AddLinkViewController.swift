@@ -91,9 +91,21 @@ class AddLinkViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @objc func confirmItemButton() {
-        recipeModel.saveRecipe(name: nameRecipe.text, description: nil, image: image, exURL: linkTextField.text)
-        dismiss(animated: true)
-        delegate?.updateListRecipe()
+        for i in [nameRecipe, linkTextField] {
+            if i.text == "" {
+                i.center.x += 5
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: []) {
+                    i.center.x -= 5
+                }
+            }
+        }
+        
+        if nameRecipe.text != "" && linkTextField.text != "" {
+            recipeModel.saveRecipe(name: nameRecipe.text, description: nil, image: image, exURL: linkTextField.text)
+            dismiss(animated: true)
+            delegate?.updateListRecipe()
+        }
+        
     }
     
     //MARK: - UIPickerController (camera)
