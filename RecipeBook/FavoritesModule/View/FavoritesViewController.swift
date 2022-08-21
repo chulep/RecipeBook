@@ -11,6 +11,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var tableView: UITableView?
     let viewModel = FavoritesViewModel()
+    lazy var nothingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width / 2, height: view.bounds.width / 6))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewWillAppear(animated)
         viewModel.exportAllRecipes()
         tableView?.reloadData()
+        
+        if viewModel.recipeCount == 0 {
+            nothingLabel.isHidden = false
+        } else {
+            nothingLabel.isHidden = true
+        }
     }
 
     func createUI() {
@@ -30,6 +37,11 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView?.delegate = self
         tableView?.dataSource = self
         tableView?.register(FavoritesTableViewCell.self, forCellReuseIdentifier: FavoritesTableViewCell.identifire)
+        
+        view.addSubview(nothingLabel)
+        nothingLabel.center = view.center
+        nothingLabel.textColor = UIColorHelper.systemMediumGray
+        nothingLabel.text = "Нет избранных рецептов"
     }
     
     //MARK: - TableView Delegate/DataSourse
@@ -40,7 +52,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifire, for: indexPath) as! FavoritesTableViewCell
         cell.viewModel = viewModel.favoritesCellViewModel(forIdexPath: indexPath)
-        
         return cell
     }
     

@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIImage {
+    
     static func createImage(data: Data?, fromURL: Bool) -> UIImage? {
         switch (data, fromURL) {
         case _ where fromURL == false && data == nil:
@@ -18,4 +19,5 @@ extension UIImage {
             return UIImage(data: data!)
         }
     }
+    
 }

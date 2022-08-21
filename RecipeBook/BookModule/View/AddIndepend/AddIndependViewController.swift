@@ -110,7 +110,7 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
                 textView.text = "Опишите рецепт"
-                textView.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                textView.textColor = UIColorHelper.systemLightGray
                 textView.textAlignment = .center
             }
     }

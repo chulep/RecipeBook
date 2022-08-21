@@ -61,7 +61,7 @@ class FavoritesTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColor.gray
+        backgroundView.backgroundColor = UIColorHelper.systemMediumGray
         selectedBackgroundView = backgroundView
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.isSelected = false

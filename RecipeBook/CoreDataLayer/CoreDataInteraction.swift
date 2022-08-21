@@ -5,7 +5,6 @@
 //  Created by Pavel Schulepov on 11.08.2022.
 //
 
-import Foundation
 import CoreData
 
 final class CoreDataInteraction {
