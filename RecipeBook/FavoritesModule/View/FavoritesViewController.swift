@@ -16,6 +16,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         createUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.exportAllRecipes()
+        tableView?.reloadData()
+    }
 
     func createUI() {
         tableView = UITableView(frame: view.bounds)
@@ -34,11 +40,21 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifire, for: indexPath) as! FavoritesTableViewCell
         cell.viewModel = viewModel.favoritesCellViewModel(forIdexPath: indexPath)
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailViewModel = viewModel.detailRecipeViewModel(forIdexPath: indexPath)
+        let detailVC = DetailRecipeViewController()
+        detailVC.viewModel = detailViewModel
+        let navVC = UINavigationController(rootViewController: detailVC)
+        navVC.modalPresentationStyle = .fullScreen
+        present(navVC, animated: true)
     }
 
 }

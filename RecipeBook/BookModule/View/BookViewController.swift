@@ -34,6 +34,8 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel?.exportAllRecipes()
+        collectionView?.reloadData()
     }
     
     //MARK: - Create UI

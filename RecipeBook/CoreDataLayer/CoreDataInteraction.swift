@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreData
-import UIKit
 
 final class CoreDataInteraction {
     
@@ -33,7 +32,7 @@ final class CoreDataInteraction {
         return mapping(data: allRecipe)
     }
     
-    func saveRecipe(name: String?, description: String?, image: UIImage?, exURL: String?) {
+    func saveRecipe(name: String?, description: String?, image: Data?, exURL: String?) {
         let coreDataStack = CoreDataStack()
         let context = coreDataStack.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "RecipeData", in: context)
@@ -42,8 +41,7 @@ final class CoreDataInteraction {
         objectRecipe?.descriptionRecipe = description
         objectRecipe?.exURL = exURL
         objectRecipe?.favoriteRecipe = false
-        guard let image = image else { return }
-        objectRecipe?.imageRecipe = UIImage.jpegData(image)(compressionQuality: 0.5)
+        objectRecipe?.imageRecipe = image
         do {
             try context.save()
             print("RECIPE SAVE")
@@ -97,14 +95,12 @@ final class CoreDataInteraction {
         let fetchRequest: NSFetchRequest<RecipeData> = RecipeData.fetchRequest()
         let predicate = NSPredicate(format: "favoriteRecipe == %@", NSNumber(value: true))
         fetchRequest.predicate = predicate
-        
         do {
             favRecipe = try context.fetch(fetchRequest)
             print("EXPORT FAVPRITE DONE")
         } catch {
             print("EXPORT FAVORITES ERROR")
         }
-        
         return mapping(data: favRecipe)
     }
     

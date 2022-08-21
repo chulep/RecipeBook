@@ -92,7 +92,8 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
     }
     
     @objc func confirmItemButton() {
-        recipeModel.saveRecipe(name: nameRecipe.text, description: descriptionRecipe.text, image: image, exURL: nil)
+        let imageData = UIImage.jpegData(image)(compressionQuality: 0.5)
+        recipeModel.saveRecipe(name: nameRecipe.text, description: descriptionRecipe.text, image: imageData, exURL: nil)
         dismiss(animated: true)
         delegate?.updateListRecipe()
     }

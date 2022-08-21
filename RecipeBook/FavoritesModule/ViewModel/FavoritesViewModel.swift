@@ -11,7 +11,7 @@ protocol FavoritesViewModelType {
     var recipeCount: Int { get set }
     func exportAllRecipes()
     func favoritesCellViewModel(forIdexPath indexPath: IndexPath) -> FavoritesCellViewModelType?
-    //func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType?
+    func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType?
 }
 
 class FavoritesViewModel: FavoritesViewModelType {
@@ -34,8 +34,12 @@ class FavoritesViewModel: FavoritesViewModelType {
     
     func favoritesCellViewModel(forIdexPath indexPath: IndexPath) -> FavoritesCellViewModelType? {
         let recipe = recipes[indexPath.row]
-        let viewModel = FavoritesCellViewModel(name: recipe.nameRecipe, image: recipe.imageRecipe)
+        let viewModel = FavoritesCellViewModel(recipe: recipe)
         return viewModel
     }
     
+    func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType? {
+        let recipe = recipes[indexPath.row]
+        return DetailRecipeViewModel(recipe: recipe, indexPath: indexPath)
+    }
 }
