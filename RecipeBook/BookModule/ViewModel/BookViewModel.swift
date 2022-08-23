@@ -31,7 +31,7 @@ class BookViewModel: BookViewModelType {
     }
     
     func exportAllRecipes() {
-        parentArrayRecipies = recipeModel.exportAllRecipe()
+        parentArrayRecipies = recipeModel.exportRecipe(request: .allRecipe)
         recipes = parentArrayRecipies
     }
     
@@ -42,7 +42,7 @@ class BookViewModel: BookViewModelType {
     
     func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType? {
         guard let recipes = recipes else { return nil }
-        return DetailRecipeViewModel(recipe: recipes[indexPath.row], indexPath: indexPath)
+        return DetailRecipeViewModel(recipe: recipes[indexPath.row], indexPath: indexPath, forModule: .bookModule)
     }
     
     func searchRecipe(text: String) {
