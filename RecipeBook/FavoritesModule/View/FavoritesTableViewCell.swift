@@ -34,13 +34,13 @@ class FavoritesTableViewCell: UITableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            recipeImageView.topAnchor.constraint(equalTo: topAnchor),
-            recipeImageView.leftAnchor.constraint(equalTo: leftAnchor),
-            recipeImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            recipeImageView.topAnchor.constraint(equalTo: topAnchor, constant: 3),
+            recipeImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 3),
+            recipeImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3),
             recipeImageView.heightAnchor.constraint(equalTo: recipeImageView.widthAnchor),
             
             recipeName.topAnchor.constraint(equalTo: topAnchor),
-            recipeName.leftAnchor.constraint(equalTo: recipeImageView.rightAnchor),
+            recipeName.leftAnchor.constraint(equalTo: recipeImageView.rightAnchor, constant: 10),
             recipeName.bottomAnchor.constraint(equalTo: bottomAnchor),
             recipeName.rightAnchor.constraint(equalTo: rightAnchor)
         ])

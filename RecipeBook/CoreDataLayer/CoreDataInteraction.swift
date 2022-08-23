@@ -9,6 +9,11 @@ import CoreData
 
 final class CoreDataInteraction {
     
+    private enum ExportRequest {
+        case allRecipe
+        case favoriteRecipe
+    }
+    
     private func mapping(data: [RecipeData]) -> [Recipe] {
         return data.map { Recipe(nameRecipe: $0.nameRecipe,
                                  descriptionRecipe: $0.descriptionRecipe,
