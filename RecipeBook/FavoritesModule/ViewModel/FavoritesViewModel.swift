@@ -29,8 +29,7 @@ class FavoritesViewModel: FavoritesViewModelType {
     }
     
     func exportAllRecipes() {
-        recipes = coreData.exportFavoriteRecipe()
-    }
+        recipes = coreData.exportRecipe(request: .favoriteRecipe)    }
     
     func favoritesCellViewModel(forIdexPath indexPath: IndexPath) -> FavoritesCellViewModelType? {
         let recipe = recipes[indexPath.row]
@@ -40,6 +39,6 @@ class FavoritesViewModel: FavoritesViewModelType {
     
     func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType? {
         let recipe = recipes[indexPath.row]
-        return DetailRecipeViewModel(recipe: recipe, indexPath: indexPath)
+        return DetailRecipeViewModel(recipe: recipe, indexPath: indexPath, forModule: .favoriteModule)
     }
 }

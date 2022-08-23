@@ -14,10 +14,11 @@ protocol DetailRecipeViewModelType {
     var descriptionView: String? { get }
     var exURL: String? { get }
     var favoriteRecipe: Bool { get set }
+    var forModule: CoreDataInteraction.ForModule { get }
     func tapToFavorite()
     func checkURL(urlString: String) -> Bool
     func deleteRecipe()
-    init(recipe: Recipe, indexPath: IndexPath)
+    init(recipe: Recipe, indexPath: IndexPath, forModule: CoreDataInteraction.ForModule)
 }
 
 class DetailRecipeViewModel: DetailRecipeViewModelType {
@@ -27,15 +28,17 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
     var descriptionView: String?
     var exURL: String?
     var favoriteRecipe: Bool
+    var forModule: CoreDataInteraction.ForModule
     private var indexPath: IndexPath
     let model = CoreDataInteraction()
 
-    required init(recipe: Recipe, indexPath: IndexPath) {
+    required init(recipe: Recipe, indexPath: IndexPath, forModule: CoreDataInteraction.ForModule) {
         self.name = recipe.nameRecipe
         self.descriptionView = recipe.descriptionRecipe
         self.exURL = recipe.exURL
         self.favoriteRecipe = recipe.favoriteRecipe
         self.indexPath = indexPath
+        self.forModule = forModule
         
         switch recipe { // запихать в расширение уи имадж
         case _ where recipe.exURL == nil && recipe.imageRecipe == nil:
@@ -56,11 +59,11 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
     
     func tapToFavorite() {
         favoriteRecipe = !favoriteRecipe
-        model.tapToFavorite(indexPath: indexPath, favorite: favoriteRecipe)
+        model.tapToFavorite(forModule: forModule, indexPath: indexPath, favorite: favoriteRecipe)
     }
     
     func deleteRecipe() {
-        model.delete(indexPath: indexPath)
+        model.deleteRecipe(indexPath: indexPath)
     }
     
 }

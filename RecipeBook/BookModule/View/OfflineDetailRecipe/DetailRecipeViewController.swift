@@ -54,11 +54,17 @@ class DetailRecipeViewController: UIViewController {
             favoriteImage = UIImage(systemName: "heart")
         }
         
+        var buttonArray = [UIBarButtonItem]()
         activityIndicator = UIActivityIndicatorView()
-        let indicatorItem = UIBarButtonItem(customView: activityIndicator!)
-        let deleteItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(deleteObject))
         let favoriteItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: #selector(tapToFavorite))
-        navigationItem.setRightBarButtonItems([favoriteItem, deleteItem, indicatorItem], animated: true)
+        buttonArray.append(favoriteItem)
+        if viewModel?.forModule == .bookModule {
+            let deleteItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(deleteObject))
+            buttonArray.append(deleteItem)
+        }
+        let indicatorItem = UIBarButtonItem(customView: activityIndicator!)
+        buttonArray.append(indicatorItem)
+        navigationItem.setRightBarButtonItems(buttonArray, animated: true)
     }
     
     @objc func cancelItemButton() {
@@ -177,5 +183,5 @@ extension DetailRecipeViewController: WKNavigationDelegate {
         activityIndicator?.isHidden = true
         activityIndicator?.stopAnimating()
     }
-
+    
 }

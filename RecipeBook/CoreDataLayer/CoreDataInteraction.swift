@@ -9,24 +9,21 @@ import CoreData
 
 final class CoreDataInteraction {
     
-    private enum ExportRequest {
+    enum ExportRequest {
         case allRecipe
         case favoriteRecipe
     }
     
-    private func mapping(data: [RecipeData]) -> [Recipe] {
-        return data.map { Recipe(nameRecipe: $0.nameRecipe,
-                                 descriptionRecipe: $0.descriptionRecipe,
-                                 imageRecipe: $0.imageRecipe,
-                                 exURL: $0.exURL,
-                                 favoriteRecipe: $0.favoriteRecipe) }
-    }
-    
-    func exportAllRecipe() -> [Recipe] {
+    func exportRecipe(request: ExportRequest) -> [Recipe] {
         var allRecipe = [RecipeData]()
         let coreDataStack = CoreDataStack()
         let context = coreDataStack.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<RecipeData> = RecipeData.fetchRequest()
+        if request == .favoriteRecipe {
+            let predicate = NSPredicate(format: "favoriteRecipe == %@", NSNumber(value: true))
+            fetchRequest.predicate = predicate
+        }
+        
         do {
             print("Export CoreData DONE")
             allRecipe = try context.fetch(fetchRequest)
@@ -54,12 +51,21 @@ final class CoreDataInteraction {
         }
     }
     
-    func tapToFavorite(indexPath: IndexPath, favorite: Bool) {
-        let index = indexPath.row
+    enum ForModule {
+        case bookModule
+        case favoriteModule
+    }
+    
+    func tapToFavorite(forModule: ForModule, indexPath: IndexPath, favorite: Bool) {
         var allRecipe = [RecipeData]()
         let coreDataStack = CoreDataStack()
         let context = coreDataStack.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<RecipeData> = RecipeData.fetchRequest()
+        if forModule == .favoriteModule {
+            let predicate = NSPredicate(format: "favoriteRecipe == %@", NSNumber(value: true))
+            fetchRequest.predicate = predicate
+        }
+        
         do {
             print("Export CoreData DONE")
             allRecipe = try context.fetch(fetchRequest)
@@ -67,8 +73,9 @@ final class CoreDataInteraction {
             print("Export CoreData ERROR")
         }
         
-        let object = allRecipe[index] as NSManagedObject
+        let object = allRecipe[indexPath.row] as NSManagedObject
         object.setValue(favorite, forKey: "favoriteRecipe")
+        
         do {
             try context.save()
             print("SAVE FAVORITE")
@@ -77,7 +84,7 @@ final class CoreDataInteraction {
         }
     }
     
-    func delete(indexPath: IndexPath) {
+    func deleteRecipe(indexPath: IndexPath) {
         var allRecipe = [RecipeData]()
         let coreDataStack = CoreDataStack()
         let context = coreDataStack.persistentContainer.viewContext
@@ -92,20 +99,12 @@ final class CoreDataInteraction {
         }
     }
     
-    func exportFavoriteRecipe() -> [Recipe] {
-        var favRecipe = [RecipeData]()
-        let coreDataStack = CoreDataStack()
-        let context = coreDataStack.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<RecipeData> = RecipeData.fetchRequest()
-        let predicate = NSPredicate(format: "favoriteRecipe == %@", NSNumber(value: true))
-        fetchRequest.predicate = predicate
-        do {
-            favRecipe = try context.fetch(fetchRequest)
-            print("EXPORT FAVPRITE DONE")
-        } catch {
-            print("EXPORT FAVORITES ERROR")
-        }
-        return mapping(data: favRecipe)
+    private func mapping(data: [RecipeData]) -> [Recipe] {
+        return data.map { Recipe(nameRecipe: $0.nameRecipe,
+                                 descriptionRecipe: $0.descriptionRecipe,
+                                 imageRecipe: $0.imageRecipe,
+                                 exURL: $0.exURL,
+                                 favoriteRecipe: $0.favoriteRecipe) }
     }
     
 }
