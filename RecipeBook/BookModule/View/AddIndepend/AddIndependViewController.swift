@@ -92,7 +92,8 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
     }
     
     @objc func confirmItemButton() {
-        recipeModel.saveRecipe(name: nameRecipe.text, description: descriptionRecipe.text, image: image, exURL: nil)
+        let imageData = UIImage.jpegData(image)(compressionQuality: 0.5)
+        recipeModel.saveRecipe(name: nameRecipe.text, description: descriptionRecipe.text, image: imageData, exURL: nil)
         dismiss(animated: true)
         delegate?.updateListRecipe()
     }
@@ -109,7 +110,7 @@ class AddIndependViewController: UIViewController, UITextViewDelegate, UIImagePi
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
                 textView.text = "Опишите рецепт"
-                textView.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                textView.textColor = UIColorHelper.systemLightGray
                 textView.textAlignment = .center
             }
     }

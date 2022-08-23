@@ -37,7 +37,7 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
         self.favoriteRecipe = recipe.favoriteRecipe
         self.indexPath = indexPath
         
-        switch recipe {
+        switch recipe { // запихать в расширение уи имадж
         case _ where recipe.exURL == nil && recipe.imageRecipe == nil:
             image = UIImage(systemName: "pencil.circle")
         case _ where recipe.exURL != nil && recipe.imageRecipe == nil:

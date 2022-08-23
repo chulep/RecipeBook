@@ -101,7 +101,8 @@ class AddLinkViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
         
         if nameRecipe.text != "" && linkTextField.text != "" {
-            recipeModel.saveRecipe(name: nameRecipe.text, description: nil, image: image, exURL: linkTextField.text)
+            let imageData = UIImage.jpegData(image)(compressionQuality: 0.5)
+            recipeModel.saveRecipe(name: nameRecipe.text, description: nil, image: imageData, exURL: linkTextField.text)
             dismiss(animated: true)
             delegate?.updateListRecipe()
         }
