@@ -11,7 +11,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var tableView: UITableView?
     let viewModel = FavoritesViewModel()
-    lazy var nothingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width / 2, height: view.bounds.width / 6))
+    lazy var nothingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 8))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +39,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView?.register(FavoritesTableViewCell.self, forCellReuseIdentifier: FavoritesTableViewCell.identifire)
         
         view.addSubview(nothingLabel)
+        nothingLabel.textAlignment = .center
         nothingLabel.center = view.center
         nothingLabel.textColor = UIColorHelper.systemMediumGray
         nothingLabel.text = "Нет избранных рецептов"

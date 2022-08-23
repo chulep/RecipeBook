@@ -23,6 +23,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     var addRecipeView = AddRecipeView()
     var collectionView: UICollectionView?
     var viewModel: BookViewModelType?
+    private lazy var nothingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 8))
 
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -36,6 +37,12 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewWillAppear(animated)
         viewModel?.exportAllRecipes()
         collectionView?.reloadData()
+        
+        if viewModel?.recipeCount == 0 {
+            nothingLabel.isHidden = false
+        } else {
+            nothingLabel.isHidden = true
+        }
     }
     
     //MARK: - Create UI
@@ -67,6 +74,12 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         addRecipeView.clipsToBounds = true
         addRecipeView.layer.cornerRadius = buttonSize / 2
         collectionView?.reloadData()
+        
+        view.addSubview(nothingLabel)
+        nothingLabel.textAlignment = .center
+        nothingLabel.center = view.center
+        nothingLabel.textColor = UIColorHelper.systemMediumGray
+        nothingLabel.text = "Добавьте первый рецепт"
     }
     
     //MARK: - CollectionView Settings
