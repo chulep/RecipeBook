@@ -133,8 +133,8 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         collectionView?.reloadData()
     }
     
-    @objc func buttonadd() {
-        let VC = AddIndependViewController()
+    @objc func buttonAddIndepend() {
+        let VC = AddRecipeViewController(action: .inddepend)
         VC.delegate = self
         let navVC = UINavigationController(rootViewController: VC)
             navVC.modalPresentationStyle = .fullScreen
@@ -142,8 +142,8 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         present(navVC, animated: true)
     }
     
-    @objc func buttonadd2() {
-        let VC = AddLinkViewController()
+    @objc func buttonAddUrl() {
+        let VC = AddRecipeViewController(action: .url)
         VC.delegate = self
         let navVC = UINavigationController(rootViewController: VC)
             navVC.modalPresentationStyle = .fullScreen

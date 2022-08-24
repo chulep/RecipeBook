@@ -54,14 +54,17 @@ class DetailRecipeViewController: UIViewController {
             favoriteImage = UIImage(systemName: "heart")
         }
         
+        
         var buttonArray = [UIBarButtonItem]()
         activityIndicator = UIActivityIndicatorView()
         let favoriteItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: #selector(tapToFavorite))
         buttonArray.append(favoriteItem)
+        
         if viewModel?.forModule == .bookModule {
             let deleteItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(deleteObject))
             buttonArray.append(deleteItem)
         }
+        
         let indicatorItem = UIBarButtonItem(customView: activityIndicator!)
         buttonArray.append(indicatorItem)
         navigationItem.setRightBarButtonItems(buttonArray, animated: true)
