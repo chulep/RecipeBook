@@ -103,8 +103,9 @@
 				5D673839289A753E000714CA /* Box.swift */,
 				5D3706F228B136B0000B65F8 /* UIColorHelper.swift */,
 				5DE6750928B23D92006211E7 /* Extension UIImage.swift */,
-				5D16EE7A28915E4A00C7EEF8 /* CoreDataLayer */,
 				5D13FCC5287AB92500F5DF4D /* TabBarModule */,
+				5D16EE7A28915E4A00C7EEF8 /* CoreDataLayer */,
+				5D3EC374287B5D8700A8B1F7 /* Model */,
 				5D13FCC2287AB42000F5DF4D /* BookModule */,
 				5D13FCC3287AB42F00F5DF4D /* CalculationModule */,
 				5D13FCC4287AB59A00F5DF4D /* FavoritesModule */,
@@ -118,7 +119,6 @@
 		5D13FCC2287AB42000F5DF4D /* BookModule */ = {
 			isa = PBXGroup;
 			children = (
-				5D3EC374287B5D8700A8B1F7 /* Model */,
 				5D3EC373287B5D7B00A8B1F7 /* View */,
 				5D3EC375287B5DA100A8B1F7 /* ViewModel */,
 			);
@@ -136,7 +136,6 @@
 		5D13FCC4287AB59A00F5DF4D /* FavoritesModule */ = {
 			isa = PBXGroup;
 			children = (
-				5D7678BA28A925110094C002 /* Model */,
 				5D7678B728A924DE0094C002 /* ViewModel */,
 				5D7678B628A924C90094C002 /* View */,
 			);
@@ -217,13 +216,6 @@
 				5D7678BD28A92A840094C002 /* FavoritesCellViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		5D7678BA28A925110094C002 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		5D9E3C872880139D003667FA /* AddViewController */ = {

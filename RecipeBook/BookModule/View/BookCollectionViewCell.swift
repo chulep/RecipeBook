@@ -67,8 +67,10 @@ class BookCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             imageView.backgroundColor = isSelected ? .gray : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            nameLabel.alpha = isSelected ? 0.5 : 1
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.imageView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                self.nameLabel.alpha = 1
             }
         }
     }
