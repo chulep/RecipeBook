@@ -26,12 +26,11 @@
 		5D3EC379287B6D1900A8B1F7 /* BookViewControllerAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EC378287B6D1900A8B1F7 /* BookViewControllerAnimations.swift */; };
 		5D4148AD2886B9C7006AA00A /* DetailRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4148AC2886B9C7006AA00A /* DetailRecipeViewController.swift */; };
 		5D4148AF2886B9F7006AA00A /* DetailRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4148AE2886B9F7006AA00A /* DetailRecipeViewModel.swift */; };
-		5D56175A2881BCD400CDFD55 /* AddLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5617592881BCD400CDFD55 /* AddLinkViewController.swift */; };
 		5D67383A289A753E000714CA /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D673839289A753E000714CA /* Box.swift */; };
 		5D7678B928A925020094C002 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678B828A925020094C002 /* FavoritesViewModel.swift */; };
 		5D7678BC28A9253B0094C002 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678BB28A9253B0094C002 /* FavoritesTableViewCell.swift */; };
 		5D7678BE28A92A840094C002 /* FavoritesCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678BD28A92A840094C002 /* FavoritesCellViewModel.swift */; };
-		5D9E3C89288013FB003667FA /* AddIndependViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9E3C88288013FB003667FA /* AddIndependViewController.swift */; };
+		5D9E3C89288013FB003667FA /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9E3C88288013FB003667FA /* AddRecipeViewController.swift */; };
 		5DE6750A28B23D92006211E7 /* Extension UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE6750928B23D92006211E7 /* Extension UIImage.swift */; };
 		5DF60DF1287DDEFF00D72AAC /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF60DF0287DDEFF00D72AAC /* RecipeModel.swift */; };
 		5DF60DF3287DE3F700D72AAC /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF60DF2287DE3F700D72AAC /* BookViewModel.swift */; };
@@ -59,12 +58,11 @@
 		5D3EC378287B6D1900A8B1F7 /* BookViewControllerAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewControllerAnimations.swift; sourceTree = "<group>"; };
 		5D4148AC2886B9C7006AA00A /* DetailRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecipeViewController.swift; sourceTree = "<group>"; };
 		5D4148AE2886B9F7006AA00A /* DetailRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecipeViewModel.swift; sourceTree = "<group>"; };
-		5D5617592881BCD400CDFD55 /* AddLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkViewController.swift; sourceTree = "<group>"; };
 		5D673839289A753E000714CA /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		5D7678B828A925020094C002 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		5D7678BB28A9253B0094C002 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		5D7678BD28A92A840094C002 /* FavoritesCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCellViewModel.swift; sourceTree = "<group>"; };
-		5D9E3C88288013FB003667FA /* AddIndependViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIndependViewController.swift; sourceTree = "<group>"; };
+		5D9E3C88288013FB003667FA /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
 		5DE6750928B23D92006211E7 /* Extension UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension UIImage.swift"; sourceTree = "<group>"; };
 		5DF60DF0287DDEFF00D72AAC /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		5DF60DF2287DE3F700D72AAC /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
@@ -166,9 +164,8 @@
 		5D3EC373287B5D7B00A8B1F7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5D4148AB2886B99E006AA00A /* OfflineDetailRecipe */,
-				5D5617582881BCC100CDFD55 /* AddLink */,
-				5D9E3C872880139D003667FA /* AddIndepend */,
+				5D4148AB2886B99E006AA00A /* DetailRecipeViewController */,
+				5D9E3C872880139D003667FA /* AddViewController */,
 				5D13FCC6287ABAC600F5DF4D /* BookViewController.swift */,
 				5D3EC378287B6D1900A8B1F7 /* BookViewControllerAnimations.swift */,
 				5D13FCCC287AFE7800F5DF4D /* SearchView.swift */,
@@ -196,20 +193,12 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		5D4148AB2886B99E006AA00A /* OfflineDetailRecipe */ = {
+		5D4148AB2886B99E006AA00A /* DetailRecipeViewController */ = {
 			isa = PBXGroup;
 			children = (
 				5D4148AC2886B9C7006AA00A /* DetailRecipeViewController.swift */,
 			);
-			path = OfflineDetailRecipe;
-			sourceTree = "<group>";
-		};
-		5D5617582881BCC100CDFD55 /* AddLink */ = {
-			isa = PBXGroup;
-			children = (
-				5D5617592881BCD400CDFD55 /* AddLinkViewController.swift */,
-			);
-			path = AddLink;
+			path = DetailRecipeViewController;
 			sourceTree = "<group>";
 		};
 		5D7678B628A924C90094C002 /* View */ = {
@@ -237,12 +226,12 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		5D9E3C872880139D003667FA /* AddIndepend */ = {
+		5D9E3C872880139D003667FA /* AddViewController */ = {
 			isa = PBXGroup;
 			children = (
-				5D9E3C88288013FB003667FA /* AddIndependViewController.swift */,
+				5D9E3C88288013FB003667FA /* AddRecipeViewController.swift */,
 			);
-			path = AddIndepend;
+			path = AddViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,14 +305,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DF60DF3287DE3F700D72AAC /* BookViewModel.swift in Sources */,
-				5D9E3C89288013FB003667FA /* AddIndependViewController.swift in Sources */,
+				5D9E3C89288013FB003667FA /* AddRecipeViewController.swift in Sources */,
 				5D13FCB0287AB3F400F5DF4D /* TabBarController.swift in Sources */,
 				5D13FCAC287AB3F400F5DF4D /* AppDelegate.swift in Sources */,
 				5D13FCCB287ABAEA00F5DF4D /* FavoritesViewController.swift in Sources */,
 				5D4148AF2886B9F7006AA00A /* DetailRecipeViewModel.swift in Sources */,
 				5D7678BE28A92A840094C002 /* FavoritesCellViewModel.swift in Sources */,
 				5D3EC379287B6D1900A8B1F7 /* BookViewControllerAnimations.swift in Sources */,
-				5D56175A2881BCD400CDFD55 /* AddLinkViewController.swift in Sources */,
 				5D16EE7928914EC700C7EEF8 /* CoreDataStack.swift in Sources */,
 				5D67383A289A753E000714CA /* Box.swift in Sources */,
 				5D4148AD2886B9C7006AA00A /* DetailRecipeViewController.swift in Sources */,

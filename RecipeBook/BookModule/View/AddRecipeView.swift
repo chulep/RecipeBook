@@ -56,8 +56,8 @@ class AddRecipeView: UIView {
         addIndependButton.tintColor = .white
         addIndependButton.setTitle("Вручную", for: .normal)
         
-        addIndependButton.addTarget(nil, action: #selector(BookViewController.buttonadd), for: .touchUpInside)
-        addLinkButton.addTarget(nil, action: #selector(BookViewController.buttonadd2), for: .touchUpInside)
+        addIndependButton.addTarget(nil, action: #selector(BookViewController.buttonAddIndepend), for: .touchUpInside)
+        addLinkButton.addTarget(nil, action: #selector(BookViewController.buttonAddUrl), for: .touchUpInside)
         
         openButton.addTarget(nil, action: #selector(BookViewController.openAddRecipe), for: .touchUpInside)
         NSLayoutConstraint.activate([
