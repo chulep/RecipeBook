@@ -8,14 +8,14 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-
+    
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         createTabBar()
         tabBarApperanse()
     }
-
+    
     //MARK: - VC on TabBar
     private func createTabBar() {
         viewControllers = [
@@ -70,5 +70,7 @@ class TabBarController: UITabBarController {
         tabBar.tintColor = .orange
         tabBar.unselectedItemTintColor = .systemGray
     }
+    
 }
+
 

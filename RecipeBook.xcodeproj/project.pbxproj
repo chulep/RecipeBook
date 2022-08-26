@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D0E40E228B60CC000B9E85B /* CalculetionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0E40E128B60CC000B9E85B /* CalculetionViewModel.swift */; };
 		5D1041D128A549B300EBBAC1 /* CoreDataInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1041D028A549B300EBBAC1 /* CoreDataInteraction.swift */; };
 		5D122625287C238F00FF3A0A /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D122624287C238F00FF3A0A /* BookCollectionViewCell.swift */; };
 		5D13FCAC287AB3F400F5DF4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D13FCAB287AB3F400F5DF4D /* AppDelegate.swift */; };
@@ -26,17 +27,21 @@
 		5D3EC379287B6D1900A8B1F7 /* BookViewControllerAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EC378287B6D1900A8B1F7 /* BookViewControllerAnimations.swift */; };
 		5D4148AD2886B9C7006AA00A /* DetailRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4148AC2886B9C7006AA00A /* DetailRecipeViewController.swift */; };
 		5D4148AF2886B9F7006AA00A /* DetailRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4148AE2886B9F7006AA00A /* DetailRecipeViewModel.swift */; };
+		5D4E011028B88ECC005B375A /* NumberPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4E010F28B88ECC005B375A /* NumberPadView.swift */; };
+		5D4E011228B8E1E8005B375A /* CustomUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4E011128B8E1E8005B375A /* CustomUIButton.swift */; };
+		5D4E011428B8EBC3005B375A /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4E011328B8EBC3005B375A /* DisplayView.swift */; };
 		5D67383A289A753E000714CA /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D673839289A753E000714CA /* Box.swift */; };
 		5D7678B928A925020094C002 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678B828A925020094C002 /* FavoritesViewModel.swift */; };
 		5D7678BC28A9253B0094C002 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678BB28A9253B0094C002 /* FavoritesTableViewCell.swift */; };
 		5D7678BE28A92A840094C002 /* FavoritesCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678BD28A92A840094C002 /* FavoritesCellViewModel.swift */; };
 		5D9E3C89288013FB003667FA /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9E3C88288013FB003667FA /* AddRecipeViewController.swift */; };
-		5DE6750A28B23D92006211E7 /* Extension UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE6750928B23D92006211E7 /* Extension UIImage.swift */; };
+		5DE6750A28B23D92006211E7 /* ExtensionUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE6750928B23D92006211E7 /* ExtensionUIImage.swift */; };
 		5DF60DF1287DDEFF00D72AAC /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF60DF0287DDEFF00D72AAC /* RecipeModel.swift */; };
 		5DF60DF3287DE3F700D72AAC /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF60DF2287DE3F700D72AAC /* BookViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D0E40E128B60CC000B9E85B /* CalculetionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculetionViewModel.swift; sourceTree = "<group>"; };
 		5D1041D028A549B300EBBAC1 /* CoreDataInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataInteraction.swift; sourceTree = "<group>"; };
 		5D122624287C238F00FF3A0A /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
 		5D13FCA8287AB3F400F5DF4D /* RecipeBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipeBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,12 +63,15 @@
 		5D3EC378287B6D1900A8B1F7 /* BookViewControllerAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewControllerAnimations.swift; sourceTree = "<group>"; };
 		5D4148AC2886B9C7006AA00A /* DetailRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecipeViewController.swift; sourceTree = "<group>"; };
 		5D4148AE2886B9F7006AA00A /* DetailRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecipeViewModel.swift; sourceTree = "<group>"; };
+		5D4E010F28B88ECC005B375A /* NumberPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberPadView.swift; sourceTree = "<group>"; };
+		5D4E011128B8E1E8005B375A /* CustomUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIButton.swift; sourceTree = "<group>"; };
+		5D4E011328B8EBC3005B375A /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		5D673839289A753E000714CA /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		5D7678B828A925020094C002 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		5D7678BB28A9253B0094C002 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		5D7678BD28A92A840094C002 /* FavoritesCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCellViewModel.swift; sourceTree = "<group>"; };
 		5D9E3C88288013FB003667FA /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
-		5DE6750928B23D92006211E7 /* Extension UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension UIImage.swift"; sourceTree = "<group>"; };
+		5DE6750928B23D92006211E7 /* ExtensionUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIImage.swift; sourceTree = "<group>"; };
 		5DF60DF0287DDEFF00D72AAC /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		5DF60DF2287DE3F700D72AAC /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,7 +110,8 @@
 				5D13FCAD287AB3F400F5DF4D /* SceneDelegate.swift */,
 				5D673839289A753E000714CA /* Box.swift */,
 				5D3706F228B136B0000B65F8 /* UIColorHelper.swift */,
-				5DE6750928B23D92006211E7 /* Extension UIImage.swift */,
+				5DE6750928B23D92006211E7 /* ExtensionUIImage.swift */,
+				5D4E011128B8E1E8005B375A /* CustomUIButton.swift */,
 				5D13FCC5287AB92500F5DF4D /* TabBarModule */,
 				5D16EE7A28915E4A00C7EEF8 /* CoreDataLayer */,
 				5D3EC374287B5D8700A8B1F7 /* Model */,
@@ -129,6 +138,9 @@
 			isa = PBXGroup;
 			children = (
 				5D13FCC8287ABAD900F5DF4D /* CalculationViewController.swift */,
+				5D4E011328B8EBC3005B375A /* DisplayView.swift */,
+				5D4E010F28B88ECC005B375A /* NumberPadView.swift */,
+				5D0E40E128B60CC000B9E85B /* CalculetionViewModel.swift */,
 			);
 			path = CalculationModule;
 			sourceTree = "<group>";
@@ -308,17 +320,21 @@
 				5D67383A289A753E000714CA /* Box.swift in Sources */,
 				5D4148AD2886B9C7006AA00A /* DetailRecipeViewController.swift in Sources */,
 				5D3706F328B136B0000B65F8 /* UIColorHelper.swift in Sources */,
+				5D0E40E228B60CC000B9E85B /* CalculetionViewModel.swift in Sources */,
 				5D122625287C238F00FF3A0A /* BookCollectionViewCell.swift in Sources */,
 				5D7678B928A925020094C002 /* FavoritesViewModel.swift in Sources */,
 				5D13FCC7287ABAC600F5DF4D /* BookViewController.swift in Sources */,
+				5D4E011428B8EBC3005B375A /* DisplayView.swift in Sources */,
 				5D2E12EA28843EC2003601BB /* BookCellViewModel.swift in Sources */,
 				5DF60DF1287DDEFF00D72AAC /* RecipeModel.swift in Sources */,
-				5DE6750A28B23D92006211E7 /* Extension UIImage.swift in Sources */,
+				5DE6750A28B23D92006211E7 /* ExtensionUIImage.swift in Sources */,
 				5D1041D128A549B300EBBAC1 /* CoreDataInteraction.swift in Sources */,
 				5D13FCCD287AFE7900F5DF4D /* SearchView.swift in Sources */,
 				5D13FCB6287AB3F400F5DF4D /* RecipeBook.xcdatamodeld in Sources */,
+				5D4E011028B88ECC005B375A /* NumberPadView.swift in Sources */,
 				5D13FCC9287ABAD900F5DF4D /* CalculationViewController.swift in Sources */,
 				5D13FCAE287AB3F400F5DF4D /* SceneDelegate.swift in Sources */,
+				5D4E011228B8E1E8005B375A /* CustomUIButton.swift in Sources */,
 				5D3EC377287B637500A8B1F7 /* AddRecipeView.swift in Sources */,
 				5D7678BC28A9253B0094C002 /* FavoritesTableViewCell.swift in Sources */,
 			);
