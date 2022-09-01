@@ -8,29 +8,30 @@
 import UIKit
 
 class NumberPadView: UIView {
-    var button1 = CustomUIButton()
-    var button2 = CustomUIButton()
-    var button3 = CustomUIButton()
-    var button4 = CustomUIButton()
-    var button5 = CustomUIButton()
-    var button6 = CustomUIButton()
-    var button7 = CustomUIButton()
-    var button8 = CustomUIButton()
-    var button9 = CustomUIButton()
-    var button0 = CustomUIButton()
-    var buttonC = CustomUIButton()
-    lazy var cornerRadius = bounds.width / 3 / 9
-    lazy var buttonWidth = bounds.width / 3
-    lazy var buttonHeight = bounds.height / 4
     
+    private var button1 = CustomUIButton()
+    private var button2 = CustomUIButton()
+    private var button3 = CustomUIButton()
+    private var button4 = CustomUIButton()
+    private var button5 = CustomUIButton()
+    private var button6 = CustomUIButton()
+    private var button7 = CustomUIButton()
+    private var button8 = CustomUIButton()
+    private var button9 = CustomUIButton()
+    private var button0 = CustomUIButton()
+    private var buttonC = CustomUIButton()
+    private lazy var buttonWidth = bounds.width / 3
+    private lazy var buttonHeight = bounds.height / 4
+    
+    //MARK: - UI
     override func layoutSubviews() {
         super.layoutSubviews()
         
         for i in [button1, button2, button3, button4, button5, button6, button7, button8, button9, button0, buttonC] {
             i.backgroundColor = .orange
-            addSubview(i)
-            i.layer.cornerRadius = cornerRadius
+            i.layer.cornerRadius = bounds.width / 3 / 9
             i.addTarget(nil, action: #selector(CalculationViewController.tapButton(_:)), for: .touchUpInside)
+            addSubview(i)
         }
         
         button1.setTitle("1", for: .normal)

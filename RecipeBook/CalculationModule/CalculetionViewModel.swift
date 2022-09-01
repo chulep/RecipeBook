@@ -8,14 +8,16 @@
 import Foundation
 
 protocol CalculetionViewModelType {
-    func calculate(buttonTag: Int, segmentIndex: Int)
+    func calculate(buttonTag: Int, segmentIndex: Int, completion: (String, String, String) -> Void)
+    init(model: CalculateModel)
 }
 
 class CalculationViewModel: CalculetionViewModelType {
     
-    var cup: Double = 0
-    var spoon: Double = 0
-    var gram = "" {
+    private var model: CalculateModel
+    private var cup = "0"
+    private var spoon = "0"
+    private var gram = "0" {
         didSet {
             if (Int(gram) ?? 0) > 9999 {
                 gram = oldValue
@@ -23,7 +25,14 @@ class CalculationViewModel: CalculetionViewModelType {
         }
     }
     
-    func calculate(buttonTag: Int, segmentIndex: Int) {
+    //MARK: - Init
+    required init(model: CalculateModel) {
+        self.model = model
+    }
+    
+    
+    //MARK: - Methods
+    func calculate(buttonTag: Int, segmentIndex: Int, completion: (String, String, String) -> Void) {
         
         switch buttonTag {
         case 10:
@@ -37,19 +46,21 @@ class CalculationViewModel: CalculetionViewModelType {
         switch segmentIndex {
         case 0:
             //мука
-            cup = Double(round(10 * set / 145) / 10)
-            spoon = Double(round(10 * set / 30) / 10)
+            cup = String(Double(round(10 * set / model.flourCup) / 10))
+            spoon = String(Double(round(10 * set / model.flourSpoon) / 10))
         case 1:
             //сахар
-            cup = Double(round(10 * set / 190) / 10)
-            spoon = Double(round(10 * set / 25) / 10)
+            cup = String(Double(round(10 * set / model.sugarCup) / 10))
+            spoon = String(Double(round(10 * set / model.sugarSpoon) / 10))
         case 2:
             //крупы
-            cup = Double(round(10 * set / 240) / 10)
-            spoon = Double(round(10 * set / 20) / 10)
+            cup = String(Double(round(10 * set / model.grainCup) / 10))
+            spoon = String(Double(round(10 * set / model.grainSpoon) / 10))
         default:
             break
         }
+        
+        completion(gram, cup, spoon)
     }
     
 }

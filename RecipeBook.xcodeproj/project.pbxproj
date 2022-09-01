@@ -23,6 +23,7 @@
 		5D16EE7928914EC700C7EEF8 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D16EE7828914EC700C7EEF8 /* CoreDataStack.swift */; };
 		5D2E12EA28843EC2003601BB /* BookCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2E12E928843EC2003601BB /* BookCellViewModel.swift */; };
 		5D3706F328B136B0000B65F8 /* UIColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3706F228B136B0000B65F8 /* UIColorHelper.swift */; };
+		5D37877B28C127DF00B1AA4F /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */; };
 		5D3EC377287B637500A8B1F7 /* AddRecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EC376287B637500A8B1F7 /* AddRecipeView.swift */; };
 		5D3EC379287B6D1900A8B1F7 /* BookViewControllerAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3EC378287B6D1900A8B1F7 /* BookViewControllerAnimations.swift */; };
 		5D4148AD2886B9C7006AA00A /* DetailRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4148AC2886B9C7006AA00A /* DetailRecipeViewController.swift */; };
@@ -30,6 +31,7 @@
 		5D4E011028B88ECC005B375A /* NumberPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4E010F28B88ECC005B375A /* NumberPadView.swift */; };
 		5D4E011228B8E1E8005B375A /* CustomUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4E011128B8E1E8005B375A /* CustomUIButton.swift */; };
 		5D4E011428B8EBC3005B375A /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4E011328B8EBC3005B375A /* DisplayView.swift */; };
+		5D5AA8D128BA7B7000A936EB /* CalculateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5AA8D028BA7B7000A936EB /* CalculateModel.swift */; };
 		5D67383A289A753E000714CA /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D673839289A753E000714CA /* Box.swift */; };
 		5D7678B928A925020094C002 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678B828A925020094C002 /* FavoritesViewModel.swift */; };
 		5D7678BC28A9253B0094C002 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678BB28A9253B0094C002 /* FavoritesTableViewCell.swift */; };
@@ -59,6 +61,7 @@
 		5D16EE7828914EC700C7EEF8 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		5D2E12E928843EC2003601BB /* BookCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCellViewModel.swift; sourceTree = "<group>"; };
 		5D3706F228B136B0000B65F8 /* UIColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHelper.swift; sourceTree = "<group>"; };
+		5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		5D3EC376287B637500A8B1F7 /* AddRecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeView.swift; sourceTree = "<group>"; };
 		5D3EC378287B6D1900A8B1F7 /* BookViewControllerAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewControllerAnimations.swift; sourceTree = "<group>"; };
 		5D4148AC2886B9C7006AA00A /* DetailRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecipeViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +69,7 @@
 		5D4E010F28B88ECC005B375A /* NumberPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberPadView.swift; sourceTree = "<group>"; };
 		5D4E011128B8E1E8005B375A /* CustomUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIButton.swift; sourceTree = "<group>"; };
 		5D4E011328B8EBC3005B375A /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
+		5D5AA8D028BA7B7000A936EB /* CalculateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateModel.swift; sourceTree = "<group>"; };
 		5D673839289A753E000714CA /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		5D7678B828A925020094C002 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		5D7678BB28A9253B0094C002 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 				5D13FCAB287AB3F400F5DF4D /* AppDelegate.swift */,
 				5D13FCAD287AB3F400F5DF4D /* SceneDelegate.swift */,
 				5D673839289A753E000714CA /* Box.swift */,
+				5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */,
 				5D3706F228B136B0000B65F8 /* UIColorHelper.swift */,
 				5DE6750928B23D92006211E7 /* ExtensionUIImage.swift */,
 				5D4E011128B8E1E8005B375A /* CustomUIButton.swift */,
@@ -141,6 +146,7 @@
 				5D4E011328B8EBC3005B375A /* DisplayView.swift */,
 				5D4E010F28B88ECC005B375A /* NumberPadView.swift */,
 				5D0E40E128B60CC000B9E85B /* CalculetionViewModel.swift */,
+				5D5AA8D028BA7B7000A936EB /* CalculateModel.swift */,
 			);
 			path = CalculationModule;
 			sourceTree = "<group>";
@@ -312,6 +318,7 @@
 				5D9E3C89288013FB003667FA /* AddRecipeViewController.swift in Sources */,
 				5D13FCB0287AB3F400F5DF4D /* TabBarController.swift in Sources */,
 				5D13FCAC287AB3F400F5DF4D /* AppDelegate.swift in Sources */,
+				5D5AA8D128BA7B7000A936EB /* CalculateModel.swift in Sources */,
 				5D13FCCB287ABAEA00F5DF4D /* FavoritesViewController.swift in Sources */,
 				5D4148AF2886B9F7006AA00A /* DetailRecipeViewModel.swift in Sources */,
 				5D7678BE28A92A840094C002 /* FavoritesCellViewModel.swift in Sources */,
@@ -321,6 +328,7 @@
 				5D4148AD2886B9C7006AA00A /* DetailRecipeViewController.swift in Sources */,
 				5D3706F328B136B0000B65F8 /* UIColorHelper.swift in Sources */,
 				5D0E40E228B60CC000B9E85B /* CalculetionViewModel.swift in Sources */,
+				5D37877B28C127DF00B1AA4F /* ModuleBuilder.swift in Sources */,
 				5D122625287C238F00FF3A0A /* BookCollectionViewCell.swift in Sources */,
 				5D7678B928A925020094C002 /* FavoritesViewModel.swift in Sources */,
 				5D13FCC7287ABAC600F5DF4D /* BookViewController.swift in Sources */,

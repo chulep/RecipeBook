@@ -14,11 +14,11 @@ protocol DetailRecipeViewModelType {
     var descriptionView: String? { get }
     var exURL: String? { get }
     var favoriteRecipe: Bool { get set }
-    var forModule: CoreDataInteraction.ForModule { get }
+    var forModule: ForModule { get }
     func tapToFavorite()
     func checkURL(urlString: String) -> Bool
     func deleteRecipe()
-    init(recipe: Recipe, indexPath: IndexPath, forModule: CoreDataInteraction.ForModule)
+    init(recipe: Recipe, indexPath: IndexPath, forModule: ForModule)
 }
 
 class DetailRecipeViewModel: DetailRecipeViewModelType {
@@ -28,11 +28,11 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
     var descriptionView: String?
     var exURL: String?
     var favoriteRecipe: Bool
-    var forModule: CoreDataInteraction.ForModule
+    var forModule: ForModule
     private var indexPath: IndexPath
     let model = CoreDataInteraction()
 
-    required init(recipe: Recipe, indexPath: IndexPath, forModule: CoreDataInteraction.ForModule) {
+    required init(recipe: Recipe, indexPath: IndexPath, forModule: ForModule) {
         self.name = recipe.nameRecipe
         self.descriptionView = recipe.descriptionRecipe
         self.exURL = recipe.exURL

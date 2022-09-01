@@ -7,7 +7,11 @@
 
 import UIKit
 
-class DisplayView: UIView {
+protocol DisplayViewType {
+    func showValue(gram: String, cup: String, spoon: String)
+}
+
+class DisplayView: UIView, DisplayViewType {
     
     private let gramSupportLabel = UILabel()
     private let gramResultLabel = UILabel()
@@ -18,15 +22,16 @@ class DisplayView: UIView {
     private lazy var width = bounds.width / 2
     private lazy var height = bounds.height / 3
     
+    //MARK: - UI
     override func layoutSubviews() {
         super.layoutSubviews()
         
         for i in [cupResultLabel, cupSupportLabel, spoonResultLabel, spoonSuppertLabel, gramSupportLabel, gramResultLabel] {
             i.backgroundColor = UIColorHelper.systemLightGray
             i.textAlignment = .center
-            addSubview(i)
             i.layer.cornerRadius = bounds.width / 3 / 9
             i.clipsToBounds = true
+            addSubview(i)
         }
         
         gramSupportLabel.text = "Граммы"
@@ -45,15 +50,11 @@ class DisplayView: UIView {
         spoonResultLabel.frame = CGRect(x: width + 4, y: height * 2 + 4, width: width - 4, height: height - 4)
     }
     
-    func setText(gram: String, cup: String, spoon: String) {
+    //MARK: - Method
+    func showValue(gram: String, cup: String, spoon: String) {
         gramResultLabel.text = gram
         cupResultLabel.text = cup
         spoonResultLabel.text = spoon
-        
-        gramResultLabel.alpha = 0.8
-        UIView.animate(withDuration: 0.2) {
-            self.gramResultLabel.alpha = 1
-        }
     }
     
 }
