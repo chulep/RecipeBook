@@ -12,11 +12,12 @@ protocol FavoritesViewModelType {
     func exportAllRecipes()
     func favoritesCellViewModel(forIdexPath indexPath: IndexPath) -> FavoritesCellViewModelType?
     func detailRecipeViewModel(forIdexPath indexPath: IndexPath) -> DetailRecipeViewModelType?
+    init(coreData: CoreDataInteractionType)
 }
 
 class FavoritesViewModel: FavoritesViewModelType {
     
-    let coreData = CoreDataInteraction()
+    let coreData: CoreDataInteractionType
     var recipeCount = 0
     private var recipes: [Recipe] = [] {
         willSet(recipes) {
@@ -24,10 +25,12 @@ class FavoritesViewModel: FavoritesViewModelType {
         }
     }
     
-    init() {
+    required init(coreData: CoreDataInteractionType) {
+        self.coreData = coreData
         exportAllRecipes()
     }
     
+    //MARK: - Methods
     func exportAllRecipes() {
         recipes = coreData.exportRecipe(request: .favoriteRecipe)
     }

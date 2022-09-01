@@ -8,20 +8,20 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-
+    
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         createTabBar()
         tabBarApperanse()
     }
-
-    //MARK: - VC on TabBar
+    
+    //MARK: - VC for TabBar
     private func createTabBar() {
         viewControllers = [
             createVC(viewController: BookViewController(), title: "Рецепты", imageSystemName: "book"),
-            createVC(viewController: CalculationViewController(), title: "Весы", imageSystemName: "scalemass"),
-            createVC(viewController: FavoritesViewController(), title: "Избранное", imageSystemName: "heart")
+            ModuleBuilder.calculationModule(),
+            ModuleBuilder.favoritesModule()
         ]
     }
     
@@ -67,8 +67,10 @@ class TabBarController: UITabBarController {
         shapeLayer.strokeColor = UIColor.orange.cgColor
         
         //цвет нажатой/отжатой кнопки
-        tabBar.tintColor = .orange
+        tabBar.tintColor = .black
         tabBar.unselectedItemTintColor = .systemGray
     }
+    
 }
+
 

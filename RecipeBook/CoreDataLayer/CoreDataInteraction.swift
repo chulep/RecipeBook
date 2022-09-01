@@ -7,12 +7,25 @@
 
 import CoreData
 
-final class CoreDataInteraction {
+enum ExportRequest {
+    case allRecipe
+    case favoriteRecipe
+}
+
+enum ForModule {
+    case bookModule
+    case favoriteModule
+}
+
+protocol CoreDataInteractionType {
+    func exportRecipe(request: ExportRequest) -> [Recipe]
+    func saveRecipe(name: String?, description: String?, image: Data?, exURL: String?)
+    func tapToFavorite(forModule: ForModule, indexPath: IndexPath, favorite: Bool)
+    func deleteRecipe(indexPath: IndexPath)
     
-    enum ExportRequest {
-        case allRecipe
-        case favoriteRecipe
-    }
+}
+
+final class CoreDataInteraction: CoreDataInteractionType {
     
     func exportRecipe(request: ExportRequest) -> [Recipe] {
         var allRecipe = [RecipeData]()
@@ -49,11 +62,6 @@ final class CoreDataInteraction {
         } catch {
             print("SAVE RECIPE ERROR")
         }
-    }
-    
-    enum ForModule {
-        case bookModule
-        case favoriteModule
     }
     
     func tapToFavorite(forModule: ForModule, indexPath: IndexPath, favorite: Bool) {

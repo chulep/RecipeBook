@@ -10,9 +10,16 @@ import UIKit
 class FavoritesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tableView: UITableView?
-    let viewModel = FavoritesViewModel()
+    var viewModel: FavoritesViewModelType?
     lazy var nothingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 8))
 
+    //MARK: - Init
+    init(viewModel: FavoritesViewModelType) {
+        super.init(nibName: nil, bundle: nil)
+        self .viewModel = viewModel
+    }
+    
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         createUI()
@@ -20,16 +27,17 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.exportAllRecipes()
+        viewModel?.exportAllRecipes()
         tableView?.reloadData()
         
-        if viewModel.recipeCount == 0 {
+        if viewModel?.recipeCount == 0 {
             nothingLabel.isHidden = false
         } else {
             nothingLabel.isHidden = true
         }
     }
 
+    //MARK: - UI
     func createUI() {
         tableView = UITableView(frame: view.bounds)
         view.addSubview(tableView!)
@@ -47,12 +55,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     //MARK: - TableView Delegate/DataSourse
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.recipeCount
+        viewModel?.recipeCount ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifire, for: indexPath) as! FavoritesTableViewCell
-        cell.viewModel = viewModel.favoritesCellViewModel(forIdexPath: indexPath)
+        cell.viewModel = viewModel?.favoritesCellViewModel(forIdexPath: indexPath)
         return cell
     }
     
@@ -61,7 +69,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailViewModel = viewModel.detailRecipeViewModel(forIdexPath: indexPath)
+        let detailViewModel = viewModel?.detailRecipeViewModel(forIdexPath: indexPath)
         let detailVC = DetailRecipeViewController()
         detailVC.viewModel = detailViewModel
         let navVC = UINavigationController(rootViewController: detailVC)
@@ -69,4 +77,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         present(navVC, animated: true)
     }
 
+    //MARK: - Other
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

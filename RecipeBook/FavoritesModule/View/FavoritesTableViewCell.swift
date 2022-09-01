@@ -14,11 +14,6 @@ class FavoritesTableViewCell: UITableViewCell {
     let recipeName = UILabel()
     var viewModel: FavoritesCellViewModelType?
     private lazy var radius = bounds.height / 10
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -26,6 +21,7 @@ class FavoritesTableViewCell: UITableViewCell {
     }
     
     
+    //MARK: - UI
     private func createUI() {
         
         for i in [recipeImageView, recipeName] {
@@ -57,6 +53,7 @@ class FavoritesTableViewCell: UITableViewCell {
         recipeImageView.image = UIImage.createImage(data: viewModel.image, fromURL: viewModel.fromURL)
     }
 
+    //MARK: - Selected
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
