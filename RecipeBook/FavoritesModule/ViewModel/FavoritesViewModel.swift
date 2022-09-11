@@ -27,7 +27,6 @@ class FavoritesViewModel: FavoritesViewModelType {
     
     required init(coreData: CoreDataInteractionType) {
         self.coreData = coreData
-        exportAllRecipes()
     }
     
     //MARK: - Methods

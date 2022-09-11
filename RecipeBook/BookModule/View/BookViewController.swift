@@ -11,18 +11,14 @@ protocol reloadRecipeDelegate: AnyObject {
 
 import UIKit
 
-class BookViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class BookViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
     
-    var widthSearchView = NSLayoutConstraint()
-    var widthAddRecipeView = NSLayoutConstraint()
-    var heightAddRecipeView = NSLayoutConstraint()
-    lazy var buttonSize = view.bounds.width / 9
-    var searchIsOpen = false
-    var addRecipeIsOpen = false
-    var searchView = CustomSearchView()
-    var addRecipeView = AddRecipeView()
+    private var buttonIsOpen = false
+    var addButtonView = AddButtonView()
+    var addButton = UIButton()
     var collectionView: UICollectionView?
     var viewModel: BookViewModelType?
+    private var searchBar = UISearchBar()
     private lazy var nothingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 8))
 
     //MARK: - viewDidLoad
@@ -43,37 +39,25 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         } else {
             nothingLabel.isHidden = true
         }
+        addButtonView.frame = CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: view.bounds.width)
     }
     
     //MARK: - Create UI
     private func createUI() {
+        
+        view.addSubview(addButton)
+        addButton.backgroundColor = UIColorHelper.systemOrange
+        addButton.frame = CGRect(x: 10, y: view.bounds.height - 160, width: view.bounds.width / 8, height: view.bounds.width / 8)
+        addButton.addTarget(self, action: #selector(self.buttonAddOpen), for: .touchUpInside)
+        addButton.layer.cornerRadius = addButton.bounds.height / 2
+        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        
+        view.addSubview(addButtonView)
+        
+        navigationItem.titleView = searchBar
+        searchBar.delegate = self
+        
         view.backgroundColor = .white
-        
-        searchView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(searchView)
-        
-        searchView.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
-        searchView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
-        searchView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        widthSearchView = searchView.widthAnchor.constraint(equalToConstant: buttonSize)
-        widthSearchView.isActive = true
-        
-        searchView.clipsToBounds = true
-        searchView.layer.cornerRadius = buttonSize / 2
-        //
-        addRecipeView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(addRecipeView)
-        
-        addRecipeView.topAnchor.constraint(equalTo: searchView.bottomAnchor,constant: 20).isActive = true
-        addRecipeView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        heightAddRecipeView = addRecipeView.heightAnchor.constraint(equalToConstant: buttonSize)
-        widthAddRecipeView = addRecipeView.widthAnchor.constraint(equalToConstant: buttonSize)
-        widthAddRecipeView.isActive = true
-        heightAddRecipeView.isActive = true
-        
-        addRecipeView.clipsToBounds = true
-        addRecipeView.layer.cornerRadius = buttonSize / 2
-        collectionView?.reloadData()
         
         view.addSubview(nothingLabel)
         nothingLabel.textAlignment = .center
@@ -87,7 +71,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: view.bounds.width / 2 - 15, height: view.bounds.width / 2 + 30)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
         layout.sectionHeadersPinToVisibleBounds = true
         return layout
     }
@@ -128,27 +112,36 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     //MARK: - Search Method
-    @objc func searchViewMethod() {
-        viewModel?.searchRecipe(text: searchView.textField.text ?? "")
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel?.searchRecipe(text: searchText)
         collectionView?.reloadData()
     }
     
-    @objc func buttonAddIndepend() {
-        let VC = AddRecipeViewController(action: .inddepend)
-        VC.delegate = self
-        let navVC = UINavigationController(rootViewController: VC)
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.navigationBar.backgroundColor = .orange
-        present(navVC, animated: true)
+    //MARK: - Add Open
+    @objc func buttonAddOpen() {
+        buttonIsOpen = !buttonIsOpen
+        
+        switch buttonIsOpen {
+        case true:
+            UIView.animate(withDuration: 0.3, delay: 0) {
+                self.addButtonView.frame.origin.y = self.view.bounds.height - self.view.bounds.width
+            }
+        case false:
+            UIView.animate(withDuration: 0.3, delay: 0) {
+                self.addButtonView.frame.origin.y = self.view.bounds.height
+            }
+        }
     }
     
-    @objc func buttonAddUrl() {
-        let VC = AddRecipeViewController(action: .url)
-        VC.delegate = self
-        let navVC = UINavigationController(rootViewController: VC)
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.navigationBar.backgroundColor = .orange
-        present(navVC, animated: true)
+    @objc func openNewVC(_ button: UIButton) {
+        switch button.tag {
+        case 1:
+            present(ModuleBuilder.addViewController(action: .url), animated: true)
+        case 2:
+            present(ModuleBuilder.addViewController(action: .inddepend), animated: true)
+        default:
+            break
+        }
     }
     
 }

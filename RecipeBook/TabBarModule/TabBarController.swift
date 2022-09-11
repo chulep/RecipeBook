@@ -19,17 +19,10 @@ class TabBarController: UITabBarController {
     //MARK: - VC for TabBar
     private func createTabBar() {
         viewControllers = [
-            createVC(viewController: BookViewController(), title: "Рецепты", imageSystemName: "book"),
+            ModuleBuilder.bookModule(),
             ModuleBuilder.calculationModule(),
             ModuleBuilder.favoritesModule()
         ]
-    }
-    
-    //MARK: - Create VC
-    private func createVC(viewController: UIViewController, title: String, imageSystemName: String) -> UIViewController {
-        viewController.tabBarItem.title = title
-        viewController.tabBarItem.image = UIImage(systemName: imageSystemName)
-        return viewController
     }
     
     //MARK: - TabBar style

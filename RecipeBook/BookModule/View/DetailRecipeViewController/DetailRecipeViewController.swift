@@ -71,9 +71,9 @@ class DetailRecipeViewController: UIViewController {
     }
     
     @objc func cancelItemButton() {
+        webView?.stopLoading()
         dismiss(animated: true)
         delegate?.updateListRecipe()
-        //webView?.stopLoading()
     }
     
     @objc func tapToFavorite() {

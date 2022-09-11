@@ -26,10 +26,6 @@ class BookViewModel: BookViewModelType {
         }
     }
     
-    init() {
-        exportAllRecipes()
-    }
-    
     func exportAllRecipes() {
         parentArrayRecipies = recipeModel.exportRecipe(request: .allRecipe)
         recipes = parentArrayRecipies
