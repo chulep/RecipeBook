@@ -9,23 +9,22 @@ import Foundation
 import UIKit
 
 protocol DetailRecipeViewModelType {
-    var image: UIImage? { get }
+    var image: Data? { get }
     var name: String? { get }
-    var descriptionView: String? { get }
+    var description: String? { get }
     var exURL: String? { get }
     var favoriteRecipe: Bool { get set }
     var forModule: ForModule { get }
     func tapToFavorite()
-    func checkURL(urlString: String) -> Bool
     func deleteRecipe()
     init(recipe: Recipe, indexPath: IndexPath, forModule: ForModule)
 }
 
 class DetailRecipeViewModel: DetailRecipeViewModelType {
     
-    var image: UIImage?
+    var image: Data?
     var name: String?
-    var descriptionView: String?
+    var description: String?
     var exURL: String?
     var favoriteRecipe: Bool
     var forModule: ForModule
@@ -34,27 +33,12 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
 
     required init(recipe: Recipe, indexPath: IndexPath, forModule: ForModule) {
         self.name = recipe.nameRecipe
-        self.descriptionView = recipe.descriptionRecipe
+        self.description = recipe.descriptionRecipe
         self.exURL = recipe.exURL
         self.favoriteRecipe = recipe.favoriteRecipe
         self.indexPath = indexPath
         self.forModule = forModule
-        
-        switch recipe { // запихать в расширение уи имадж
-        case _ where recipe.exURL == nil && recipe.imageRecipe == nil:
-            image = UIImage(systemName: "pencil.circle")
-        case _ where recipe.exURL != nil && recipe.imageRecipe == nil:
-            image = UIImage(systemName: "globe")
-        default:
-            image = UIImage(data: recipe.imageRecipe!)
-        }
-    }
-    
-    func checkURL(urlString: String) -> Bool {
-        if let url = URL(string: urlString) {
-            return UIApplication.shared.canOpenURL(url)
-        }
-        return false
+        self.image = recipe.imageRecipe
     }
     
     func tapToFavorite() {

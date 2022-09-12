@@ -46,7 +46,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         } else {
             nothingLabel.isHidden = true
         }
-        addButtonView.frame = CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: view.bounds.width / 1.7)
+        addButtonView.frame = CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: view.bounds.width / 1.6)
         blurView.isHidden = true
         navigationItem.titleView?.isHidden = false
         buttonIsOpen = false
@@ -161,7 +161,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
             blurView.alpha = 0
             navigationItem.titleView?.isHidden = true
             UIView.animate(withDuration: 0.3, delay: 0) {
-                self.addButtonView.frame.origin.y = self.view.bounds.height - self.view.bounds.width / 1.7
+                self.addButtonView.frame.origin.y = self.view.bounds.height - self.view.bounds.width / 1.6
                 self.blurView.alpha = 0.7
             }
         case false:

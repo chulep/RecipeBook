@@ -35,6 +35,8 @@
 		5D7678BC28A9253B0094C002 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678BB28A9253B0094C002 /* FavoritesTableViewCell.swift */; };
 		5D7678BE28A92A840094C002 /* FavoritesCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678BD28A92A840094C002 /* FavoritesCellViewModel.swift */; };
 		5D9E3C89288013FB003667FA /* AddRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9E3C88288013FB003667FA /* AddRecipeViewController.swift */; };
+		5DAF954A28CF7F8400F37170 /* ExtencionUIAplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAF954928CF7F8300F37170 /* ExtencionUIAplication.swift */; };
+		5DAF954E28CF88DA00F37170 /* DetailUICreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAF954D28CF88DA00F37170 /* DetailUICreator.swift */; };
 		5DE6750A28B23D92006211E7 /* ExtensionUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE6750928B23D92006211E7 /* ExtensionUIImage.swift */; };
 		5DF60DF1287DDEFF00D72AAC /* RecipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF60DF0287DDEFF00D72AAC /* RecipeModel.swift */; };
 		5DF60DF3287DE3F700D72AAC /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF60DF2287DE3F700D72AAC /* BookViewModel.swift */; };
@@ -71,6 +73,8 @@
 		5D7678BB28A9253B0094C002 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		5D7678BD28A92A840094C002 /* FavoritesCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCellViewModel.swift; sourceTree = "<group>"; };
 		5D9E3C88288013FB003667FA /* AddRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewController.swift; sourceTree = "<group>"; };
+		5DAF954928CF7F8300F37170 /* ExtencionUIAplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtencionUIAplication.swift; sourceTree = "<group>"; };
+		5DAF954D28CF88DA00F37170 /* DetailUICreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailUICreator.swift; sourceTree = "<group>"; };
 		5DE6750928B23D92006211E7 /* ExtensionUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIImage.swift; sourceTree = "<group>"; };
 		5DF60DF0287DDEFF00D72AAC /* RecipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModel.swift; sourceTree = "<group>"; };
 		5DF60DF2287DE3F700D72AAC /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
@@ -111,6 +115,7 @@
 				5D673839289A753E000714CA /* Box.swift */,
 				5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */,
 				5D3706F228B136B0000B65F8 /* UIColorHelper.swift */,
+				5DAF954928CF7F8300F37170 /* ExtencionUIAplication.swift */,
 				5DE6750928B23D92006211E7 /* ExtensionUIImage.swift */,
 				5D4E011128B8E1E8005B375A /* CustomUIButton.swift */,
 				5D13FCC5287AB92500F5DF4D /* TabBarModule */,
@@ -119,6 +124,7 @@
 				5D13FCC2287AB42000F5DF4D /* BookModule */,
 				5D13FCC3287AB42F00F5DF4D /* CalculationModule */,
 				5D13FCC4287AB59A00F5DF4D /* FavoritesModule */,
+				5DAF954B28CF817800F37170 /* DetailModule */,
 				5D13FCB7287AB3F600F5DF4D /* Assets.xcassets */,
 				5D13FCB9287AB3F600F5DF4D /* LaunchScreen.storyboard */,
 				5D13FCBC287AB3F600F5DF4D /* Info.plist */,
@@ -177,7 +183,6 @@
 		5D3EC373287B5D7B00A8B1F7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5D4148AB2886B99E006AA00A /* DetailRecipeViewController */,
 				5D9E3C872880139D003667FA /* AddViewController */,
 				5D13FCC6287ABAC600F5DF4D /* BookViewController.swift */,
 				5D122624287C238F00FF3A0A /* BookCollectionViewCell.swift */,
@@ -198,17 +203,17 @@
 			children = (
 				5DF60DF2287DE3F700D72AAC /* BookViewModel.swift */,
 				5D2E12E928843EC2003601BB /* BookCellViewModel.swift */,
-				5D4148AE2886B9F7006AA00A /* DetailRecipeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		5D4148AB2886B99E006AA00A /* DetailRecipeViewController */ = {
+		5D4148AB2886B99E006AA00A /* DetailRecipeView */ = {
 			isa = PBXGroup;
 			children = (
 				5D4148AC2886B9C7006AA00A /* DetailRecipeViewController.swift */,
+				5DAF954D28CF88DA00F37170 /* DetailUICreator.swift */,
 			);
-			path = DetailRecipeViewController;
+			path = DetailRecipeView;
 			sourceTree = "<group>";
 		};
 		5D7678B628A924C90094C002 /* View */ = {
@@ -236,6 +241,23 @@
 				5D6DFD3B28CE1B1100A77817 /* AddButtonView.swift */,
 			);
 			path = AddViewController;
+			sourceTree = "<group>";
+		};
+		5DAF954B28CF817800F37170 /* DetailModule */ = {
+			isa = PBXGroup;
+			children = (
+				5DAF954C28CF819800F37170 /* DetailViewModel */,
+				5D4148AB2886B99E006AA00A /* DetailRecipeView */,
+			);
+			path = DetailModule;
+			sourceTree = "<group>";
+		};
+		5DAF954C28CF819800F37170 /* DetailViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5D4148AE2886B9F7006AA00A /* DetailRecipeViewModel.swift */,
+			);
+			path = DetailViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,6 +333,7 @@
 				5DF60DF3287DE3F700D72AAC /* BookViewModel.swift in Sources */,
 				5D9E3C89288013FB003667FA /* AddRecipeViewController.swift in Sources */,
 				5D13FCB0287AB3F400F5DF4D /* TabBarController.swift in Sources */,
+				5DAF954A28CF7F8400F37170 /* ExtencionUIAplication.swift in Sources */,
 				5D13FCAC287AB3F400F5DF4D /* AppDelegate.swift in Sources */,
 				5D5AA8D128BA7B7000A936EB /* CalculateModel.swift in Sources */,
 				5D13FCCB287ABAEA00F5DF4D /* FavoritesViewController.swift in Sources */,
@@ -318,6 +341,7 @@
 				5D7678BE28A92A840094C002 /* FavoritesCellViewModel.swift in Sources */,
 				5D16EE7928914EC700C7EEF8 /* CoreDataStack.swift in Sources */,
 				5D67383A289A753E000714CA /* Box.swift in Sources */,
+				5DAF954E28CF88DA00F37170 /* DetailUICreator.swift in Sources */,
 				5D4148AD2886B9C7006AA00A /* DetailRecipeViewController.swift in Sources */,
 				5D3706F328B136B0000B65F8 /* UIColorHelper.swift in Sources */,
 				5D0E40E228B60CC000B9E85B /* CalculetionViewModel.swift in Sources */,

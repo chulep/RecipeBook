@@ -15,19 +15,13 @@ class DetailRecipeViewController: UIViewController {
     var recipeDescriptionTextView = UITextView()
     private var supportDescriptionLabel: UILabel?
     private var favoriteImage: UIImage?
-    
+    private var createHelper = DetailUICreate()
     
     var webView: WKWebView?
     var activityIndicator: UIActivityIndicatorView?
     
     var delegate: reloadRecipeDelegate?
-    var viewModel: DetailRecipeViewModelType? {
-        willSet(viewModel) {
-            recipeImageView.image = viewModel?.image
-            recipeNameLabel.text = viewModel?.name
-            recipeDescriptionTextView.text = viewModel?.descriptionView
-        }
-    }
+    var viewModel: DetailRecipeViewModelType? 
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -39,6 +33,7 @@ class DetailRecipeViewController: UIViewController {
         } else {
             createOnlineUI()
         }
+        
     }
     
     //MARK: - Navigation bar
@@ -54,7 +49,6 @@ class DetailRecipeViewController: UIViewController {
             favoriteImage = UIImage(systemName: "heart")
         }
         
-        
         var buttonArray = [UIBarButtonItem]()
         activityIndicator = UIActivityIndicatorView()
         let favoriteItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: #selector(tapToFavorite))
@@ -67,6 +61,7 @@ class DetailRecipeViewController: UIViewController {
         
         let indicatorItem = UIBarButtonItem(customView: activityIndicator!)
         buttonArray.append(indicatorItem)
+        
         navigationItem.setRightBarButtonItems(buttonArray, animated: true)
     }
     
@@ -98,37 +93,26 @@ class DetailRecipeViewController: UIViewController {
     //MARK: - Create offline detail UI
     func createOfflineUI() {
         view.backgroundColor = .white
-        supportDescriptionLabel = UILabel()
+        recipeImageView = createHelper.createImageView(imageData: viewModel?.image)
+        recipeNameLabel = createHelper.createNameLabel(text: viewModel?.name)
+        recipeDescriptionTextView = createHelper.createTextView(text: viewModel?.description)
+        supportDescriptionLabel = createHelper.createSupportDescriptionLabel()
+        
         for i in [recipeNameLabel, recipeDescriptionTextView, recipeImageView, supportDescriptionLabel] {
             i!.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(i!)
         }
         
-        recipeImageView.contentMode = .scaleAspectFill
-        recipeImageView.clipsToBounds = true
-        recipeImageView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        recipeImageView.tintColor = .white
-        
-        recipeNameLabel.textAlignment = .left
-        recipeNameLabel.numberOfLines = 2
-        recipeNameLabel.font = UIFont.boldSystemFont(ofSize: 80)
-        recipeNameLabel.adjustsFontSizeToFitWidth = true
-        recipeNameLabel.minimumScaleFactor = 0.01
-        
-        recipeDescriptionTextView.textContainerInset = UIEdgeInsets.zero
-        recipeDescriptionTextView.textContainer.lineFragmentPadding = 0
-        recipeDescriptionTextView.isEditable = false
-        recipeDescriptionTextView.textColor = .gray
-        recipeDescriptionTextView.font = UIFont.boldSystemFont(ofSize: 17)
-        
-        supportDescriptionLabel?.text = "Описание:"
-        supportDescriptionLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        var imageHeight = view.bounds.width / 2
+        if viewModel?.image == nil {
+            imageHeight = 0
+        }
         
         NSLayoutConstraint.activate([
             recipeImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1),
             recipeImageView.leftAnchor.constraint(equalTo: view.leftAnchor),
             recipeImageView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            recipeImageView.heightAnchor.constraint(equalTo: recipeImageView.widthAnchor, multiplier: 1/2),
+            recipeImageView.heightAnchor.constraint(equalToConstant: imageHeight),
             
             recipeNameLabel.topAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: 13),
             recipeNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
@@ -154,7 +138,7 @@ class DetailRecipeViewController: UIViewController {
         webView?.frame = view.bounds
         webView?.navigationDelegate = self
         guard let exLink = viewModel?.exURL else { return } // если писать на руском то выкидывает через урл { ретёрн }
-        if viewModel?.checkURL(urlString: exLink) == false { //можно запихнуть в вью модель
+        if UIApplication.shared.checkURL(urlString: exLink) == false { //можно запихнуть в вью модель
             let alertController = UIAlertController(title: "Не удалось открыть ссылку:", message: "\(exLink)", preferredStyle: .alert)
             let actionCancel = UIAlertAction(title: "Назад", style: .default) { action in
                 self.cancelItemButton()
