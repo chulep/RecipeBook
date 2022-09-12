@@ -20,7 +20,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     var collectionView: UICollectionView?
     var viewModel: BookViewModelType?
     private var searchBar = UISearchBar()
-    private lazy var nothingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 8))
+    private var nothingLabel = UILabel()
 
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -56,6 +56,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     private func createUI() {
         
         view.addSubview(nothingLabel)
+        nothingLabel.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 8)
         nothingLabel.textAlignment = .center
         nothingLabel.center = view.center
         nothingLabel.textColor = UIColorHelper.systemLightGray
@@ -150,7 +151,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         collectionView?.reloadData()
     }
     
-    //MARK: - Add Open
+    //MARK: - Add View Open
     @objc func buttonAddOpen() {
         buttonIsOpen = !buttonIsOpen
         searchBar.resignFirstResponder()
@@ -173,6 +174,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
+    //MARK: - Open Add ViewController
     @objc func openNewVC(_ button: UIButton) {
         switch button.tag {
         case 1:
