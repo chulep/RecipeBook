@@ -14,6 +14,22 @@ protocol ModuleBuilderType {
 
 struct ModuleBuilder: ModuleBuilderType {
     
+    static func bookModule() -> UINavigationController {
+        let viewController = BookViewController()
+        viewController.tabBarItem.title = "Рецепты"
+        viewController.tabBarItem.image = UIImage(systemName: "book")
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.navigationBar.backgroundColor = .orange
+        return navController
+    }
+    
+    static func addViewController(action: AddRecipeViewController.Action) -> UINavigationController {
+        let viewController = AddRecipeViewController(action: action)
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.modalPresentationStyle = .fullScreen
+        return navController
+    }
+    
     static func calculationModule() -> CalculationViewController {
         let model = CalculateModel()
         let viewModel = CalculationViewModel(model: model)

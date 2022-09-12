@@ -11,18 +11,15 @@ protocol reloadRecipeDelegate: AnyObject {
 
 import UIKit
 
-class BookViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class BookViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
     
-    var widthSearchView = NSLayoutConstraint()
-    var widthAddRecipeView = NSLayoutConstraint()
-    var heightAddRecipeView = NSLayoutConstraint()
-    lazy var buttonSize = view.bounds.width / 9
-    var searchIsOpen = false
-    var addRecipeIsOpen = false
-    var searchView = CustomSearchView()
-    var addRecipeView = AddRecipeView()
+    private var blurView = UIVisualEffectView()
+    private var buttonIsOpen = false
+    var addButtonView = AddButtonView()
+    var addButton = UIButton()
     var collectionView: UICollectionView?
     var viewModel: BookViewModelType?
+    private var searchBar = UISearchBar()
     private lazy var nothingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 8))
 
     //MARK: - viewDidLoad
@@ -31,6 +28,12 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         viewModel = BookViewModel()
         createCollectionView()
         createUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addButton.layer.cornerRadius = addButton.bounds.height / 2
+        addButton.clipsToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,43 +46,45 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         } else {
             nothingLabel.isHidden = true
         }
+        addButtonView.frame = CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: view.bounds.width / 1.7)
+        blurView.isHidden = true
+        navigationItem.titleView?.isHidden = false
+        buttonIsOpen = false
     }
     
     //MARK: - Create UI
     private func createUI() {
-        view.backgroundColor = .white
-        
-        searchView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(searchView)
-        
-        searchView.heightAnchor.constraint(equalToConstant: buttonSize).isActive = true
-        searchView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
-        searchView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        widthSearchView = searchView.widthAnchor.constraint(equalToConstant: buttonSize)
-        widthSearchView.isActive = true
-        
-        searchView.clipsToBounds = true
-        searchView.layer.cornerRadius = buttonSize / 2
-        //
-        addRecipeView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(addRecipeView)
-        
-        addRecipeView.topAnchor.constraint(equalTo: searchView.bottomAnchor,constant: 20).isActive = true
-        addRecipeView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        heightAddRecipeView = addRecipeView.heightAnchor.constraint(equalToConstant: buttonSize)
-        widthAddRecipeView = addRecipeView.widthAnchor.constraint(equalToConstant: buttonSize)
-        widthAddRecipeView.isActive = true
-        heightAddRecipeView.isActive = true
-        
-        addRecipeView.clipsToBounds = true
-        addRecipeView.layer.cornerRadius = buttonSize / 2
-        collectionView?.reloadData()
         
         view.addSubview(nothingLabel)
         nothingLabel.textAlignment = .center
         nothingLabel.center = view.center
-        nothingLabel.textColor = UIColorHelper.systemMediumGray
+        nothingLabel.textColor = UIColorHelper.systemLightGray
         nothingLabel.text = "Добавьте первый рецепт"
+        
+        view.addSubview(addButton)
+        addButton.backgroundColor = UIColorHelper.systemOrange
+        addButton.addTarget(self, action: #selector(self.buttonAddOpen), for: .touchUpInside)
+        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
+        addButton.tintColor = .white
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25),
+            addButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            addButton.widthAnchor.constraint(equalToConstant: view.bounds.width / 7),
+            addButton.heightAnchor.constraint(equalTo: addButton.widthAnchor)
+        ])
+        
+        let blur = UIBlurEffect(style: .extraLight)
+        blurView = UIVisualEffectView(effect: blur)
+        view.addSubview(blurView)
+        blurView.frame = view.bounds
+        
+        view.addSubview(addButtonView)
+        
+        navigationItem.titleView = searchBar
+        searchBar.delegate = self
+        
+        view.backgroundColor = .white
     }
     
     //MARK: - CollectionView Settings
@@ -87,7 +92,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: view.bounds.width / 2 - 15, height: view.bounds.width / 2 + 30)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
         layout.sectionHeadersPinToVisibleBounds = true
         return layout
     }
@@ -128,27 +133,55 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     //MARK: - Search Method
-    @objc func searchViewMethod() {
-        viewModel?.searchRecipe(text: searchView.textField.text ?? "")
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel?.searchRecipe(text: searchText)
         collectionView?.reloadData()
     }
     
-    @objc func buttonAddIndepend() {
-        let VC = AddRecipeViewController(action: .inddepend)
-        VC.delegate = self
-        let navVC = UINavigationController(rootViewController: VC)
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.navigationBar.backgroundColor = .orange
-        present(navVC, animated: true)
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
     }
     
-    @objc func buttonAddUrl() {
-        let VC = AddRecipeViewController(action: .url)
-        VC.delegate = self
-        let navVC = UINavigationController(rootViewController: VC)
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.navigationBar.backgroundColor = .orange
-        present(navVC, animated: true)
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
+        searchBar.text = ""
+        viewModel?.searchRecipe(text: searchBar.text!)
+        collectionView?.reloadData()
+    }
+    
+    //MARK: - Add Open
+    @objc func buttonAddOpen() {
+        buttonIsOpen = !buttonIsOpen
+        searchBar.resignFirstResponder()
+        switch buttonIsOpen {
+        case true:
+            blurView.isHidden = false
+            blurView.alpha = 0
+            navigationItem.titleView?.isHidden = true
+            UIView.animate(withDuration: 0.3, delay: 0) {
+                self.addButtonView.frame.origin.y = self.view.bounds.height - self.view.bounds.width / 1.7
+                self.blurView.alpha = 0.7
+            }
+        case false:
+            navigationItem.titleView?.isHidden = false
+            blurView.isHidden = false
+            UIView.animate(withDuration: 0.3, delay: 0) {
+                self.addButtonView.frame.origin.y = self.view.bounds.height
+                self.blurView.alpha = 0
+            }
+        }
+    }
+    
+    @objc func openNewVC(_ button: UIButton) {
+        switch button.tag {
+        case 1:
+            present(ModuleBuilder.addViewController(action: .url), animated: true)
+        case 2:
+            present(ModuleBuilder.addViewController(action: .inddepend), animated: true)
+        default:
+            break
+        }
     }
     
 }
