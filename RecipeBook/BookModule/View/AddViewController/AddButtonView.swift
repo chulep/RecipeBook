@@ -17,7 +17,7 @@ class AddButtonView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = UIColorHelper.systemLightGray
+        backgroundColor = UIColorHelper.systemMediumGray
         
         addSubview(buttonClosed)
         buttonClosed.setTitle("Закрыть", for: .normal)
@@ -39,7 +39,10 @@ class AddButtonView: UIView {
         stack.distribution = .fillEqually
         stack.axis = .horizontal
         stack.spacing = 10
-        stack.frame = CGRect(x: 10, y: buttonClosed.bounds.height + 5, width: bounds.width - 20, height: bounds.width / 2 - 20)
+        stack.frame = CGRect(x: 10, y: buttonClosed.bounds.height + 5, width: bounds.width - 20, height: bounds.width / 4 - 20)
+        
+        independButton.layer.cornerRadius = independButton.bounds.width / 4
+        internetButton.layer.cornerRadius = independButton.bounds.width / 4
     }
 
 }
