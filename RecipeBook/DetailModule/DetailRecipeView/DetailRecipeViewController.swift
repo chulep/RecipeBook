@@ -138,7 +138,7 @@ class DetailRecipeViewController: UIViewController {
         webView?.frame = view.bounds
         webView?.navigationDelegate = self
         guard let exLink = viewModel?.exURL else { return } // если писать на руском то выкидывает через урл { ретёрн }
-        if UIApplication.shared.checkURL(urlString: exLink) == false { //можно запихнуть в вью модель
+        if UIApplication.shared.checkURL(urlString: exLink) == false {
             let alertController = UIAlertController(title: "Не удалось открыть ссылку:", message: "\(exLink)", preferredStyle: .alert)
             let actionCancel = UIAlertAction(title: "Назад", style: .default) { action in
                 self.cancelItemButton()

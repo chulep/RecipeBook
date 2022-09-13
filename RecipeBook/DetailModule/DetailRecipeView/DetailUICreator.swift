@@ -47,4 +47,18 @@ final class DetailUICreate {
         return textView
     }
     
+    func createAlert(url: String, completion: @escaping (Bool) -> Void) -> UIAlertController {
+        let alertController = UIAlertController(title: "Не удалось открыть ссылку:", message: url, preferredStyle: .alert)
+        let actionCancel = UIAlertAction(title: "Назад", style: .default) { action in
+            completion(false)
+        }
+        let actionDelete = UIAlertAction(title: "Удалить", style: .default) { action in
+            completion(true)
+        }
+        alertController.addAction(actionDelete)
+        alertController.addAction(actionCancel)
+        
+        return alertController
+    }
+    
 }
