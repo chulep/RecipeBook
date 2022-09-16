@@ -21,10 +21,10 @@ class AddButtonView: UIView {
         
         addSubview(buttonClosed)
         buttonClosed.setTitle("Закрыть", for: .normal)
-        buttonClosed.frame = CGRect(x: 5, y: 0, width: bounds.width / 5, height: bounds.width / 9)
+        buttonClosed.frame = CGRect(x: bounds.width - buttonClosed.bounds.width - 5, y: 0, width: bounds.width / 5, height: bounds.width / 9)
         buttonClosed.addTarget(nil, action: #selector(BookViewController.buttonAddOpen), for: .touchUpInside)
         
-        internetButton.setTitle("Из интернета", for: .normal)
+        internetButton.setTitle("По ссылке", for: .normal)
         independButton.setTitle("Вручную", for: .normal)
         internetButton.tag = 1
         independButton.tag = 2
