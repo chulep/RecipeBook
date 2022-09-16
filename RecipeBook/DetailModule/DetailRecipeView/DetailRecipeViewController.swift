@@ -17,7 +17,7 @@ class DetailRecipeViewController: UIViewController {
     private var UICreator: DetailUICreator?
     
     var webView: WKWebView?
-    var activityIndicator: UIActivityIndicatorView?
+    var activityIndicator = UIActivityIndicatorView()
     
     var delegate: reloadRecipeDelegate?
     var viewModel: DetailRecipeViewModelType?
@@ -59,8 +59,7 @@ class DetailRecipeViewController: UIViewController {
             buttonsArray.append(deleteItem)
         }
         
-        let activity = UIActivityIndicatorView()
-        let indicatorItem = UIBarButtonItem(customView: activity)
+        let indicatorItem = UIBarButtonItem(customView: activityIndicator)
         buttonsArray.append(indicatorItem)
         
         navigationItem.setRightBarButtonItems(buttonsArray, animated: true)
@@ -69,6 +68,7 @@ class DetailRecipeViewController: UIViewController {
     //MARK: - Button method
     @objc func cancel() {
         webView?.stopLoading()
+        webView = nil
         dismiss(animated: true)
         delegate?.updateListRecipe()
     }
@@ -161,13 +161,13 @@ class DetailRecipeViewController: UIViewController {
 extension DetailRecipeViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        activityIndicator?.isHidden = false
-        activityIndicator?.startAnimating()
+        navigationItem.titleView = activityIndicator
+        activityIndicator.startAnimating()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        activityIndicator?.isHidden = true
-        activityIndicator?.stopAnimating()
+        navigationItem.titleView = nil
+        activityIndicator.stopAnimating()
     }
     
 }

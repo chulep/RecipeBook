@@ -132,7 +132,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         present(detailVC, animated: true)
     }
     
-    //MARK: - Search Method
+    //MARK: - Search Bar Delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         viewModel?.searchRecipe(text: searchText)
         collectionView?.reloadData()
@@ -161,7 +161,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
             navigationItem.titleView?.isHidden = true
             UIView.animate(withDuration: 0.3, delay: 0) {
                 self.addButtonView.frame.origin.y = self.view.bounds.height - self.view.bounds.width / 1.6
-                self.blurView.alpha = 0.7
+                self.blurView.alpha = 0.9
             }
         case false:
             navigationItem.titleView?.isHidden = false
