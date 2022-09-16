@@ -28,6 +28,9 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         viewModel = BookViewModel()
         createCollectionView()
         createUI()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(buttonAddOpen))
+        blurView.addGestureRecognizer(tap)
     }
     
     override func viewDidAppear(_ animated: Bool) {
