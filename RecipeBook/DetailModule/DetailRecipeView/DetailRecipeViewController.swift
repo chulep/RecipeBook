@@ -10,24 +10,32 @@ import WebKit
 
 class DetailRecipeViewController: UIViewController {
     
-    var recipeImageView = UIImageView()
-    var recipeNameLabel = UILabel()
-    var recipeDescriptionTextView = UITextView()
+    var recipeImageView: UIImageView?
+    var recipeNameLabel: UILabel?
+    var recipeDescriptionTextView: UITextView?
     private var supportDescriptionLabel: UILabel?
-    private var favoriteImage: UIImage?
-    private var createHelper = DetailUICreate()
+    private var UICreator: DetailUICreator?
     
     var webView: WKWebView?
     var activityIndicator: UIActivityIndicatorView?
     
     var delegate: reloadRecipeDelegate?
-    var viewModel: DetailRecipeViewModelType? 
+    var viewModel: DetailRecipeViewModelType?
     
-    //MARK: - viewDidLoad
+    init(viewModel: DetailRecipeViewModelType, UICreator: DetailUICreator) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+        self.UICreator = UICreator
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         createNavBarStyle()
-        
         if viewModel?.exURL == nil {
             createOfflineUI()
         } else {
@@ -40,32 +48,26 @@ class DetailRecipeViewController: UIViewController {
     func createNavBarStyle() {
         title = "Рецепт"
         navigationController?.navigationBar.tintColor = .white
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(cancelItemButton))
-        
-        switch viewModel!.favoriteRecipe {
-        case true:
-            favoriteImage = UIImage(systemName: "heart.fill")
-        case false:
-            favoriteImage = UIImage(systemName: "heart")
-        }
-        
-        var buttonArray = [UIBarButtonItem]()
-        activityIndicator = UIActivityIndicatorView()
-        let favoriteItem = UIBarButtonItem(image: favoriteImage, style: .plain, target: self, action: #selector(tapToFavorite))
-        buttonArray.append(favoriteItem)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: self, action: #selector(cancel))
+
+        var buttonsArray = [UIBarButtonItem]()
+        let favoriteItem = UIBarButtonItem(image: UICreator?.createFavoriteImage(favorite: viewModel!.favoriteRecipe), style: .plain, target: self, action: #selector(tapToFavorite))
+        buttonsArray.append(favoriteItem)
         
         if viewModel?.forModule == .bookModule {
-            let deleteItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(deleteObject))
-            buttonArray.append(deleteItem)
+            let deleteItem = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .plain, target: self, action: #selector(deleteRecipe))
+            buttonsArray.append(deleteItem)
         }
         
-        let indicatorItem = UIBarButtonItem(customView: activityIndicator!)
-        buttonArray.append(indicatorItem)
+        let activity = UIActivityIndicatorView()
+        let indicatorItem = UIBarButtonItem(customView: activity)
+        buttonsArray.append(indicatorItem)
         
-        navigationItem.setRightBarButtonItems(buttonArray, animated: true)
+        navigationItem.setRightBarButtonItems(buttonsArray, animated: true)
     }
     
-    @objc func cancelItemButton() {
+    //MARK: - Button method
+    @objc func cancel() {
         webView?.stopLoading()
         dismiss(animated: true)
         delegate?.updateListRecipe()
@@ -76,27 +78,21 @@ class DetailRecipeViewController: UIViewController {
         createNavBarStyle()
     }
     
-    @objc func deleteObject() {
-        let alertController = UIAlertController(title: "Хотите удалить рецепт?", message: "\(String(describing: viewModel?.name))", preferredStyle: .alert)
-        let actionCancel = UIAlertAction(title: "Отмена", style: .default) { action in
-            alertController.dismiss(animated: true)
-        }
-        let actionDelete = UIAlertAction(title: "Удалить", style: .default) { action in
+    @objc func deleteRecipe() {
+        let alertController = UICreator?.createDeleteAlert(recipeName: viewModel?.name) { [unowned self] in
             self.viewModel?.deleteRecipe()
-            self.cancelItemButton()
+            cancel()
         }
-        alertController.addAction(actionDelete)
-        alertController.addAction(actionCancel)
-        present(alertController, animated: true)
+        present(alertController!, animated: true)
     }
     
     //MARK: - Create offline detail UI
     func createOfflineUI() {
         view.backgroundColor = .white
-        recipeImageView = createHelper.createImageView(imageData: viewModel?.image)
-        recipeNameLabel = createHelper.createNameLabel(text: viewModel?.name)
-        recipeDescriptionTextView = createHelper.createTextView(text: viewModel?.description)
-        supportDescriptionLabel = createHelper.createSupportDescriptionLabel()
+        recipeImageView = UICreator?.createImageView(imageData: viewModel?.image)
+        recipeNameLabel = UICreator?.createNameLabel(text: viewModel?.name)
+        recipeDescriptionTextView = UICreator?.createTextView(text: viewModel?.description)
+        supportDescriptionLabel = UICreator?.createSupportDescriptionLabel()
         
         for i in [recipeNameLabel, recipeDescriptionTextView, recipeImageView, supportDescriptionLabel] {
             i!.translatesAutoresizingMaskIntoConstraints = false
@@ -109,25 +105,25 @@ class DetailRecipeViewController: UIViewController {
         }
         
         NSLayoutConstraint.activate([
-            recipeImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1),
-            recipeImageView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            recipeImageView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            recipeImageView.heightAnchor.constraint(equalToConstant: imageHeight),
+            recipeImageView!.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1),
+            recipeImageView!.leftAnchor.constraint(equalTo: view.leftAnchor),
+            recipeImageView!.rightAnchor.constraint(equalTo: view.rightAnchor),
+            recipeImageView!.heightAnchor.constraint(equalToConstant: imageHeight),
             
-            recipeNameLabel.topAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: 13),
-            recipeNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            recipeNameLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            recipeNameLabel.heightAnchor.constraint(equalTo: recipeNameLabel.widthAnchor, multiplier: 1/8),
+            recipeNameLabel!.topAnchor.constraint(equalTo: recipeImageView!.bottomAnchor, constant: 13),
+            recipeNameLabel!.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            recipeNameLabel!.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            recipeNameLabel!.heightAnchor.constraint(equalTo: recipeNameLabel!.widthAnchor, multiplier: 1/8),
             
-            supportDescriptionLabel!.topAnchor.constraint(equalTo: recipeNameLabel.bottomAnchor, constant: 13),
+            supportDescriptionLabel!.topAnchor.constraint(equalTo: recipeNameLabel!.bottomAnchor, constant: 13),
             supportDescriptionLabel!.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
             supportDescriptionLabel!.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
             supportDescriptionLabel!.heightAnchor.constraint(equalTo: supportDescriptionLabel!.widthAnchor, multiplier: 1/12),
             
-            recipeDescriptionTextView.topAnchor.constraint(equalTo: supportDescriptionLabel!.bottomAnchor),
-            recipeDescriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
-            recipeDescriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            recipeDescriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5)
+            recipeDescriptionTextView!.topAnchor.constraint(equalTo: supportDescriptionLabel!.bottomAnchor),
+            recipeDescriptionTextView!.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20),
+            recipeDescriptionTextView!.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            recipeDescriptionTextView!.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5)
         ])
     }
     
@@ -137,20 +133,23 @@ class DetailRecipeViewController: UIViewController {
         view.addSubview(webView!)
         webView?.frame = view.bounds
         webView?.navigationDelegate = self
-        guard let exLink = viewModel?.exURL else { return } // если писать на руском то выкидывает через урл { ретёрн }
+        
+        //Alert, если ссылка битая
+        guard let exLink = viewModel?.exURL else { return }
         if UIApplication.shared.checkURL(urlString: exLink) == false {
-            let alertController = UIAlertController(title: "Не удалось открыть ссылку:", message: "\(exLink)", preferredStyle: .alert)
-            let actionCancel = UIAlertAction(title: "Назад", style: .default) { action in
-                self.cancelItemButton()
+            let alertController = UICreator?.createWarningAlert(urlString: exLink) { [unowned self] delete in
+                switch delete {
+                case false:
+                    self.cancel()
+                case true:
+                    self.viewModel?.deleteRecipe()
+                    self.cancel()
+                }
             }
-            let actionDelete = UIAlertAction(title: "Удалить", style: .default) { action in
-                self.viewModel?.deleteRecipe()
-                self.cancelItemButton()
-            }
-            alertController.addAction(actionDelete)
-            alertController.addAction(actionCancel)
-            present(alertController, animated: true)
+            present(alertController!, animated: true)
         }
+        
+        //Открываем, если ссылка рабочая
         guard let url = URL(string: exLink) else { return }
         let urlRequest = URLRequest(url: url)
         webView?.load(urlRequest)

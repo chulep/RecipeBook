@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DetailUICreate {
+final class DetailUICreator {
     func createImageView(imageData: Data?) -> UIImageView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -47,8 +47,8 @@ final class DetailUICreate {
         return textView
     }
     
-    func createAlert(url: String, completion: @escaping (Bool) -> Void) -> UIAlertController {
-        let alertController = UIAlertController(title: "Не удалось открыть ссылку:", message: url, preferredStyle: .alert)
+    func createWarningAlert(urlString: String?, completion: @escaping (Bool) -> Void) -> UIAlertController {
+        let alertController = UIAlertController(title: "Не удалось открыть ссылку:", message: urlString, preferredStyle: .alert)
         let actionCancel = UIAlertAction(title: "Назад", style: .default) { action in
             completion(false)
         }
@@ -57,8 +57,29 @@ final class DetailUICreate {
         }
         alertController.addAction(actionDelete)
         alertController.addAction(actionCancel)
-        
         return alertController
     }
     
+    func createDeleteAlert(recipeName: String?, completion: @escaping () -> Void) -> UIAlertController {
+        let alertController = UIAlertController(title: "Хотите удалить рецепт?", message: recipeName, preferredStyle: .alert)
+        let actionCancel = UIAlertAction(title: "Отмена", style: .default) { action in
+            alertController.dismiss(animated: true)
+        }
+        let actionDelete = UIAlertAction(title: "Удалить", style: .default) { action in
+            completion()
+        }
+        alertController.addAction(actionDelete)
+        alertController.addAction(actionCancel)
+        return alertController
+    }
+    
+    func createFavoriteImage(favorite: Bool) -> UIImage? {
+        switch favorite {
+        case true:
+            return UIImage(systemName: "heart.fill")
+        case false:
+            return UIImage(systemName: "heart")
+        }
+    }
+
 }

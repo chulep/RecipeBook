@@ -12,16 +12,16 @@ class TabBarController: UITabBarController {
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        createTabBar()
+        createControllers()
         tabBarApperanse()
     }
     
     //MARK: - VC for TabBar
-    private func createTabBar() {
+    private func createControllers() {
         viewControllers = [
-            ModuleBuilder.bookModule(),
-            ModuleBuilder.calculationModule(),
-            ModuleBuilder.favoritesModule()
+            ModuleBuilder.createBookModule(),
+            ModuleBuilder.createCalculationModule(),
+            ModuleBuilder.createFavoritesModule()
         ]
     }
     

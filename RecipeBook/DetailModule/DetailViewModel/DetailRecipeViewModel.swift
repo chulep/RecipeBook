@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 protocol DetailRecipeViewModelType {
     var image: Data? { get }
