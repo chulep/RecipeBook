@@ -46,7 +46,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         } else {
             nothingLabel.isHidden = true
         }
-        addButtonView.frame = CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: view.bounds.width / 1.7)
+        addButtonView.frame = CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: view.bounds.width / 1.6)
         blurView.isHidden = true
         navigationItem.titleView?.isHidden = false
         buttonIsOpen = false
@@ -124,13 +124,9 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     //delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let viewModel = viewModel else { return }
-        let detailVC = DetailRecipeViewController()
-        detailVC.delegate = self
-        detailVC.viewModel = viewModel.detailRecipeViewModel(forIdexPath: indexPath)
-        let navVC = UINavigationController(rootViewController: detailVC)
-        navVC.modalPresentationStyle = .fullScreen
-        present(navVC, animated: true)
+        guard let detailViewModel = viewModel?.detailRecipeViewModel(forIdexPath: indexPath) else { return }
+        let detailVC = ModuleBuilder.createDetailModule(viewModel: detailViewModel)
+        present(detailVC, animated: true)
     }
     
     //MARK: - Search Method
@@ -161,7 +157,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
             blurView.alpha = 0
             navigationItem.titleView?.isHidden = true
             UIView.animate(withDuration: 0.3, delay: 0) {
-                self.addButtonView.frame.origin.y = self.view.bounds.height - self.view.bounds.width / 1.7
+                self.addButtonView.frame.origin.y = self.view.bounds.height - self.view.bounds.width / 1.6
                 self.blurView.alpha = 0.7
             }
         case false:
@@ -178,9 +174,9 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     @objc func openNewVC(_ button: UIButton) {
         switch button.tag {
         case 1:
-            present(ModuleBuilder.addViewController(action: .url), animated: true)
+            present(ModuleBuilder.createAddRecipeViewController(action: .url), animated: true)
         case 2:
-            present(ModuleBuilder.addViewController(action: .inddepend), animated: true)
+            present(ModuleBuilder.createAddRecipeViewController(action: .inddepend), animated: true)
         default:
             break
         }

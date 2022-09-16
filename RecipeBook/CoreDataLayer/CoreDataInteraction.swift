@@ -75,10 +75,10 @@ final class CoreDataInteraction: CoreDataInteractionType {
         }
         
         do {
-            print("Export CoreData DONE")
+            print("Export CoreData Favorite DONE")
             allRecipe = try context.fetch(fetchRequest)
         } catch {
-            print("Export CoreData ERROR")
+            print("Export CoreData Favorite ERROR")
         }
         
         let object = allRecipe[indexPath.row] as NSManagedObject

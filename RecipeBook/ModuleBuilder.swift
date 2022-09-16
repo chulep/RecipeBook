@@ -8,13 +8,26 @@
 import UIKit
 
 protocol ModuleBuilderType {
-    static func calculationModule() -> CalculationViewController
-    static func favoritesModule() -> FavoritesViewController
+    
 }
 
 struct ModuleBuilder: ModuleBuilderType {
     
-    static func bookModule() -> UINavigationController {
+    static func createTabBarController() -> UITabBarController {
+        let tabBarContreoller = TabBarController()
+        return tabBarContreoller
+    }
+    
+    static func createNavigationBarApperance(backgroundColor: UIColor, textColor: UIColor) {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = backgroundColor
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : textColor]
+    }
+    
+    static func createBookModule() -> UINavigationController {
         let viewController = BookViewController()
         viewController.tabBarItem.title = "Рецепты"
         viewController.tabBarItem.image = UIImage(systemName: "book")
@@ -23,14 +36,14 @@ struct ModuleBuilder: ModuleBuilderType {
         return navController
     }
     
-    static func addViewController(action: AddRecipeViewController.Action) -> UINavigationController {
+    static func createAddRecipeViewController(action: AddRecipeViewController.Action) -> UINavigationController {
         let viewController = AddRecipeViewController(action: action)
         let navController = UINavigationController(rootViewController: viewController)
         navController.modalPresentationStyle = .fullScreen
         return navController
     }
     
-    static func calculationModule() -> CalculationViewController {
+    static func createCalculationModule() -> CalculationViewController {
         let model = CalculateModel()
         let viewModel = CalculationViewModel(model: model)
         let displayView = DisplayView()
@@ -41,13 +54,21 @@ struct ModuleBuilder: ModuleBuilderType {
         return viewController
     }
     
-    static func favoritesModule() -> FavoritesViewController {
+    static func createFavoritesModule() -> FavoritesViewController {
         let coreData = CoreDataInteraction()
         let viewModel = FavoritesViewModel(coreData: coreData)
         let viewController = FavoritesViewController(viewModel: viewModel)
         viewController.title = "Избранное"
         viewController.tabBarItem.image = UIImage(systemName: "heart")
         return viewController
+    }
+    
+    static func createDetailModule(viewModel: DetailRecipeViewModelType) -> UINavigationController {
+        let detailUICreator = DetailUICreator()
+        let viewController = DetailRecipeViewController(viewModel: viewModel, UICreator: detailUICreator)
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.modalPresentationStyle = .fullScreen
+        return navController
     }
     
 }

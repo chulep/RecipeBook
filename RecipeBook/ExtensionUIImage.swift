@@ -20,4 +20,13 @@ extension UIImage {
         }
     }
     
+    static func openImageData(data: Data?) -> UIImage {
+        switch data {
+        case _ where data != nil:
+            return UIImage(data: data!)!
+        default:
+            return UIImage()
+        }
+    }
+    
 }

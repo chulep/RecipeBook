@@ -69,12 +69,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailViewModel = viewModel?.detailRecipeViewModel(forIdexPath: indexPath)
-        let detailVC = DetailRecipeViewController()
-        detailVC.viewModel = detailViewModel
-        let navVC = UINavigationController(rootViewController: detailVC)
-        navVC.modalPresentationStyle = .fullScreen
-        present(navVC, animated: true)
+        guard let detailViewModel = viewModel?.detailRecipeViewModel(forIdexPath: indexPath) else { return }
+        let detailVC = ModuleBuilder.createDetailModule(viewModel: detailViewModel)
+        present(detailVC, animated: true)
     }
 
     //MARK: - Other
