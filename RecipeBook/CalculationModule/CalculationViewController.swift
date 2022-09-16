@@ -47,17 +47,17 @@ class CalculationViewController: UIViewController {
             displayView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             displayView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 7),
             displayView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -7),
-            displayView.heightAnchor.constraint(equalToConstant: view.bounds.height / 3),
+            displayView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -view.bounds.height / 12),
             
-            productSegment.bottomAnchor.constraint(equalTo: numberPadView.topAnchor, constant: -7),
+            productSegment.topAnchor.constraint(equalTo: view.centerYAnchor, constant: view.bounds.height / 12),
             productSegment.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 7),
             productSegment.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -7),
             productSegment.heightAnchor.constraint(equalToConstant: view.bounds.height / 24),
             
+            numberPadView.topAnchor.constraint(equalTo: productSegment.bottomAnchor, constant: 7),
             numberPadView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -22),
             numberPadView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 7),
             numberPadView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -7),
-            numberPadView.heightAnchor.constraint(equalToConstant: view.bounds.height / 4)
         ])
     }
     
