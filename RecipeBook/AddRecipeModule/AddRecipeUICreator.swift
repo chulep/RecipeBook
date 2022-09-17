@@ -10,8 +10,11 @@ import UIKit
 protocol AddRecipeUICreatorType {
     func createImageButton(bounds: CGRect) -> UIButton
     func createNameTextField() -> UITextField
-    func createUrlTextField() -> UITextField
-    func createDescriptionTextView() -> UITextView
+    func createUrlTextField(action: AddRecipeViewController.Action) -> UITextField
+    func createDescriptionTextView(action: AddRecipeViewController.Action) -> UITextView
+    func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView)
+    func imagePickerController() -> UIImagePickerController
+    func settingsRadius(imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView)
 }
 
 class AddRecipeUICreator: AddRecipeUICreatorType {
@@ -37,17 +40,20 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
         return textField
     }
     
-    func createUrlTextField() -> UITextField {
+    func createUrlTextField(action: AddRecipeViewController.Action) -> UITextField {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.layer.borderColor = UIColor.gray.cgColor
         textField.layer.borderWidth = 1
         textField.textAlignment = .center
         textField.placeholder = "Вставьте ссылку"
+        if action == .inddepend {
+            textField.isHidden = true
+        }
         return textField
     }
     
-    func createDescriptionTextView() -> UITextView {
+    func createDescriptionTextView(action: AddRecipeViewController.Action) -> UITextView {
         let textView = UITextView()
         textView.backgroundColor = .white
         textView.layer.borderColor = UIColor.gray.cgColor
@@ -56,7 +62,52 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
         textView.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         textView.textAlignment = .center
         textView.font = UIFont.boldSystemFont(ofSize: 15)
+        if action == .url {
+            textView.isHidden = true
+        }
         return textView
+    }
+    
+    func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView) {
+        for i in [imageButton, nameTextField, urlTextField, descriptionTextView] {
+            i.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        NSLayoutConstraint.activate([
+            imageButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
+            imageButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 110),
+            imageButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -110),
+            imageButton.widthAnchor.constraint(equalTo: imageButton.heightAnchor),
+            
+            nameTextField.topAnchor.constraint(equalTo: imageButton.bottomAnchor, constant: 15),
+            nameTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            nameTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            nameTextField.heightAnchor.constraint(equalTo: imageButton.heightAnchor, multiplier: 1/4),
+            
+            descriptionTextView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
+            descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            descriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            
+            urlTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
+            urlTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            urlTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            urlTextField.heightAnchor.constraint(equalTo: imageButton.heightAnchor, multiplier: 1/4),
+        ])
+    }
+    
+    func imagePickerController() -> UIImagePickerController {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera
+        imagePicker.allowsEditing = true
+        return imagePicker
+    }
+    
+    func settingsRadius(imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView) {
+        imageButton.layer.cornerRadius = imageButton.bounds.height / 2
+        nameTextField.layer.cornerRadius = nameTextField.bounds.height / 3
+        urlTextField.layer.cornerRadius = nameTextField.bounds.height / 3
+        descriptionTextView.layer.cornerRadius = descriptionTextView.bounds.height / 30
     }
     
 }

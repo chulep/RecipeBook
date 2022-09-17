@@ -16,23 +16,20 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     private var urlTextField = UITextField()
     private var imagePickerController: UIImagePickerController!
     weak var delegate: reloadRecipeDelegate?
+    private var action: Action!
     
     var viewModel: AddRecipeViewModelType!
     var UICreator: AddRecipeUICreatorType!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         createUI()
         createNavBarStyle()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        imageButton.layer.cornerRadius = imageButton.bounds.height / 2
-        nameTextField.layer.cornerRadius = nameTextField.bounds.height / 3
-        urlTextField.layer.cornerRadius = nameTextField.bounds.height / 3
-        descriptionTextView.layer.cornerRadius = descriptionTextView.bounds.height / 30
+        UICreator.settingsRadius(imageButton: imageButton, nameTextField: nameTextField, descriptionTextView: descriptionTextView, urlTextField: urlTextField)
     }
     
     //MARK: - Init
@@ -45,59 +42,22 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
         self.UICreator = UICreator
-        
-        switch action {
-        case .url:
-            descriptionTextView.isHidden = true
-            descriptionTextView.text = nil
-        case .inddepend:
-            urlTextField.isHidden = true
-            urlTextField.text = nil
-        }
+        self.action = action
     }
     
     //MARK: - UI
     func createUI() {
+        view.backgroundColor = .white
+        imageButton = UICreator.createImageButton(bounds: view.bounds)
+        nameTextField = UICreator.createNameTextField()
+        descriptionTextView = UICreator.createDescriptionTextView(action: action)
+        urlTextField = UICreator.createUrlTextField(action: action)
+        
         for i in [imageButton, nameTextField, urlTextField, descriptionTextView] {
-            i.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(i)
         }
         
-        //imageButton = UICreator.createImageButton(bounds: view.bounds)
-        imageButton.setImage(UIImage(systemName: "camera")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: view.bounds.width / 6)), for: .normal)
-        imageButton.addTarget(nil, action: #selector(AddRecipeViewController.touchSetImage), for: .touchUpInside)
-        imageButton.tintColor = .white
-        imageButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        imageButton.imageView?.contentMode = .scaleAspectFill
-        imageButton.clipsToBounds = true
-        
-        nameTextField = UICreator.createNameTextField()
-        urlTextField = UICreator.createUrlTextField()
-        descriptionTextView = UICreator.createDescriptionTextView()
-        descriptionTextView.delegate = self
-        
-        NSLayoutConstraint.activate([
-            imageButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
-            imageButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 110),
-            imageButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -110),
-            imageButton.widthAnchor.constraint(equalTo: imageButton.heightAnchor),
-            
-            nameTextField.topAnchor.constraint(equalTo: imageButton.bottomAnchor, constant: 15),
-            nameTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
-            nameTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            nameTextField.heightAnchor.constraint(equalTo: imageButton.heightAnchor, multiplier: 1/4),
-            
-            descriptionTextView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
-            descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
-            descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            descriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
-            
-            urlTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
-            urlTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
-            urlTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            urlTextField.heightAnchor.constraint(equalTo: imageButton.heightAnchor, multiplier: 1/4),
-        ])
-        
+        UICreator.createConstraints(view: view, imageButton: imageButton, nameTextField: nameTextField, descriptionTextView: descriptionTextView, urlTextField: urlTextField)
     }
     
     func createNavBarStyle() {
@@ -135,10 +95,8 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     
     //MARK: - UIPickerController
     @objc func touchSetImage() {
-        imagePickerController = UIImagePickerController()
+        imagePickerController = UICreator.imagePickerController()
         imagePickerController.delegate = self
-        imagePickerController.sourceType = .camera
-        imagePickerController.allowsEditing = true
         present(imagePickerController, animated: true)
     }
     
