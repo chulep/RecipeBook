@@ -16,7 +16,9 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     private var urlTextField = UITextField()
     private var imagePickerController: UIImagePickerController!
     weak var delegate: reloadRecipeDelegate?
-    var recipeModel = CoreDataInteraction()
+    
+    var viewModel: AddRecipeViewModelType!
+    var UICreator: AddRecipeUICreatorType!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +41,10 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         case inddepend
     }
     
-    convenience init(action: Action) {
+    convenience init(action: Action, viewModel: AddRecipeViewModelType, UICreator: AddRecipeUICreatorType) {
         self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+        self.UICreator = UICreator
         
         switch action {
         case .url:
@@ -59,33 +63,18 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
             view.addSubview(i)
         }
         
+        //imageButton = UICreator.createImageButton(bounds: view.bounds)
         imageButton.setImage(UIImage(systemName: "camera")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: view.bounds.width / 6)), for: .normal)
-        imageButton.addTarget(self, action: #selector(touchSetImage), for: .touchUpInside)
+        imageButton.addTarget(nil, action: #selector(AddRecipeViewController.touchSetImage), for: .touchUpInside)
         imageButton.tintColor = .white
         imageButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         imageButton.imageView?.contentMode = .scaleAspectFill
         imageButton.clipsToBounds = true
         
-        nameTextField.backgroundColor = .white
-        nameTextField.layer.borderColor = UIColor.gray.cgColor
-        nameTextField.layer.borderWidth = 1
-        nameTextField.textAlignment = .center
-        nameTextField.placeholder = "Введите название"
-        
-        urlTextField.backgroundColor = .white
-        urlTextField.layer.borderColor = UIColor.gray.cgColor
-        urlTextField.layer.borderWidth = 1
-        urlTextField.textAlignment = .center
-        urlTextField.placeholder = "Вставьте ссылку"
-        
-        descriptionTextView.backgroundColor = .white
-        descriptionTextView.layer.borderColor = UIColor.gray.cgColor
-        descriptionTextView.layer.borderWidth = 1
+        nameTextField = UICreator.createNameTextField()
+        urlTextField = UICreator.createUrlTextField()
+        descriptionTextView = UICreator.createDescriptionTextView()
         descriptionTextView.delegate = self
-        descriptionTextView.text = "Опишите рецепт"
-        descriptionTextView.textColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        descriptionTextView.textAlignment = .center
-        descriptionTextView.font = UIFont.boldSystemFont(ofSize: 15)
         
         NSLayoutConstraint.activate([
             imageButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
@@ -182,7 +171,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         if urlTextField.isHidden {
             if nameTextField.text != "" && descriptionTextView.text != "Опишите рецепт" && descriptionTextView.text != "" {
                 let imageData = UIImage.jpegData(image)(compressionQuality: 0.5)
-                recipeModel.saveRecipe(name: nameTextField.text, description: descriptionTextView.text, image: imageData, exURL: nil)
+                viewModel.saveRecipe(name: nameTextField.text, description: descriptionTextView.text, image: imageData, exURL: nil)
                 dismiss(animated: true)
                 delegate?.updateListRecipe()
             }
@@ -191,7 +180,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         if descriptionTextView.isHidden {
             if nameTextField.text != "" && urlTextField.text != "" {
                 let imageData = UIImage.jpegData(image)(compressionQuality: 0.5)
-                recipeModel.saveRecipe(name: nameTextField.text, description: nil, image: imageData, exURL: urlTextField.text)
+                viewModel.saveRecipe(name: nameTextField.text, description: nil, image: imageData, exURL: urlTextField.text)
                 dismiss(animated: true)
                 delegate?.updateListRecipe()
             }

@@ -20,6 +20,8 @@
 		5D13FCC9287ABAD900F5DF4D /* CalculationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D13FCC8287ABAD900F5DF4D /* CalculationViewController.swift */; };
 		5D13FCCB287ABAEA00F5DF4D /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D13FCCA287ABAEA00F5DF4D /* FavoritesViewController.swift */; };
 		5D16EE7928914EC700C7EEF8 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D16EE7828914EC700C7EEF8 /* CoreDataStack.swift */; };
+		5D1ACD6A28D5CDFD009108D9 /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1ACD6928D5CDFD009108D9 /* AddRecipeViewModel.swift */; };
+		5D1ACD6C28D5CFDD009108D9 /* AddRecipeUICreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1ACD6B28D5CFDD009108D9 /* AddRecipeUICreator.swift */; };
 		5D2E12EA28843EC2003601BB /* BookCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2E12E928843EC2003601BB /* BookCellViewModel.swift */; };
 		5D3706F328B136B0000B65F8 /* UIColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3706F228B136B0000B65F8 /* UIColorHelper.swift */; };
 		5D37877B28C127DF00B1AA4F /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */; };
@@ -58,6 +60,8 @@
 		5D13FCC8287ABAD900F5DF4D /* CalculationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationViewController.swift; sourceTree = "<group>"; };
 		5D13FCCA287ABAEA00F5DF4D /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		5D16EE7828914EC700C7EEF8 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		5D1ACD6928D5CDFD009108D9 /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
+		5D1ACD6B28D5CFDD009108D9 /* AddRecipeUICreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeUICreator.swift; sourceTree = "<group>"; };
 		5D2E12E928843EC2003601BB /* BookCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCellViewModel.swift; sourceTree = "<group>"; };
 		5D3706F228B136B0000B65F8 /* UIColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHelper.swift; sourceTree = "<group>"; };
 		5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 				5D13FCC5287AB92500F5DF4D /* TabBarModule */,
 				5D16EE7A28915E4A00C7EEF8 /* CoreDataLayer */,
 				5D3EC374287B5D8700A8B1F7 /* Model */,
+				5D9E3C872880139D003667FA /* AddRecipeModule */,
 				5D13FCC2287AB42000F5DF4D /* BookModule */,
 				5D13FCC3287AB42F00F5DF4D /* CalculationModule */,
 				5D13FCC4287AB59A00F5DF4D /* FavoritesModule */,
@@ -183,9 +188,9 @@
 		5D3EC373287B5D7B00A8B1F7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5D9E3C872880139D003667FA /* AddViewController */,
 				5D13FCC6287ABAC600F5DF4D /* BookViewController.swift */,
 				5D122624287C238F00FF3A0A /* BookCollectionViewCell.swift */,
+				5D6DFD3B28CE1B1100A77817 /* AddButtonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -234,13 +239,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		5D9E3C872880139D003667FA /* AddViewController */ = {
+		5D9E3C872880139D003667FA /* AddRecipeModule */ = {
 			isa = PBXGroup;
 			children = (
 				5D9E3C88288013FB003667FA /* AddRecipeViewController.swift */,
-				5D6DFD3B28CE1B1100A77817 /* AddButtonView.swift */,
+				5D1ACD6B28D5CFDD009108D9 /* AddRecipeUICreator.swift */,
+				5D1ACD6928D5CDFD009108D9 /* AddRecipeViewModel.swift */,
 			);
-			path = AddViewController;
+			path = AddRecipeModule;
 			sourceTree = "<group>";
 		};
 		5DAF954B28CF817800F37170 /* DetailModule */ = {
@@ -330,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D1ACD6A28D5CDFD009108D9 /* AddRecipeViewModel.swift in Sources */,
 				5DF60DF3287DE3F700D72AAC /* BookViewModel.swift in Sources */,
 				5D9E3C89288013FB003667FA /* AddRecipeViewController.swift in Sources */,
 				5D13FCB0287AB3F400F5DF4D /* TabBarController.swift in Sources */,
@@ -340,6 +347,7 @@
 				5D4148AF2886B9F7006AA00A /* DetailRecipeViewModel.swift in Sources */,
 				5D7678BE28A92A840094C002 /* FavoritesCellViewModel.swift in Sources */,
 				5D16EE7928914EC700C7EEF8 /* CoreDataStack.swift in Sources */,
+				5D1ACD6C28D5CFDD009108D9 /* AddRecipeUICreator.swift in Sources */,
 				5D67383A289A753E000714CA /* Box.swift in Sources */,
 				5DAF954E28CF88DA00F37170 /* DetailUICreator.swift in Sources */,
 				5D4148AD2886B9C7006AA00A /* DetailRecipeViewController.swift in Sources */,

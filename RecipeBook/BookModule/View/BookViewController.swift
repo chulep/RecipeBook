@@ -177,9 +177,9 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     @objc func openNewVC(_ button: UIButton) {
         switch button.tag {
         case 1:
-            present(ModuleBuilder.createAddRecipeViewController(action: .url), animated: true)
+            present(ModuleBuilder.createAddRecipeModule(action: .url), animated: true)
         case 2:
-            present(ModuleBuilder.createAddRecipeViewController(action: .inddepend), animated: true)
+            present(ModuleBuilder.createAddRecipeModule(action: .inddepend), animated: true)
         default:
             break
         }
