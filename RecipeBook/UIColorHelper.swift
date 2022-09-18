@@ -12,4 +12,6 @@ struct UIColorHelper {
     static let systemMediumGray = UIColor.gray
     static let systemOrange = UIColor.orange
     static let systemWhite = UIColor.white
+    static let systemBlack = UIColor.black
+    static let systemRed = UIColor.red
 }

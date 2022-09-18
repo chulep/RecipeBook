@@ -36,7 +36,7 @@ class DetailRecipeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createNavBarStyle()
-        if viewModel?.exURL == nil {
+        if viewModel?.exURL == "" || viewModel?.exURL == nil {
             createOfflineUI()
         } else {
             createOnlineUI()

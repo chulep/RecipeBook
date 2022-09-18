@@ -140,8 +140,8 @@
 		5D13FCC2287AB42000F5DF4D /* BookModule */ = {
 			isa = PBXGroup;
 			children = (
-				5D3EC373287B5D7B00A8B1F7 /* View */,
 				5D3EC375287B5DA100A8B1F7 /* ViewModel */,
+				5D3EC373287B5D7B00A8B1F7 /* View */,
 			);
 			path = BookModule;
 			sourceTree = "<group>";
@@ -239,12 +239,28 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		5D9E3C872880139D003667FA /* AddRecipeModule */ = {
+		5D87AC5028D7AD8A00C5BC94 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				5D9E3C88288013FB003667FA /* AddRecipeViewController.swift */,
 				5D1ACD6B28D5CFDD009108D9 /* AddRecipeUICreator.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5D87AC5128D7AD9800C5BC94 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
 				5D1ACD6928D5CDFD009108D9 /* AddRecipeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5D9E3C872880139D003667FA /* AddRecipeModule */ = {
+			isa = PBXGroup;
+			children = (
+				5D87AC5128D7AD9800C5BC94 /* ViewModel */,
+				5D87AC5028D7AD8A00C5BC94 /* View */,
 			);
 			path = AddRecipeModule;
 			sourceTree = "<group>";

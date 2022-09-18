@@ -51,6 +51,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         imageButton = UICreator.createImageButton(bounds: view.bounds)
         nameTextField = UICreator.createNameTextField()
         descriptionTextView = UICreator.createDescriptionTextView(action: action)
+        descriptionTextView.delegate = self
         urlTextField = UICreator.createUrlTextField(action: action)
         
         for i in [imageButton, nameTextField, urlTextField, descriptionTextView] {
@@ -80,7 +81,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1) {
             textView.text = ""
-            textView.textColor = .black
+            textView.textColor = UIColorHelper.systemBlack
             textView.textAlignment = .natural
         }
     }
@@ -108,39 +109,15 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     private func animateAndSave() {
-        
-        for i in [nameTextField, urlTextField] {
-            if i.text == "" {
-                i.center.x += 5
-                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: []) {
-                    i.center.x -= 5
-                }
-            }
-        }
-        
-        
-        if descriptionTextView.text == "" || descriptionTextView.text == "Опишите рецепт" {
-            descriptionTextView.center.x += 5
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: []) {
-                self.descriptionTextView.center.x -= 5
-            }
-        }
-        
-        if urlTextField.isHidden {
-            if nameTextField.text != "" && descriptionTextView.text != "Опишите рецепт" && descriptionTextView.text != "" {
-                let imageData = UIImage.jpegData(image)(compressionQuality: 0.5)
-                viewModel.saveRecipe(name: nameTextField.text, description: descriptionTextView.text, image: imageData, exURL: nil)
-                dismiss(animated: true)
-                delegate?.updateListRecipe()
-            }
-        }
-        
-        if descriptionTextView.isHidden {
-            if nameTextField.text != "" && urlTextField.text != "" {
-                let imageData = UIImage.jpegData(image)(compressionQuality: 0.5)
-                viewModel.saveRecipe(name: nameTextField.text, description: nil, image: imageData, exURL: urlTextField.text)
-                dismiss(animated: true)
-                delegate?.updateListRecipe()
+        UICreator.shakeAnimationIsFilling(nameTextField, urlTextField, descriptionTextView) { textIsFilling in
+            if textIsFilling {
+                let imageData = UIImage.jpegData(self.image)(compressionQuality: 0.4)
+                self.viewModel.saveRecipe(name: self.nameTextField.text,
+                                          description: self.descriptionTextView.text,
+                                          image: imageData,
+                                          exURL: self.urlTextField.text)
+                self.dismiss(animated: true)
+                self.delegate?.updateListRecipe()
             }
         }
     }

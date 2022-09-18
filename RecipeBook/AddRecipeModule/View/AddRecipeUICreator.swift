@@ -15,6 +15,7 @@ protocol AddRecipeUICreatorType {
     func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView)
     func imagePickerController() -> UIImagePickerController
     func settingsRadius(imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView)
+    func shakeAnimationIsFilling(_ name: UITextField, _ url: UITextField, _ description: UITextView, textIsFilling: @escaping (_ textIsFilling: Bool) -> Void)
 }
 
 class AddRecipeUICreator: AddRecipeUICreatorType {
@@ -108,6 +109,41 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
         nameTextField.layer.cornerRadius = nameTextField.bounds.height / 3
         urlTextField.layer.cornerRadius = nameTextField.bounds.height / 3
         descriptionTextView.layer.cornerRadius = descriptionTextView.bounds.height / 30
+    }
+    
+    func shakeAnimationIsFilling(_ name: UITextField, _ url: UITextField, _ description: UITextView, textIsFilling: @escaping (_ textIsFilling: Bool) -> Void) {
+        var isfilling = true
+        
+        if url.isHidden {
+            if description.text == "" || description.text == "Опишите рецепт" {
+                description.center.x += 5
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: []) {
+                    description.center.x -= 5
+                    description.layer.borderColor = UIColorHelper.systemRed.cgColor
+                }
+                isfilling = false
+            } else {
+                description.layer.borderColor = UIColorHelper.systemMediumGray.cgColor
+            }
+        }
+        
+        for i in [name, url] {
+            if i.text == "" {
+                i.center.x += 5
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: []) {
+                    i.center.x -= 5
+                    i.layer.borderColor = UIColorHelper.systemRed.cgColor
+                }
+            } else {
+                i.layer.borderColor = UIColorHelper.systemMediumGray.cgColor
+            }
+        }
+        
+        if url.isHidden == false && url.text == "" || name.text == "" {
+            isfilling = false
+        }
+        
+        textIsFilling(isfilling)
     }
     
 }
