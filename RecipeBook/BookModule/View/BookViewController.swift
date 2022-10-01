@@ -11,32 +11,29 @@ protocol reloadRecipeDelegate: AnyObject {
 
 import UIKit
 
-class BookViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
+final class BookViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
     
     private var blurView = UIVisualEffectView()
     private var buttonIsOpen = false
-    var addButtonView = AddButtonView()
-    var addButton = UIButton()
-    var collectionView: UICollectionView?
-    var viewModel: BookViewModelType?
+    private var addButtonView = AddButtonView()
+    private var addButton = UIButton()
     private var searchBar = UISearchBar()
-    private var nothingLabel = UILabel()
+    private var collectionView: UICollectionView?
+    private var viewModel: BookViewModelType?
+    private var nothingLabel: UILabel?
+    private var UICreator: BookUICreatorType?
+    
+    //MARK: - Init
+    convenience init(viewModel: BookViewModelType, UICreator: BookUICreatorType) {
+        self.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+        self.UICreator = UICreator
+    }
 
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = BookViewModel()
-        createCollectionView()
         createUI()
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(buttonAddOpen))
-        blurView.addGestureRecognizer(tap)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        addButton.layer.cornerRadius = addButton.bounds.height / 2
-        addButton.clipsToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,70 +42,41 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         collectionView?.reloadData()
         
         if viewModel?.recipeCount == 0 {
-            nothingLabel.isHidden = false
+            nothingLabel = UICreator?.createNothingLabel(bounds: view.bounds)
+            view.addSubview(nothingLabel!)
         } else {
-            nothingLabel.isHidden = true
+            nothingLabel?.isHidden = true
         }
-        addButtonView.frame = CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: view.bounds.width / 1.6)
-        blurView.isHidden = true
-        navigationItem.titleView?.isHidden = false
-        buttonIsOpen = false
+        
+        UICreator?.addNewRecipeViewAnimate(isOpen: nil, bounds: view.bounds, addView: addButtonView, blurView: blurView, navItem: navigationItem)
+        
+        addButton.layer.cornerRadius = addButton.bounds.height / 2
+        addButton.clipsToBounds = true
     }
     
     //MARK: - Create UI
     private func createUI() {
+        view.backgroundColor = .white
+        collectionView = UICreator?.createUICollectionView(bounds: view.bounds)
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
         
-        view.addSubview(nothingLabel)
-        nothingLabel.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 8)
-        nothingLabel.textAlignment = .center
-        nothingLabel.center = view.center
-        nothingLabel.textColor = ColorHelper.systemLightGray
-        nothingLabel.text = "Добавьте первый рецепт"
-        
-        view.addSubview(addButton)
-        addButton.backgroundColor = ColorHelper.systemOrange
+        addButton = UICreator!.createAddNewRecipeButton()
         addButton.addTarget(self, action: #selector(self.buttonAddOpen), for: .touchUpInside)
-        addButton.setImage(UIImage(systemName: "plus"), for: .normal)
-        addButton.tintColor = .white
-        addButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25),
-            addButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            addButton.widthAnchor.constraint(equalToConstant: view.bounds.width / 7),
-            addButton.heightAnchor.constraint(equalTo: addButton.widthAnchor)
-        ])
         
-        let blur = UIBlurEffect(style: .extraLight)
-        blurView = UIVisualEffectView(effect: blur)
-        view.addSubview(blurView)
-        blurView.frame = view.bounds
+        blurView = UICreator!.createBlurView(bounds: view.bounds)
         
-        view.addSubview(addButtonView)
+        for i in [collectionView!, addButton, blurView, addButtonView] {
+            view.addSubview(i)
+        }
+        
+        UICreator?.addButtonConstraintActivate(button: addButton, parrentView: view)
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(buttonAddOpen))
+        blurView.addGestureRecognizer(tap)
         
         navigationItem.titleView = searchBar
         searchBar.delegate = self
-        
-        view.backgroundColor = .white
-    }
-    
-    //MARK: - CollectionView Settings
-    private func settingCollectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: view.bounds.width / 2 - 15, height: view.bounds.width / 2 + 30)
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
-        layout.sectionHeadersPinToVisibleBounds = true
-        return layout
-    }
-    
-    private func createCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: settingCollectionViewLayout())
-        collectionView?.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.identifire)
-        collectionView?.frame = view.bounds
-        view.addSubview(collectionView!)
-        
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
     }
     
     //MARK: - CollectionView DataSource/Delegate
@@ -154,23 +122,7 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     @objc func buttonAddOpen() {
         buttonIsOpen = !buttonIsOpen
         searchBar.resignFirstResponder()
-        switch buttonIsOpen {
-        case true:
-            blurView.isHidden = false
-            blurView.alpha = 0
-            navigationItem.titleView?.isHidden = true
-            UIView.animate(withDuration: 0.3, delay: 0) {
-                self.addButtonView.frame.origin.y = self.view.bounds.height - self.view.bounds.width / 1.6
-                self.blurView.alpha = 0.9
-            }
-        case false:
-            navigationItem.titleView?.isHidden = false
-            blurView.isHidden = false
-            UIView.animate(withDuration: 0.3, delay: 0) {
-                self.addButtonView.frame.origin.y = self.view.bounds.height
-                self.blurView.alpha = 0
-            }
-        }
+        UICreator?.addNewRecipeViewAnimate(isOpen: buttonIsOpen, bounds: view.bounds, addView: addButtonView, blurView: blurView, navItem: navigationItem)
     }
     
     //MARK: - Open Add ViewController

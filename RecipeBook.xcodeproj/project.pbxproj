@@ -33,6 +33,7 @@
 		5D5AA8D128BA7B7000A936EB /* CalculateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5AA8D028BA7B7000A936EB /* CalculateModel.swift */; };
 		5D67383A289A753E000714CA /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D673839289A753E000714CA /* Box.swift */; };
 		5D6DFD3C28CE1B1100A77817 /* AddButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6DFD3B28CE1B1100A77817 /* AddButtonView.swift */; };
+		5D7325C628E843CA007DE8CB /* BookUICreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7325C528E843CA007DE8CB /* BookUICreator.swift */; };
 		5D7678B928A925020094C002 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678B828A925020094C002 /* FavoritesViewModel.swift */; };
 		5D7678BC28A9253B0094C002 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678BB28A9253B0094C002 /* FavoritesTableViewCell.swift */; };
 		5D7678BE28A92A840094C002 /* FavoritesCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7678BD28A92A840094C002 /* FavoritesCellViewModel.swift */; };
@@ -73,6 +74,7 @@
 		5D5AA8D028BA7B7000A936EB /* CalculateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateModel.swift; sourceTree = "<group>"; };
 		5D673839289A753E000714CA /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		5D6DFD3B28CE1B1100A77817 /* AddButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButtonView.swift; sourceTree = "<group>"; };
+		5D7325C528E843CA007DE8CB /* BookUICreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookUICreator.swift; sourceTree = "<group>"; };
 		5D7678B828A925020094C002 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		5D7678BB28A9253B0094C002 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		5D7678BD28A92A840094C002 /* FavoritesCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCellViewModel.swift; sourceTree = "<group>"; };
@@ -120,7 +122,7 @@
 				5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */,
 				5D4E011128B8E1E8005B375A /* CustomUIButton.swift */,
 				5D5AAEF928E83CE6008D19ED /* Extensions */,
-				5D5AAEFA28E83D41008D19ED /* Helpers */,
+				5D5AAEFB28E83E31008D19ED /* Helpers */,
 				5D13FCC5287AB92500F5DF4D /* TabBarModule */,
 				5D16EE7A28915E4A00C7EEF8 /* CoreDataLayer */,
 				5D3EC374287B5D8700A8B1F7 /* Model */,
@@ -185,6 +187,7 @@
 		5D3EC373287B5D7B00A8B1F7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5D7325C528E843CA007DE8CB /* BookUICreator.swift */,
 				5D13FCC6287ABAC600F5DF4D /* BookViewController.swift */,
 				5D122624287C238F00FF3A0A /* BookCollectionViewCell.swift */,
 				5D6DFD3B28CE1B1100A77817 /* AddButtonView.swift */,
@@ -253,12 +256,12 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		5D5AAEFA28E83D41008D19ED /* Helpers */ = {
+		5D5AAEFB28E83E31008D19ED /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				5D3706F228B136B0000B65F8 /* ColorHelper.swift */,
 			);
-			name = Helpers;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		5D7678B628A924C90094C002 /* View */ = {
@@ -413,6 +416,7 @@
 				5D122625287C238F00FF3A0A /* BookCollectionViewCell.swift in Sources */,
 				5D6DFD3C28CE1B1100A77817 /* AddButtonView.swift in Sources */,
 				5D7678B928A925020094C002 /* FavoritesViewModel.swift in Sources */,
+				5D7325C628E843CA007DE8CB /* BookUICreator.swift in Sources */,
 				5D13FCC7287ABAC600F5DF4D /* BookViewController.swift in Sources */,
 				5D4E011428B8EBC3005B375A /* DisplayView.swift in Sources */,
 				5D2E12EA28843EC2003601BB /* BookCellViewModel.swift in Sources */,

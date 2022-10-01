@@ -6,29 +6,23 @@
 //
 
 import Foundation
-import UIKit
 
 protocol BookCellViewModelType: AnyObject {
-    var name: String { get }
-    var image: UIImage? { get }
+    var name: String? { get }
+    var image: Data? { get }
+    var fromURL: Bool { get }
+    init(recipe: Recipe)
 }
 
 class BookCellViewModel: BookCellViewModelType {
-        
-    var name: String
-    var image: UIImage?
+    var image: Data?
+    var name: String?
+    var fromURL = false
     
-    init(recipe: Recipe) {
-        name = recipe.nameRecipe ?? ""
-        
-        switch recipe { // запихать в расширение уи имадж
-        case _ where recipe.exURL == nil || recipe.exURL == "" && recipe.imageRecipe == nil:
-            image = UIImage(systemName: "pencil.circle")
-        case _ where recipe.exURL != nil || recipe.exURL != "" && recipe.imageRecipe == nil:
-            image = UIImage(systemName: "globe")
-        default:
-            image = UIImage(data: recipe.imageRecipe!)
-        }
+    required init(recipe: Recipe) {
+        self.image = recipe.imageRecipe
+        self.name = recipe.nameRecipe
+        if recipe.exURL != "" && recipe.exURL != nil { fromURL = true }
     }
     
 }
