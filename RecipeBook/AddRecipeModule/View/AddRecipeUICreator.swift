@@ -119,11 +119,11 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
                 description.center.x += 5
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: []) {
                     description.center.x -= 5
-                    description.layer.borderColor = UIColorHelper.systemRed.cgColor
+                    description.layer.borderColor = ColorHelper.systemRed.cgColor
                 }
                 isfilling = false
             } else {
-                description.layer.borderColor = UIColorHelper.systemMediumGray.cgColor
+                description.layer.borderColor = ColorHelper.systemMediumGray.cgColor
             }
         }
         
@@ -132,10 +132,10 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
                 i.center.x += 5
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0, options: []) {
                     i.center.x -= 5
-                    i.layer.borderColor = UIColorHelper.systemRed.cgColor
+                    i.layer.borderColor = ColorHelper.systemRed.cgColor
                 }
             } else {
-                i.layer.borderColor = UIColorHelper.systemMediumGray.cgColor
+                i.layer.borderColor = ColorHelper.systemMediumGray.cgColor
             }
         }
         

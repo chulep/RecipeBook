@@ -23,7 +23,7 @@
 		5D1ACD6A28D5CDFD009108D9 /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1ACD6928D5CDFD009108D9 /* AddRecipeViewModel.swift */; };
 		5D1ACD6C28D5CFDD009108D9 /* AddRecipeUICreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1ACD6B28D5CFDD009108D9 /* AddRecipeUICreator.swift */; };
 		5D2E12EA28843EC2003601BB /* BookCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2E12E928843EC2003601BB /* BookCellViewModel.swift */; };
-		5D3706F328B136B0000B65F8 /* UIColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3706F228B136B0000B65F8 /* UIColorHelper.swift */; };
+		5D3706F328B136B0000B65F8 /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3706F228B136B0000B65F8 /* ColorHelper.swift */; };
 		5D37877B28C127DF00B1AA4F /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */; };
 		5D4148AD2886B9C7006AA00A /* DetailRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4148AC2886B9C7006AA00A /* DetailRecipeViewController.swift */; };
 		5D4148AF2886B9F7006AA00A /* DetailRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4148AE2886B9F7006AA00A /* DetailRecipeViewModel.swift */; };
@@ -63,7 +63,7 @@
 		5D1ACD6928D5CDFD009108D9 /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
 		5D1ACD6B28D5CFDD009108D9 /* AddRecipeUICreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeUICreator.swift; sourceTree = "<group>"; };
 		5D2E12E928843EC2003601BB /* BookCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCellViewModel.swift; sourceTree = "<group>"; };
-		5D3706F228B136B0000B65F8 /* UIColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHelper.swift; sourceTree = "<group>"; };
+		5D3706F228B136B0000B65F8 /* ColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
 		5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		5D4148AC2886B9C7006AA00A /* DetailRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecipeViewController.swift; sourceTree = "<group>"; };
 		5D4148AE2886B9F7006AA00A /* DetailRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecipeViewModel.swift; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 				5D13FCAD287AB3F400F5DF4D /* SceneDelegate.swift */,
 				5D673839289A753E000714CA /* Box.swift */,
 				5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */,
-				5D3706F228B136B0000B65F8 /* UIColorHelper.swift */,
+				5D3706F228B136B0000B65F8 /* ColorHelper.swift */,
 				5DAF954928CF7F8300F37170 /* ExtencionUIAplication.swift */,
 				5DE6750928B23D92006211E7 /* ExtensionUIImage.swift */,
 				5D4E011128B8E1E8005B375A /* CustomUIButton.swift */,
@@ -367,7 +367,7 @@
 				5D67383A289A753E000714CA /* Box.swift in Sources */,
 				5DAF954E28CF88DA00F37170 /* DetailUICreator.swift in Sources */,
 				5D4148AD2886B9C7006AA00A /* DetailRecipeViewController.swift in Sources */,
-				5D3706F328B136B0000B65F8 /* UIColorHelper.swift in Sources */,
+				5D3706F328B136B0000B65F8 /* ColorHelper.swift in Sources */,
 				5D0E40E228B60CC000B9E85B /* CalculetionViewModel.swift in Sources */,
 				5D37877B28C127DF00B1AA4F /* ModuleBuilder.swift in Sources */,
 				5D122625287C238F00FF3A0A /* BookCollectionViewCell.swift in Sources */,

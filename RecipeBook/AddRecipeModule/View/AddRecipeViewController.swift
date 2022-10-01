@@ -81,7 +81,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1) {
             textView.text = ""
-            textView.textColor = UIColorHelper.systemBlack
+            textView.textColor = ColorHelper.systemBlack
             textView.textAlignment = .natural
         }
     }
@@ -89,7 +89,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "Опишите рецепт"
-            textView.textColor = UIColorHelper.systemLightGray
+            textView.textColor = ColorHelper.systemLightGray
             textView.textAlignment = .center
         }
     }

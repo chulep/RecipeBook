@@ -27,7 +27,7 @@ class DisplayView: UIView, DisplayViewType {
         super.layoutSubviews()
         
         for i in [cupResultLabel, cupSupportLabel, spoonResultLabel, spoonSuppertLabel, gramSupportLabel, gramResultLabel] {
-            i.backgroundColor = UIColorHelper.systemLightGray
+            i.backgroundColor = ColorHelper.systemLightGray
             i.textAlignment = .center
             i.layer.cornerRadius = bounds.width / 3 / 9
             i.clipsToBounds = true

@@ -39,7 +39,7 @@ class CalculationViewController: UIViewController {
         }
         
         
-        productSegment.backgroundColor = UIColorHelper.systemLightGray
+        productSegment.backgroundColor = ColorHelper.systemLightGray
         productSegment.selectedSegmentIndex = 0
         productSegment.addTarget(self, action: #selector(selectSegment(_:)), for: .valueChanged)
         

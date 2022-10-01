@@ -43,7 +43,7 @@ class FavoritesTableViewCell: UITableViewCell {
         
         recipeImageView.layer.cornerRadius = radius
         recipeImageView.clipsToBounds = true
-        recipeImageView.tintColor = UIColorHelper.systemLightGray
+        recipeImageView.tintColor = ColorHelper.systemLightGray
         recipeImageView.contentMode = .scaleAspectFill
         
         recipeName.numberOfLines = 2
@@ -58,7 +58,7 @@ class FavoritesTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         let backgroundView = UIView()
-        backgroundView.backgroundColor = UIColorHelper.systemMediumGray
+        backgroundView.backgroundColor = ColorHelper.systemMediumGray
         selectedBackgroundView = backgroundView
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.isSelected = false

@@ -12,7 +12,7 @@ final class DetailUICreator {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.backgroundColor = UIColorHelper.systemLightGray
+        imageView.backgroundColor = ColorHelper.systemLightGray
         imageView.tintColor = .white
         imageView.image = UIImage.openImageData(data: imageData)
         return imageView
@@ -41,7 +41,7 @@ final class DetailUICreator {
         textView.textContainerInset = UIEdgeInsets.zero
         textView.textContainer.lineFragmentPadding = 0
         textView.isEditable = false
-        textView.textColor = UIColorHelper.systemMediumGray
+        textView.textColor = ColorHelper.systemMediumGray
         textView.font = UIFont.boldSystemFont(ofSize: 17)
         textView.text = text
         return textView
