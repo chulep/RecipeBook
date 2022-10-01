@@ -7,16 +7,16 @@
 
 import UIKit
 
-class BookCollectionViewCell: UICollectionViewCell {
+final class BookCollectionViewCell: UICollectionViewCell {
     
     static let identifire = "bookCell"
     private var imageView = UIImageView()
     private var nameLabel = UILabel()
     private lazy var radiusView = bounds.height / 10
-    var viewModel: BookCellViewModelType? {
+    var viewModel: BookCellViewModelType! {
         willSet(viewModel) {
             nameLabel.text = viewModel?.name
-            imageView.image = viewModel?.image
+            imageView.image = UIImage.createImage(data: viewModel.image, fromURL: viewModel.fromURL)
         }
     }
         

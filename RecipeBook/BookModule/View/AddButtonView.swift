@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddButtonView: UIView {
+final class AddButtonView: UIView {
     
     private let internetButton = UIButton()
     private let independButton = UIButton()

@@ -29,7 +29,9 @@ struct ModuleBuilder: ModuleBuilderType {
     }
     
     static func createBookModule() -> UINavigationController {
-        let viewController = BookViewController()
+        let UICreator = BookUICreator()
+        let viewModel = BookViewModel()
+        let viewController = BookViewController(viewModel: viewModel, UICreator: UICreator)
         viewController.tabBarItem.title = "Рецепты"
         viewController.tabBarItem.image = UIImage(systemName: "book")
         let navController = UINavigationController(rootViewController: viewController)
