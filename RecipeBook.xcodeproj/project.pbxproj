@@ -149,11 +149,9 @@
 		5D13FCC3287AB42F00F5DF4D /* CalculationModule */ = {
 			isa = PBXGroup;
 			children = (
-				5D13FCC8287ABAD900F5DF4D /* CalculationViewController.swift */,
-				5D4E011328B8EBC3005B375A /* DisplayView.swift */,
-				5D4E010F28B88ECC005B375A /* NumberPadView.swift */,
-				5D0E40E128B60CC000B9E85B /* CalculetionViewModel.swift */,
-				5D5AA8D028BA7B7000A936EB /* CalculateModel.swift */,
+				5D5AAEF828E7FDC0008D19ED /* Model */,
+				5D5AAEF728E7FDB1008D19ED /* ViewModel */,
+				5D5AAEF628E7FD9A008D19ED /* View */,
 			);
 			path = CalculationModule;
 			sourceTree = "<group>";
@@ -219,6 +217,32 @@
 				5DAF954D28CF88DA00F37170 /* DetailUICreator.swift */,
 			);
 			path = DetailRecipeView;
+			sourceTree = "<group>";
+		};
+		5D5AAEF628E7FD9A008D19ED /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5D13FCC8287ABAD900F5DF4D /* CalculationViewController.swift */,
+				5D4E010F28B88ECC005B375A /* NumberPadView.swift */,
+				5D4E011328B8EBC3005B375A /* DisplayView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5D5AAEF728E7FDB1008D19ED /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5D0E40E128B60CC000B9E85B /* CalculetionViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5D5AAEF828E7FDC0008D19ED /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5D5AA8D028BA7B7000A936EB /* CalculateModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		5D7678B628A924C90094C002 /* View */ = {
