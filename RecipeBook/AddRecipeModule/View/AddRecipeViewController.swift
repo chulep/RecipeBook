@@ -74,7 +74,17 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     @objc func confirmItemButton() {
-        animateAndSave()
+        UICreator.shakeAnimationIsFilling(nameTextField, urlTextField, descriptionTextView) { textIsFilling in
+            if textIsFilling {
+                let imageData = UIImage.jpegData(self.image)(compressionQuality: 0.4)
+                self.viewModel.saveRecipe(name: self.nameTextField.text,
+                                          description: self.descriptionTextView.text,
+                                          image: imageData,
+                                          exURL: self.urlTextField.text)
+                self.dismiss(animated: true)
+                self.delegate?.updateListRecipe()
+            }
+        }
     }
     
     //MARK: - TextView Delegate
@@ -106,20 +116,6 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         image = info[.originalImage] as! UIImage
         image.jpegData(compressionQuality: 0.4)
         imageButton.setImage(image, for: .normal)
-    }
-    
-    private func animateAndSave() {
-        UICreator.shakeAnimationIsFilling(nameTextField, urlTextField, descriptionTextView) { textIsFilling in
-            if textIsFilling {
-                let imageData = UIImage.jpegData(self.image)(compressionQuality: 0.4)
-                self.viewModel.saveRecipe(name: self.nameTextField.text,
-                                          description: self.descriptionTextView.text,
-                                          image: imageData,
-                                          exURL: self.urlTextField.text)
-                self.dismiss(animated: true)
-                self.delegate?.updateListRecipe()
-            }
-        }
     }
     
 }
