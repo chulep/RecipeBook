@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        ModuleBuilder.createNavigationBarApperance(backgroundColor: UIColorHelper.systemOrange, textColor: UIColorHelper.systemWhite)
+        ModuleBuilder.createNavigationBarApperance(backgroundColor: ColorHelper.systemOrange, textColor: ColorHelper.systemWhite)
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = ModuleBuilder.createTabBarController()
         window?.makeKeyAndVisible()

@@ -17,7 +17,7 @@ class AddButtonView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = UIColorHelper.systemMediumGray
+        backgroundColor = ColorHelper.systemMediumGray
         
         addSubview(buttonClosed)
         buttonClosed.setTitle("Закрыть", for: .normal)
@@ -30,19 +30,18 @@ class AddButtonView: UIView {
         independButton.tag = 2
         
         addSubview(stack)
-        for i in [independButton, internetButton] {
-            stack.addArrangedSubview(i)
-            i.backgroundColor = UIColorHelper.systemOrange
-            i.bounds.size = CGSize(width: bounds.width / 2 - 100, height: bounds.width / 2 - 100)
-            i.addTarget(nil, action: #selector(BookViewController.openNewVC(_:)), for: .touchUpInside)
-        }
         stack.distribution = .fillEqually
         stack.axis = .horizontal
         stack.spacing = 10
         stack.frame = CGRect(x: 10, y: buttonClosed.bounds.height + 5, width: bounds.width - 20, height: bounds.width / 4 - 20)
         
-        independButton.layer.cornerRadius = independButton.bounds.width / 4
-        internetButton.layer.cornerRadius = independButton.bounds.width / 4
+        for i in [independButton, internetButton] {
+            stack.addArrangedSubview(i)
+            i.backgroundColor = ColorHelper.systemOrange
+            i.bounds.size = CGSize(width: bounds.width / 2 - 100, height: bounds.width / 2 - 100)
+            i.addTarget(nil, action: #selector(BookViewController.openNewVC(_:)), for: .touchUpInside)
+            i.layer.cornerRadius = stack.bounds.height / 4
+        }
     }
 
 }

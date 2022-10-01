@@ -22,9 +22,9 @@ class BookCellViewModel: BookCellViewModelType {
         name = recipe.nameRecipe ?? ""
         
         switch recipe { // запихать в расширение уи имадж
-        case _ where recipe.exURL == nil && recipe.imageRecipe == nil:
+        case _ where recipe.exURL == nil || recipe.exURL == "" && recipe.imageRecipe == nil:
             image = UIImage(systemName: "pencil.circle")
-        case _ where recipe.exURL != nil && recipe.imageRecipe == nil:
+        case _ where recipe.exURL != nil || recipe.exURL != "" && recipe.imageRecipe == nil:
             image = UIImage(systemName: "globe")
         default:
             image = UIImage(data: recipe.imageRecipe!)

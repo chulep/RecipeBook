@@ -13,6 +13,7 @@ protocol DetailRecipeViewModelType {
     var description: String? { get }
     var exURL: String? { get }
     var favoriteRecipe: Bool { get set }
+    var isOffline: Bool { get set }
     var forModule: ForModule { get }
     func tapToFavorite()
     func deleteRecipe()
@@ -26,6 +27,7 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
     var description: String?
     var exURL: String?
     var favoriteRecipe: Bool
+    var isOffline: Bool
     var forModule: ForModule
     private var indexPath: IndexPath
     let model = CoreDataInteraction()
@@ -38,6 +40,12 @@ class DetailRecipeViewModel: DetailRecipeViewModelType {
         self.indexPath = indexPath
         self.forModule = forModule
         self.image = recipe.imageRecipe
+        
+        if exURL == "" || exURL == nil {
+            isOffline = true
+        } else {
+            isOffline = false
+        }
     }
     
     func tapToFavorite() {

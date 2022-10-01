@@ -49,7 +49,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         view.addSubview(nothingLabel)
         nothingLabel.textAlignment = .center
         nothingLabel.center = view.center
-        nothingLabel.textColor = UIColorHelper.systemLightGray
+        nothingLabel.textColor = ColorHelper.systemLightGray
         nothingLabel.text = "Нет избранных рецептов"
     }
     

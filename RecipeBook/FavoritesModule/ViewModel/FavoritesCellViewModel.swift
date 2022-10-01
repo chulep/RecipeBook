@@ -23,6 +23,6 @@ class FavoritesCellViewModel: FavoritesCellViewModelType {
     required init(recipe: Recipe) {
         self.name = recipe.nameRecipe
         self.image = recipe.imageRecipe
-        if recipe.exURL != nil { fromURL = true }
+        if recipe.exURL != "" && recipe.exURL != nil { fromURL = true }
     }
 }

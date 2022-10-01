@@ -62,11 +62,11 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
         nothingLabel.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.width / 8)
         nothingLabel.textAlignment = .center
         nothingLabel.center = view.center
-        nothingLabel.textColor = UIColorHelper.systemLightGray
+        nothingLabel.textColor = ColorHelper.systemLightGray
         nothingLabel.text = "Добавьте первый рецепт"
         
         view.addSubview(addButton)
-        addButton.backgroundColor = UIColorHelper.systemOrange
+        addButton.backgroundColor = ColorHelper.systemOrange
         addButton.addTarget(self, action: #selector(self.buttonAddOpen), for: .touchUpInside)
         addButton.setImage(UIImage(systemName: "plus"), for: .normal)
         addButton.tintColor = .white
@@ -177,9 +177,9 @@ class BookViewController: UIViewController, UICollectionViewDataSource, UICollec
     @objc func openNewVC(_ button: UIButton) {
         switch button.tag {
         case 1:
-            present(ModuleBuilder.createAddRecipeViewController(action: .url), animated: true)
+            present(ModuleBuilder.createAddRecipeModule(action: .url), animated: true)
         case 2:
-            present(ModuleBuilder.createAddRecipeViewController(action: .inddepend), animated: true)
+            present(ModuleBuilder.createAddRecipeModule(action: .inddepend), animated: true)
         default:
             break
         }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CloudKit
 
 protocol ModuleBuilderType {
     
@@ -36,8 +37,11 @@ struct ModuleBuilder: ModuleBuilderType {
         return navController
     }
     
-    static func createAddRecipeViewController(action: AddRecipeViewController.Action) -> UINavigationController {
-        let viewController = AddRecipeViewController(action: action)
+    static func createAddRecipeModule(action: AddRecipeViewController.Action) -> UINavigationController {
+        let coreData = CoreDataInteraction()
+        let viewModel = AddRecipeViewModel(coreData: coreData)
+        let UICreator = AddRecipeUICreator()
+        let viewController = AddRecipeViewController(action: action, viewModel: viewModel, UICreator: UICreator)
         let navController = UINavigationController(rootViewController: viewController)
         navController.modalPresentationStyle = .fullScreen
         return navController
