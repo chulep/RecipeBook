@@ -118,10 +118,9 @@
 				5D13FCAD287AB3F400F5DF4D /* SceneDelegate.swift */,
 				5D673839289A753E000714CA /* Box.swift */,
 				5D37877A28C127DF00B1AA4F /* ModuleBuilder.swift */,
-				5D3706F228B136B0000B65F8 /* ColorHelper.swift */,
-				5DAF954928CF7F8300F37170 /* ExtencionUIAplication.swift */,
-				5DE6750928B23D92006211E7 /* ExtensionUIImage.swift */,
 				5D4E011128B8E1E8005B375A /* CustomUIButton.swift */,
+				5D5AAEF928E83CE6008D19ED /* Extensions */,
+				5D5AAEFA28E83D41008D19ED /* Helpers */,
 				5D13FCC5287AB92500F5DF4D /* TabBarModule */,
 				5D16EE7A28915E4A00C7EEF8 /* CoreDataLayer */,
 				5D3EC374287B5D8700A8B1F7 /* Model */,
@@ -243,6 +242,23 @@
 				5D5AA8D028BA7B7000A936EB /* CalculateModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5D5AAEF928E83CE6008D19ED /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5DAF954928CF7F8300F37170 /* ExtencionUIAplication.swift */,
+				5DE6750928B23D92006211E7 /* ExtensionUIImage.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5D5AAEFA28E83D41008D19ED /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5D3706F228B136B0000B65F8 /* ColorHelper.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		5D7678B628A924C90094C002 /* View */ = {
