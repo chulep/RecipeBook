@@ -15,6 +15,7 @@ protocol BookUICreatorType {
     func createAddNewRecipeButton() -> UIButton
     func addNewRecipeViewAnimate(isOpen: Bool?, bounds: CGRect, addView: UIView, blurView: UIView, navItem: UINavigationItem)
     func addButtonConstraintActivate(button: UIButton, parrentView: UIView)
+    func circleRadius(view: UIView)
 }
 
 final class BookUICreator: BookUICreatorType {
@@ -87,6 +88,11 @@ final class BookUICreator: BookUICreatorType {
             button.widthAnchor.constraint(equalToConstant: parrentView.bounds.width / 7),
             button.heightAnchor.constraint(equalTo: button.widthAnchor)
         ])
+    }
+    
+    func circleRadius(view: UIView) {
+        view.layer.cornerRadius = view.bounds.height / 2
+        view.clipsToBounds = true
     }
     
 }

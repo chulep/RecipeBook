@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BookCollectionViewCell: UICollectionViewCell {
+final class BookCollectionViewCell: UICollectionViewCell {
     
     static let identifire = "bookCell"
     private var imageView = UIImageView()

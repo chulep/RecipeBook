@@ -15,13 +15,13 @@ final class BookViewController: UIViewController, UICollectionViewDataSource, UI
     
     private var blurView = UIVisualEffectView()
     private var buttonIsOpen = false
-    private var addButtonView = AddButtonView()
-    private var addButton = UIButton()
+    private var addRecipeView = AddButtonView()
+    private var addRecipeButton = UIButton()
     private var searchBar = UISearchBar()
-    private var collectionView: UICollectionView?
-    private var viewModel: BookViewModelType?
-    private var nothingLabel: UILabel?
-    private var UICreator: BookUICreatorType?
+    private var collectionView: UICollectionView!
+    private var viewModel: BookViewModelType!
+    private var nothingLabel: UILabel!
+    private var UICreator: BookUICreatorType!
     
     //MARK: - Init
     convenience init(viewModel: BookViewModelType, UICreator: BookUICreatorType) {
@@ -38,39 +38,42 @@ final class BookViewController: UIViewController, UICollectionViewDataSource, UI
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel?.exportAllRecipes()
-        collectionView?.reloadData()
+        viewModel.exportAllRecipes()
+        collectionView.reloadData()
         
         if viewModel?.recipeCount == 0 {
-            nothingLabel = UICreator?.createNothingLabel(bounds: view.bounds)
-            view.addSubview(nothingLabel!)
+            nothingLabel = UICreator.createNothingLabel(bounds: view.bounds)
+            view.addSubview(nothingLabel)
         } else {
             nothingLabel?.isHidden = true
         }
         
-        UICreator?.addNewRecipeViewAnimate(isOpen: nil, bounds: view.bounds, addView: addButtonView, blurView: blurView, navItem: navigationItem)
-        
-        addButton.layer.cornerRadius = addButton.bounds.height / 2
-        addButton.clipsToBounds = true
+        UICreator.addNewRecipeViewAnimate(isOpen: nil, bounds: view.bounds, addView: addRecipeView, blurView: blurView, navItem: navigationItem)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        UICreator.circleRadius(view: addRecipeButton)
     }
     
     //MARK: - Create UI
     private func createUI() {
         view.backgroundColor = .white
-        collectionView = UICreator?.createUICollectionView(bounds: view.bounds)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
         
-        addButton = UICreator!.createAddNewRecipeButton()
-        addButton.addTarget(self, action: #selector(self.buttonAddOpen), for: .touchUpInside)
+        collectionView = UICreator.createUICollectionView(bounds: view.bounds)
+        collectionView.dataSource = self
+        collectionView.delegate = self
         
-        blurView = UICreator!.createBlurView(bounds: view.bounds)
+        addRecipeButton = UICreator.createAddNewRecipeButton()
+        addRecipeButton.addTarget(self, action: #selector(self.buttonAddOpen), for: .touchUpInside)
         
-        for i in [collectionView!, addButton, blurView, addButtonView] {
+        blurView = UICreator.createBlurView(bounds: view.bounds)
+        
+        for i in [collectionView!, addRecipeButton, blurView, addRecipeView] {
             view.addSubview(i)
         }
         
-        UICreator?.addButtonConstraintActivate(button: addButton, parrentView: view)
+        UICreator.addButtonConstraintActivate(button: addRecipeButton, parrentView: view)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(buttonAddOpen))
         blurView.addGestureRecognizer(tap)
@@ -82,7 +85,7 @@ final class BookViewController: UIViewController, UICollectionViewDataSource, UI
     //MARK: - CollectionView DataSource/Delegate
     //dataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel?.recipeCount ?? 0
+        viewModel.recipeCount ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -95,14 +98,14 @@ final class BookViewController: UIViewController, UICollectionViewDataSource, UI
     
     //delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let detailViewModel = viewModel?.detailRecipeViewModel(forIdexPath: indexPath) else { return }
+        guard let detailViewModel = viewModel.detailRecipeViewModel(forIdexPath: indexPath) else { return }
         let detailVC = ModuleBuilder.createDetailModule(viewModel: detailViewModel)
         present(detailVC, animated: true)
     }
     
     //MARK: - Search Bar Delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        viewModel?.searchRecipe(text: searchText)
+        viewModel.searchRecipe(text: searchText)
         collectionView?.reloadData()
     }
     
@@ -122,7 +125,7 @@ final class BookViewController: UIViewController, UICollectionViewDataSource, UI
     @objc func buttonAddOpen() {
         buttonIsOpen = !buttonIsOpen
         searchBar.resignFirstResponder()
-        UICreator?.addNewRecipeViewAnimate(isOpen: buttonIsOpen, bounds: view.bounds, addView: addButtonView, blurView: blurView, navItem: navigationItem)
+        UICreator.addNewRecipeViewAnimate(isOpen: buttonIsOpen, bounds: view.bounds, addView: addRecipeView, blurView: blurView, navItem: navigationItem)
     }
     
     //MARK: - Open Add ViewController
@@ -142,8 +145,8 @@ final class BookViewController: UIViewController, UICollectionViewDataSource, UI
 //MARK: - Add Recipe Delegate
 extension BookViewController: reloadRecipeDelegate {
     func updateListRecipe() {
-        viewModel?.exportAllRecipes()
-        collectionView?.reloadData()
+        viewModel.exportAllRecipes()
+        collectionView.reloadData()
     }
     
 }
