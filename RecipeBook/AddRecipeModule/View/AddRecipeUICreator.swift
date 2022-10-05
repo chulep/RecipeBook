@@ -74,18 +74,21 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
             i.translatesAutoresizingMaskIntoConstraints = false
         }
         
+        let descriptionTopA = descriptionTextView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15)
+        descriptionTopA.priority = UILayoutPriority(999)
+        
         NSLayoutConstraint.activate([
             imageButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
             imageButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 110),
             imageButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -110),
-            imageButton.widthAnchor.constraint(equalTo: imageButton.heightAnchor),
+            imageButton.heightAnchor.constraint(equalTo: imageButton.widthAnchor),
             
             nameTextField.topAnchor.constraint(equalTo: imageButton.bottomAnchor, constant: 15),
             nameTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             nameTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            nameTextField.heightAnchor.constraint(equalTo: imageButton.heightAnchor, multiplier: 1/4),
+            nameTextField.heightAnchor.constraint(equalTo: imageButton.widthAnchor, multiplier: 1/4),
             
-            descriptionTextView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
+            descriptionTopA,
             descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             descriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
@@ -93,7 +96,7 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
             urlTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
             urlTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             urlTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            urlTextField.heightAnchor.constraint(equalTo: imageButton.heightAnchor, multiplier: 1/4),
+            urlTextField.heightAnchor.constraint(equalTo: imageButton.widthAnchor, multiplier: 1/4),
         ])
     }
     

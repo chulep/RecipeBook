@@ -20,16 +20,24 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     
     var viewModel: AddRecipeViewModelType!
     var UICreator: AddRecipeUICreatorType!
+    var myKeyboradFrame: CGRect?
+    var constrants = NSLayoutConstraint()
+    var keyboeardIsOpen = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        keyboardNotification()
         createUI()
         createNavBarStyle()
+        constrants = descriptionTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         UICreator.settingsRadius(imageButton: imageButton, nameTextField: nameTextField, descriptionTextView: descriptionTextView, urlTextField: urlTextField)
+
     }
     
     //MARK: - Init
@@ -102,6 +110,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
             textView.textColor = ColorHelper.systemLightGray
             textView.textAlignment = .center
         }
+        
     }
     
     //MARK: - UIPickerController
@@ -116,6 +125,36 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         image = info[.originalImage] as! UIImage
         image.jpegData(compressionQuality: 0.4)
         imageButton.setImage(image, for: .normal)
+    }
+    
+    //MARK: - keyboard show
+    func keyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        if keyboeardIsOpen == false {
+            var userInfo = notification.userInfo!
+            let keyboardFrame = userInfo.removeValue(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+            myKeyboradFrame = keyboardFrame.cgRectValue
+            view.frame.origin.y -= myKeyboradFrame!.height
+            constrants.constant = (myKeyboradFrame!.height + 5)
+            constrants.isActive = true
+            view.layoutIfNeeded()
+            keyboeardIsOpen = !keyboeardIsOpen
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        view.frame.origin.y += myKeyboradFrame?.height ?? 0
+        view.removeConstraint(constrants)
+        view.layoutIfNeeded()
+        keyboeardIsOpen = !keyboeardIsOpen
+    }
+    
+    @objc func endEditing() {
+        view.endEditing(true)
     }
     
 }
