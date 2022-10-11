@@ -12,13 +12,14 @@ protocol AddRecipeUICreatorType {
     func createNameTextField() -> UITextField
     func createUrlTextField(action: AddRecipeViewController.Action) -> UITextField
     func createDescriptionTextView(action: AddRecipeViewController.Action) -> UITextView
-    func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView)
+    func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView, confirmButton: UIView)
     func imagePickerController() -> UIImagePickerController
     func settingsRadius(imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView)
     func shakeAnimationIsFilling(_ name: UITextField, _ url: UITextField, _ description: UITextView, textIsFilling: @escaping (_ textIsFilling: Bool) -> Void)
 }
 
 class AddRecipeUICreator: AddRecipeUICreatorType {
+    
     
     func createImageButton(bounds: CGRect) -> UIButton {
         let button = UIButton()
@@ -69,13 +70,16 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
         return textView
     }
     
-    func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView) {
-        for i in [imageButton, nameTextField, urlTextField, descriptionTextView] {
+    func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView, confirmButton: UIView) {
+        for i in [imageButton, nameTextField, urlTextField, descriptionTextView, confirmButton] {
             i.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        let descriptionTopA = descriptionTextView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15)
-        descriptionTopA.priority = UILayoutPriority(999)
+        let descriptionTopAnchor = descriptionTextView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15)
+        descriptionTopAnchor.priority = UILayoutPriority(999)
+        let confirmHeight = confirmButton.heightAnchor.constraint(equalToConstant: 0)
+        confirmHeight.priority = UILayoutPriority(999)
+        
         
         NSLayoutConstraint.activate([
             imageButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
@@ -88,21 +92,26 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
             nameTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             nameTextField.heightAnchor.constraint(equalTo: imageButton.widthAnchor, multiplier: 1/4),
             
-            descriptionTopA,
+            descriptionTopAnchor,
             descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            descriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            descriptionTextView.bottomAnchor.constraint(equalTo: confirmButton.topAnchor),
             
             urlTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
             urlTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             urlTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             urlTextField.heightAnchor.constraint(equalTo: imageButton.widthAnchor, multiplier: 1/4),
+            
+            confirmButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            confirmButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            confirmButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/4),
+            confirmHeight
         ])
     }
     
     func imagePickerController() -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .camera
+        imagePicker.sourceType = .savedPhotosAlbum
         imagePicker.allowsEditing = true
         return imagePicker
     }

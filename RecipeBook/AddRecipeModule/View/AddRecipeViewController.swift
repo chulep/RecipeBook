@@ -14,6 +14,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     private var nameTextField = UITextField()
     private var descriptionTextView = UITextView()
     private var urlTextField = UITextField()
+    private var confirmButton = UIButton()
     private var imagePickerController: UIImagePickerController!
     weak var delegate: reloadRecipeDelegate?
     private var action: Action!
@@ -21,7 +22,8 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     var viewModel: AddRecipeViewModelType!
     var UICreator: AddRecipeUICreatorType!
     var myKeyboradFrame: CGRect?
-    var constrants = NSLayoutConstraint()
+    var constrantsD = NSLayoutConstraint()
+    var constraintsC = NSLayoutConstraint()
     var keyboeardIsOpen = false
     
     
@@ -30,14 +32,15 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         keyboardNotification()
         createUI()
         createNavBarStyle()
-        constrants = descriptionTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-        
+        constrantsD = descriptionTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+        constraintsC = confirmButton.heightAnchor.constraint(equalToConstant: 0)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         UICreator.settingsRadius(imageButton: imageButton, nameTextField: nameTextField, descriptionTextView: descriptionTextView, urlTextField: urlTextField)
-
+        
+        confirmButton.addTarget(self, action: #selector(tapConfirmButton), for: .touchUpInside)
     }
     
     //MARK: - Init
@@ -61,12 +64,15 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         descriptionTextView = UICreator.createDescriptionTextView(action: action)
         descriptionTextView.delegate = self
         urlTextField = UICreator.createUrlTextField(action: action)
+        confirmButton.setTitle("Готово", for: .normal)
+        confirmButton.setTitleColor(.black, for: .normal)
+        confirmButton.isHidden = true
         
-        for i in [imageButton, nameTextField, urlTextField, descriptionTextView] {
+        for i in [imageButton, nameTextField, urlTextField, descriptionTextView, confirmButton] {
             view.addSubview(i)
         }
         
-        UICreator.createConstraints(view: view, imageButton: imageButton, nameTextField: nameTextField, descriptionTextView: descriptionTextView, urlTextField: urlTextField)
+        UICreator.createConstraints(view: view, imageButton: imageButton, nameTextField: nameTextField, descriptionTextView: descriptionTextView, urlTextField: urlTextField, confirmButton: confirmButton)
     }
     
     func createNavBarStyle() {
@@ -139,8 +145,11 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
             let keyboardFrame = userInfo.removeValue(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
             myKeyboradFrame = keyboardFrame.cgRectValue
             view.frame.origin.y -= myKeyboradFrame!.height
-            constrants.constant = (myKeyboradFrame!.height + 5)
-            constrants.isActive = true
+            constrantsD.constant = (myKeyboradFrame!.height + 5)
+            constrantsD.isActive = true
+            confirmButton.isHidden = false
+            constraintsC.constant = view.bounds.width / 10
+            constraintsC.isActive = true
             view.layoutIfNeeded()
             keyboeardIsOpen = !keyboeardIsOpen
         }
@@ -148,12 +157,15 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     
     @objc func keyboardWillHide(notification: Notification) {
         view.frame.origin.y += myKeyboradFrame?.height ?? 0
-        view.removeConstraint(constrants)
+        view.removeConstraint(constrantsD)
+        constraintsC.constant = 0
+        constraintsC.isActive = true
+        confirmButton.isHidden = true
         view.layoutIfNeeded()
         keyboeardIsOpen = !keyboeardIsOpen
     }
     
-    @objc func endEditing() {
+    @objc func tapConfirmButton() {
         view.endEditing(true)
     }
     
