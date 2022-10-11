@@ -8,4 +8,4 @@ ___
 ___
 В приложении используется: UIKit, MVVM, DI, CoreData, Tab & NavBar, WKWebView, Collection & TableView, UIViewAnimation, UIAllertController, немного GCD, немного кастомных UI элементов и т.д.
 
-_Приложение все еще находится в разработке_
+_Приложение все еще находится в разработке._
