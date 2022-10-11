@@ -1,9 +1,11 @@
 # Добро пожаловать на страницу пет-проекта RecipeBook
-Приложение предназначено для любителей готовить. Тут вы можете добавить свои рецепты как вручную, так и по ссылке из интернета, а так же добавить их в избранное.
-Присутсвтует экран расчета грамм в ложки/стаканы, если вдруг на вашей кухне нет весов =)
+Приложение предназначено для любителей готовить. Тут вы можете добавить свои рецепты как вручную, так и по ссылке из интернета, а также добавить их в избранное.
+Присутсвтует экран расчета граммов в ложки/стаканы, если вдруг на вашей кухне нет весов =)
 Приложение состоит из нескольких экранов и имеет яркий интуитивный дизайн. 
 ___
 Ниже представлено несколько скриншотов из приложения:
 ![alt text](https://lh3.googleusercontent.com/qyjMYX84ldX7G5e-wp13rGri6XIw84XOuhxo1NCB5w2ZOFQfUrS9RMYnC65fD_KVcqzOPEa_Qc5WMKeLzD4tkzgXBRxE0m_ZCmD1Jq-Y5M0x9lrBDhjcykPNNY6kqTQ6zKDlPcN_hVUVg0Xydd-yF-XUujHMg92yE79m6zxuWERjlAOwENWAIpiVs-mSVsG3y_cT07K3zuZJrGP58BTrOTEMhT5ggbhXKWgPgjtrrJX8dWc5js2yHoj8gFqswPhwQNTgXege4LhX7eGhJcY3Ze06H0AAgq3EuJzU-hgc5jlH45UWKsFZiPXvU7rpG9UKhHbE_K5smJ_O4u6hcC6lnozzzv2fgbbQIx2By4ZbBotL9aPGhf9wr0PyBQDE5QMZBTx0YVFmq0cCONY18kdQ2BqI206dJ9vRbrmQ65cL_lUnAn6DYS5nXw_lDBCuKCwnN9rRo6qVuWafVh1VaXCWFTmlbb0eYIHdg1hZYhbPjhm58MQj58luvHF_OqLIUwAODqaNNwwH0wIHzKP7TtituVhgeqgMmqCcYXJ3iVNgcYW5lM2e89dwrffzdXoFccPmMBuVNxiv5y6BmDdHfbPlbxvFbVsi9jHTnAZE1Er1jeqtB1rjW_wRFlvWD8H-7-a3vBZxzhXUrtQAS2bctU7nU5M-PSI-Uv5L98xogVixCH6KafmfMxQV6me6vbsBxR1H4piERpDGhS7Uv9x6_wkKsur9-k1m3Iw1Wt2fn-cdmxtTTRuM2v2QxgkGV5ceVkEOw5suCVT4nxUY4D1hwtYfmfm8ytCw7fnrcHl1vC9kv7tHg-3Av0syzT_8vIYfMqqdcuGIoZqK5TJIOtPpH9I8kWyRSJdeUQJImGgW4t880UnXi32f-qWOnXfAy2xszn2FMY9Dg5XmCI0_mzaOGyO1RYRooBLzoP63GnXqK06Pn-Svo5MO8ybIxCY0E4Gr4UibDJnKJxfqrC9qlhk=w2400-h1280-no?authuser=0)
 ___
 В приложении используется: UIKit, MVVM, DI, CoreData, Tab & NavBar, WKWebView, Collection & TableView, UIViewAnimation, UIAllertController, немного GCD, немного кастомных UI элементов и т.д.
+
+_Приложение все еще находится в разработке_
