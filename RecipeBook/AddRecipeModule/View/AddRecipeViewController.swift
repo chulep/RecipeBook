@@ -22,8 +22,8 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     var viewModel: AddRecipeViewModelType!
     var UICreator: AddRecipeUICreatorType!
     var myKeyboradFrame: CGRect?
-    var constrantsD = NSLayoutConstraint()
-    var constraintsC = NSLayoutConstraint()
+    var constrantDescriptionView = NSLayoutConstraint()
+    var constraintsConfirmButton = NSLayoutConstraint()
     var keyboeardIsOpen = false
     
     
@@ -31,15 +31,15 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         super.viewDidLoad()
         createUI()
         createNavBarStyle()
-        constrantsD = descriptionTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-        constraintsC = confirmButton.heightAnchor.constraint(equalToConstant: 0)
+        constrantDescriptionView = descriptionTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+        constraintsConfirmButton = confirmButton.heightAnchor.constraint(equalToConstant: 0)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         UICreator.settingsRadius(imageButton: imageButton, nameTextField: nameTextField, descriptionTextView: descriptionTextView, urlTextField: urlTextField)
         
-        confirmButton.addTarget(self, action: #selector(tapConfirmButton), for: .touchUpInside)
+        confirmButton.addTarget(self, action: #selector(viewEndEditing), for: .touchUpInside)
     }
     
     //MARK: - Init
@@ -72,6 +72,9 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
         }
         
         UICreator.createConstraints(view: view, imageButton: imageButton, nameTextField: nameTextField, descriptionTextView: descriptionTextView, urlTextField: urlTextField, confirmButton: confirmButton)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(viewEndEditing))
+        view.addGestureRecognizer(tap)
     }
     
     func createNavBarStyle() {
@@ -154,11 +157,11 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
             let keyboardFrame = userInfo.removeValue(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
             myKeyboradFrame = keyboardFrame.cgRectValue
             view.frame.origin.y -= myKeyboradFrame!.height
-            constrantsD.constant = (myKeyboradFrame!.height + 5)
-            constrantsD.isActive = true
+            constrantDescriptionView.constant = (myKeyboradFrame!.height + 5)
+            constrantDescriptionView.isActive = true
             confirmButton.isHidden = false
-            constraintsC.constant = view.bounds.width / 10
-            constraintsC.isActive = true
+            constraintsConfirmButton.constant = view.bounds.width / 10
+            constraintsConfirmButton.isActive = true
             view.layoutIfNeeded()
             keyboeardIsOpen = !keyboeardIsOpen
         }
@@ -166,15 +169,15 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     
     @objc func keyboardWillHide(notification: Notification) {
         view.frame.origin.y += myKeyboradFrame?.height ?? 0
-        view.removeConstraint(constrantsD)
-        constraintsC.constant = 0
-        constraintsC.isActive = true
+        view.removeConstraint(constrantDescriptionView)
+        constraintsConfirmButton.constant = 0
+        constraintsConfirmButton.isActive = true
         confirmButton.isHidden = true
         view.layoutIfNeeded()
         keyboeardIsOpen = !keyboeardIsOpen
     }
     
-    @objc func tapConfirmButton() {
+    @objc func viewEndEditing() {
         view.endEditing(true)
     }
     
