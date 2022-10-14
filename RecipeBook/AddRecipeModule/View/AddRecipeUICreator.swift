@@ -95,7 +95,7 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
             descriptionTopAnchor,
             descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            descriptionTextView.bottomAnchor.constraint(equalTo: confirmButton.topAnchor),
+            descriptionTextView.bottomAnchor.constraint(equalTo: confirmButton.topAnchor, constant: -3),
             
             urlTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
             urlTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),

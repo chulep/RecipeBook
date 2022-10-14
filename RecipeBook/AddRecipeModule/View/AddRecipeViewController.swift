@@ -29,7 +29,6 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        keyboardNotification()
         createUI()
         createNavBarStyle()
         constrantsD = descriptionTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
@@ -102,6 +101,11 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     //MARK: - TextView Delegate
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        addKeyboardNotification()
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1) {
             textView.text = ""
@@ -116,7 +120,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
             textView.textColor = ColorHelper.systemLightGray
             textView.textAlignment = .center
         }
-        
+        deleteKeyboardNotification()
     }
     
     //MARK: - UIPickerController
@@ -134,9 +138,14 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     //MARK: - keyboard show
-    func keyboardNotification() {
+    func addKeyboardNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func deleteKeyboardNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func keyboardWillShow(notification: Notification) {
