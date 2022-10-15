@@ -12,13 +12,16 @@ protocol AddRecipeUICreatorType {
     func createNameTextField() -> UITextField
     func createUrlTextField(action: AddRecipeViewController.Action) -> UITextField
     func createDescriptionTextView(action: AddRecipeViewController.Action) -> UITextView
-    func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView)
+    func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView, confirmButton: UIView)
     func imagePickerController() -> UIImagePickerController
     func settingsRadius(imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView)
     func shakeAnimationIsFilling(_ name: UITextField, _ url: UITextField, _ description: UITextView, textIsFilling: @escaping (_ textIsFilling: Bool) -> Void)
+    func addKeyboardNotification(observer: Any, selectorShow: Selector, selectorHide: Selector)
+    func deleteKeyboardNotification(observer: Any)
 }
 
 class AddRecipeUICreator: AddRecipeUICreatorType {
+    
     
     func createImageButton(bounds: CGRect) -> UIButton {
         let button = UIButton()
@@ -69,37 +72,48 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
         return textView
     }
     
-    func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView) {
-        for i in [imageButton, nameTextField, urlTextField, descriptionTextView] {
+    func createConstraints(view: UIView, imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView, confirmButton: UIView) {
+        for i in [imageButton, nameTextField, urlTextField, descriptionTextView, confirmButton] {
             i.translatesAutoresizingMaskIntoConstraints = false
         }
+        
+        let descriptionTopAnchor = descriptionTextView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15)
+        descriptionTopAnchor.priority = UILayoutPriority(999)
+        let confirmHeight = confirmButton.heightAnchor.constraint(equalToConstant: 0)
+        confirmHeight.priority = UILayoutPriority(999)
+        
         
         NSLayoutConstraint.activate([
             imageButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
             imageButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 110),
             imageButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -110),
-            imageButton.widthAnchor.constraint(equalTo: imageButton.heightAnchor),
+            imageButton.heightAnchor.constraint(equalTo: imageButton.widthAnchor),
             
             nameTextField.topAnchor.constraint(equalTo: imageButton.bottomAnchor, constant: 15),
             nameTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             nameTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            nameTextField.heightAnchor.constraint(equalTo: imageButton.heightAnchor, multiplier: 1/4),
+            nameTextField.heightAnchor.constraint(equalTo: imageButton.widthAnchor, multiplier: 1/4),
             
-            descriptionTextView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
+            descriptionTopAnchor,
             descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             descriptionTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            descriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            descriptionTextView.bottomAnchor.constraint(equalTo: confirmButton.topAnchor, constant: -3),
             
             urlTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15),
             urlTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             urlTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
-            urlTextField.heightAnchor.constraint(equalTo: imageButton.heightAnchor, multiplier: 1/4),
+            urlTextField.heightAnchor.constraint(equalTo: imageButton.widthAnchor, multiplier: 1/4),
+            
+            confirmButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            confirmButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            confirmButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/4),
+            confirmHeight
         ])
     }
     
     func imagePickerController() -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .camera
+        imagePicker.sourceType = .savedPhotosAlbum
         imagePicker.allowsEditing = true
         return imagePicker
     }
@@ -144,6 +158,16 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
         }
         
         textIsFilling(isfilling)
+    }
+    
+    func addKeyboardNotification(observer: Any, selectorShow: Selector, selectorHide: Selector) {
+        NotificationCenter.default.addObserver(observer, selector: selectorShow, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(observer, selector: selectorHide, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func deleteKeyboardNotification(observer: Any) {
+        NotificationCenter.default.removeObserver(observer, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(observer, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
 }
