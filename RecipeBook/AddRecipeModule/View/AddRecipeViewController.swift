@@ -21,6 +21,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     
     var viewModel: AddRecipeViewModelType!
     var UICreator: AddRecipeUICreatorType!
+    
     var myKeyboradFrame: CGRect?
     var constrantDescriptionView = NSLayoutConstraint()
     var constraintsConfirmButton = NSLayoutConstraint()
@@ -105,7 +106,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     
     //MARK: - TextView Delegate
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        addKeyboardNotification()
+        UICreator.addKeyboardNotification(observer: self, selectorShow: #selector(keyboardWillShow(notification:)), selectorHide: #selector(keyboardWillHide(notification:)))
         return true
     }
     
@@ -123,7 +124,7 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
             textView.textColor = ColorHelper.systemLightGray
             textView.textAlignment = .center
         }
-        deleteKeyboardNotification()
+        UICreator.deleteKeyboardNotification(observer: self)
     }
     
     //MARK: - UIPickerController
@@ -141,16 +142,6 @@ class AddRecipeViewController: UIViewController, UITextViewDelegate, UIImagePick
     }
     
     //MARK: - keyboard show
-    func addKeyboardNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    func deleteKeyboardNotification() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     @objc func keyboardWillShow(notification: Notification) {
         if keyboeardIsOpen == false {
             var userInfo = notification.userInfo!

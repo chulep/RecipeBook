@@ -16,6 +16,8 @@ protocol AddRecipeUICreatorType {
     func imagePickerController() -> UIImagePickerController
     func settingsRadius(imageButton: UIView, nameTextField: UIView, descriptionTextView: UIView, urlTextField: UIView)
     func shakeAnimationIsFilling(_ name: UITextField, _ url: UITextField, _ description: UITextView, textIsFilling: @escaping (_ textIsFilling: Bool) -> Void)
+    func addKeyboardNotification(observer: Any, selectorShow: Selector, selectorHide: Selector)
+    func deleteKeyboardNotification(observer: Any)
 }
 
 class AddRecipeUICreator: AddRecipeUICreatorType {
@@ -156,6 +158,16 @@ class AddRecipeUICreator: AddRecipeUICreatorType {
         }
         
         textIsFilling(isfilling)
+    }
+    
+    func addKeyboardNotification(observer: Any, selectorShow: Selector, selectorHide: Selector) {
+        NotificationCenter.default.addObserver(observer, selector: selectorShow, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(observer, selector: selectorHide, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func deleteKeyboardNotification(observer: Any) {
+        NotificationCenter.default.removeObserver(observer, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(observer, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
 }
